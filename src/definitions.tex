@@ -1,21 +1,23 @@
 \section{Trust definitions}
-  We define two kinds of trust: direct and indirect. Direct trust from $Alice$ to $Bob$ is represented by input tokens
-  (initially belonging to $Alice$) actively put by her in a common account from which $Bob$ can also take them. As long as
-  $Bob$ does not take these tokens, $Alice$ directly trusts him equally to the amount of tokens deposited in the common
-  account.
-  
-  This information can be used by another player $Charlie$ that directly trusts $Alice$ in order to derive information
-  regarding $Bob$'s trustworthiness, even if $Charlie$ does not directly trust $Bob$. Through a transitive property, $Dean$,
-  who directly trusts $Charlie$, can in turn derive information from the direct trust from $Alice$ to $Bob$. This reasoning can
-  be extended to an arbitrary number of players, as long as they have at least one trust path to $Alice$. This is called
-  indirect trust.
+  We define two kinds of trust: direct and indirect. Direct trust from $Alice$ to $Bob$ is
+  represented by input tokens (initially belonging to $Alice$) actively put by her in a
+  common account from which $Bob$ can also take them. As long as $Bob$ does not take these
+  tokens, $Alice$ directly trusts him equally to the amount of tokens deposited in the
+  common account.
+
+  This information can be used by another player $Charlie$ that directly trusts $Alice$ in
+  order to derive information regarding $Bob$'s trustworthiness, even if $Charlie$ does
+  not directly trust $Bob$. Through a transitive property, $Dean$, who directly trusts
+  $Charlie$, can in turn derive information from the direct trust from $Alice$ to $Bob$.
+  This reasoning can be extended to an arbitrary number of players, as long as they have
+  at least one trust path to $Alice$. This is called indirect trust.
 
   \subimport{./definitions/}{directtrust.tex}
 
   \subimport{./definitions/}{indirecttrust.tex}
 
-  By convention $DTr_{Alice \rightarrow Alice} = Tr_{Alice \rightarrow Alice}$ and are both equal to the quantity of input
-  tokens $Alice$ has.
+  By convention $DTr_{Alice \rightarrow Alice} = Tr_{Alice \rightarrow Alice}$ and are
+  both equal to the quantity of input tokens $Alice$ has.
 
   We would like to provide players with an ideal functionality where they:
   \begin{enumerate}

@@ -1,44 +1,56 @@
 \section{Desired Properties for Indirect Trust}
   \begin{enumerate}
     \item $Tr_{Alice \rightarrow Bob} \geq DTr_{Alice \rightarrow Bob}$
-    \item If universe (1) and (2) are identical except for $DTr_{Alice \rightarrow Bob}$, then
+    \item If universe (1) and (2) are identical except for $DTr_{Alice \rightarrow Bob}$,
+    then
       \begin{equation*}
-	Tr^2_{Alice \rightarrow Bob} = Tr^1_{Alice \rightarrow Bob} - DTr^1_{Alice \rightarrow Bob} + DTr^2_{Alice \rightarrow
-	Bob} \enspace.
+        Tr^2_{Alice \rightarrow Bob} = Tr^1_{Alice \rightarrow Bob} - DTr^1_{Alice
+        \rightarrow Bob} + DTr^2_{Alice \rightarrow Bob} \enspace.
       \end{equation*}
-    \item Consider an indexed desire $\left(idx, d\right)$ $Alice$ has. Let $p\left(idx, d, Alice\right)$ be a function that
-    returns the player that $Alice$ should rationally delegate the calculation of $s\left(idx, d, Alice\right)$ to.
+    \item Consider an indexed desire $\left(idx, d\right)$ $Alice$ has. Let $p\left(idx,
+    d, Alice\right)$ be a function that returns the player that $Alice$ should rationally
+    delegate the calculation of $s\left(idx, d, Alice\right)$ to.
       \begin{enumerate}
-        \item If a player is cheaper and more trustworthy than all other players, delegate the calculation to him.
+        \item If a player is cheaper and more trustworthy than all other players, delegate
+        the calculation to him.
         \begin{gather*}
-	  \exists Bob \in \mathcal{P}: \forall Charlie \in \mathcal{P} \setminus \{Bob\} \\
-	  \left(c\left(idx, d, Alice, Bob\right) < c\left(idx, d, Alice, Charlie\right) \wedge \right. \\
-	  \left. \wedge \ Tr_{Alice \rightarrow Bob} > Tr_{Alice \rightarrow Charlie}\right) \Rightarrow \\
-	  \Rightarrow p\left(idx, d, Alice\right) = Bob \enspace.
-	\end{gather*}
-	\item If there exists a player $Bob$ that is both cheaper and more trustworthy than $Charlie$, do not delegate the
-	calculation to $Charlie$.
-	\begin{gather*}
-	  \exists Bob, Charlie \in \mathcal{P}: \\
-	  \left(c\left(idx, d, Alice, Bob\right) < c\left(idx, d, Alice, Charlie\right) \wedge \right. \\
-	  \left. \wedge \ Tr_{Alice \rightarrow Bob} > Tr_{Alice \rightarrow Charlie}\right) \Rightarrow \\
-	  \Rightarrow p\left(idx, d, Alice\right) \neq Charlie \enspace.
-	\end{gather*}
+          \exists Bob \in \mathcal{P}: \forall Charlie \in \mathcal{P} \setminus \{Bob\}
+          \\
+          \left(c\left(idx, d, Alice, Bob\right) < c\left(idx, d, Alice, Charlie\right)
+          \wedge \right. \\
+          \left. \wedge \ Tr_{Alice \rightarrow Bob} > Tr_{Alice \rightarrow
+          Charlie}\right) \Rightarrow \\
+          \Rightarrow p\left(idx, d, Alice\right) = Bob \enspace.
+        \end{gather*}
+        \item If there exists a player $Bob$ that is both cheaper and more trustworthy
+        than $Charlie$, do not delegate the calculation to $Charlie$.
+        \begin{gather*}
+          \exists Bob, Charlie \in \mathcal{P}: \\
+          \left(c\left(idx, d, Alice, Bob\right) < c\left(idx, d, Alice, Charlie\right)
+          \wedge \right. \\
+          \left. \wedge \ Tr_{Alice \rightarrow Bob} > Tr_{Alice \rightarrow
+          Charlie}\right) \Rightarrow \\
+          \Rightarrow p\left(idx, d, Alice\right) \neq Charlie \enspace.
+        \end{gather*}
       \end{enumerate}
       Note that the first property can be deduced from the second.
   \end{enumerate}
 
-  Let $x = \left(idx, d, Alice\right)$. Several ideas exist as to what rules $p\left(x\right)$ should satisfy:
+  Let $x = \left(idx, d, Alice\right)$. Several ideas exist as to what rules
+  $p\left(x\right)$ should satisfy:
   \begin{enumerate}
-    \item Indirect trust towards $Bob$ is required to be greater than the cost of the calculation requested by $Bob$ in order
-    for $Alice$ to delegate $s\left(idx, d, Alice\right)$ to him. If there exist multiple players that $Alice$ indirectly
-    trusts more than their cost, then the cheapest one is chosen. If multiple trustworthy enough players have the same cost,
-    the most trustworthy one is chosen.
+    \item Indirect trust towards $Bob$ is required to be greater than the cost of the
+    calculation requested by $Bob$ in order for $Alice$ to delegate $s\left(idx, d,
+    Alice\right)$ to him. If there exist multiple players that $Alice$ indirectly trusts
+    more than their cost, then the cheapest one is chosen. If multiple trustworthy enough
+    players have the same cost, the most trustworthy one is chosen.
     \begin{align*}
-      & c\left(x, Charlie\right) > Tr_{Alice \rightarrow Charlie} & \Rightarrow p\left(x\right) \neq Charlie \\
-      \mathrlap{\mbox{For the following, } \forall v \in \{Bob, Charlie\} \ c\left(x, v\right) \leq Tr_{Alice \rightarrow v}
-      \enspace.} \\
-      & c\left(x, Bob\right) < c\left(x, Charlie\right) & \Rightarrow p\left(x\right) \neq Charlie  \\
+      & c\left(x, Charlie\right) > Tr_{Alice \rightarrow Charlie} & \Rightarrow
+      p\left(x\right) \neq Charlie \\
+      \mathrlap{\mbox{For the following, } \forall v \in \{Bob, Charlie\} \ c\left(x,
+      v\right) \leq Tr_{Alice \rightarrow v} \enspace.} \\
+      & c\left(x, Bob\right) < c\left(x, Charlie\right) & \Rightarrow p\left(x\right) \neq
+      Charlie \\
       &
       \begin{rcases}
         c\left(x, Bob\right) = c\left(x, Charlie\right) \\
@@ -46,13 +58,16 @@
       \end{rcases}
       & \Rightarrow p\left(x\right) \neq Charlie
     \end{align*}
-    \item Similarly to the previous idea, the indirect trust must exceed the cost. In this case however, in case of multiple
-    trustworthy and cheap players, the indirect trust is considered before the cost.
+    \item Similarly to the previous idea, the indirect trust must exceed the cost. In this
+    case however, in case of multiple trustworthy and cheap players, the indirect trust is
+    considered before the cost.
     \begin{align*}
-      & c\left(x, Charlie\right) > Tr_{Alice \rightarrow Charlie} & \Rightarrow p\left(x\right) \neq Charlie \\
-      \mathrlap{\mbox{For the following, } \forall v \in \{Bob, Charlie\} \ c\left(x, v\right) \leq Tr_{Alice \rightarrow v}
-      \enspace.} \\
-      & Tr_{Alice \rightarrow Bob} > Tr_{Alice \rightarrow Charlie} & \Rightarrow p\left(x\right) \neq Charlie \\
+      & c\left(x, Charlie\right) > Tr_{Alice \rightarrow Charlie} & \Rightarrow
+      p\left(x\right) \neq Charlie \\
+      \mathrlap{\mbox{For the following, } \forall v \in \{Bob, Charlie\} \ c\left(x,
+      v\right) \leq Tr_{Alice \rightarrow v} \enspace.} \\
+      & Tr_{Alice \rightarrow Bob} > Tr_{Alice \rightarrow Charlie} & \Rightarrow
+      p\left(x\right) \neq Charlie \\
       &
       \begin{rcases}
         Tr_{Alice \rightarrow Bob} = Tr_{Alice \rightarrow Charlie} \\
@@ -60,16 +75,20 @@
       \end{rcases}
       & \Rightarrow p\left(x\right) \neq Charlie
     \end{align*}
-    \item The player with the highest difference between indirect trust and cost is chosen.
+    \item The player with the highest difference between indirect trust and cost is
+    chosen.
     \begin{equation*}
-      p\left(x\right) = \argmax\limits_{v \in \mathcal{P}}\left(Tr_{Alice \rightarrow v} - c\left(x, v\right)\right)
+      p\left(x\right) = \argmax\limits_{v \in \mathcal{P}}\left(Tr_{Alice \rightarrow v} -
+      c\left(x, v\right)\right)
     \end{equation*}
-    This aims to maximize trust and minimize cost and, contrary to the previous two approaches, attaches equal importance to
-    these two metrics.
+    This aims to maximize trust and minimize cost and, contrary to the previous two
+    approaches, attaches equal importance to these two metrics.
     \item The player with the lowest difference between indirect trust and cost is chosen.
     \begin{equation*}
-      p\left(x\right) = \argmin\limits_{v \in \mathcal{P}}\left(Tr_{Alice \rightarrow v} - c\left(x, v\right)\right)
+      p\left(x\right) = \argmin\limits_{v \in \mathcal{P}}\left(Tr_{Alice \rightarrow v} -
+      c\left(x, v\right)\right)
     \end{equation*}
-    Note that this last approach constitutes another direction, which departs from choosing the cheapest and most trustworthy
-    vendor, opting for the one whose price and trustworthiness match. It evidently does not follow the property (3).
+    Note that this last approach constitutes another direction, which departs from
+    choosing the cheapest and most trustworthy vendor, opting for the one whose price and
+    trustworthiness match. It evidently does not follow the property (3).
   \end{enumerate}
