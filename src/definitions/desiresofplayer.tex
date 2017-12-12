@@ -1,15 +1,15 @@
 \begin{definition}[Desires of Player function] \ \\
   \label{desiresofplayer}
-  The function $Desires : \mathcal{P} \rightarrow \left(\mathbb{N} \times
-  \mathcal{D}\right)^2$ takes as input a player and returns the set of desires that the
+  The function $Desires : \mathcal{P} \rightarrow 2^{\left(\mathbb{N} \times
+  \mathcal{D}\right)}$ takes as input a player and returns the set of desires that the
   player was assinged throughout the game.
   \begin{equation*}
     Desires\left(v\right) = \bigcup\limits_{\mathclap{\left(idx, d\right) \in \mathbb{N}
     \times \mathcal{D}}} \; \{\left(idx, d\right) : Player\left(idx, d\right) = v\}
   \end{equation*}
-  We also define $SatDesires : \mathcal{P} \rightarrow \left(\mathbb{N} \times
-  \mathcal{D}\right)^2$ and $UnsatDesires : \mathcal{P} \rightarrow \left(\mathbb{N}
-  \times \mathcal{D}\right)^2$:
+  We define $SatDesires : \mathcal{P} \rightarrow 2^{\left(\mathbb{N} \times
+  \mathcal{D}\right)}$ and $UnsatDesires : \mathcal{P} \rightarrow 2^{\left(\mathbb{N}
+  \times \mathcal{D}\right)}$ as well:
   \begin{gather*}
     \begin{aligned}
       SatDesires\left(v\right) = \bigcup\limits_{\mathclap{\left(idx, d\right) \in
