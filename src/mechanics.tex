@@ -15,6 +15,13 @@
   $s\left(idx, d, Alice\right)$ herself, whilst $Bob$ obtained some tokens which can in
   turn be used to satisfy some of his future desires.
 
+  Since $Bob$ can commit fraud and get the tokens without satisfying $Alice$'s desire in
+  exchange, $Alice$ must be well informed on the trustworthiness of potential
+  collaborators before handing in the tokens. $Alice$ can use any out-of-band means to
+  this end, which we model as an oracle $\mathcal{O}_{Trust}$ which is input a desire and
+  a list of potential players and returns the player that increases the utility the most
+  (on expectation), along with the expected utility increase.
+
   \subimport{./definitions/}{costofdesire.tex}
 
   It is reasonable to assume that there exists an absolute minimum of tokens that must be
