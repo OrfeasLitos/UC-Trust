@@ -1,0 +1,73 @@
+\section{Protocol}
+  In this section we will describe the real protocol executed by the players in the
+  absence of the $\mathcal{F}_{SAT}$ ideal functionality. The description of this protocol
+  does not need any utility function; all the "important" decisions are taken by the
+  environment.
+
+  Consider an environment $\mathcal{E}$, and adversary $\mathcal{A}$ and $n$ players
+  executing copies of the same protocol $\Pi_1, \dots, \Pi_n$. $\mathcal{E}$ can send the
+  following messages to $\Pi_i$:
+  \begin{enumerate}
+    \item \label{msg:env:desires} Manage player desires
+    \begin{enumerate}
+      \item \label{msg:env:desires:create} Satisfy $d \in \mathcal{D}$ through a player in
+      $L \subseteq \left[n\right]$
+      \item \label{msg:env:desires:abort} Abort attempt to satisfy $d \in \mathcal{D}$
+    \end{enumerate}
+    \item Manage offered desires satisfaction
+    \begin{enumerate}
+      \item Gain the ability to satisfy $d \in \mathcal{D}$ for players in $L \subseteq
+      \left[n\right]$ for a price $x \in \mathbb{N}$
+      \item Lose the ability to satisfy $d \in \mathcal{D}$ for players in $L \subseteq
+      \left[n\right]$ for a price $x \in \mathbb{N}$
+    \end{enumerate}
+    \item Satisfy another player's desire
+    \begin{enumerate}
+      \item Satisfy player's $i \in \left[n\right]$ desire $d \in \mathcal{D}$ with the
+      corresponding satisfaction string $s$
+      \item Satisfy player's $i \in \left[n\right]$ desire $d \in \mathcal{D}$ with the
+      satisfaction string $s'$ (normally suitable for satisfying $d' \neq d, d' \in
+      \mathcal{D}$)
+      \item Ignore player's $i \in \left[n\right]$ desire $d \in \mathcal{D}$
+    \end{enumerate}
+    \item Manage direct trusts
+    \begin{enumerate}
+      \item Increase direct trust to player $i \in \left[n\right]$ by $x \in \mathbb{N}$
+      \item Decrease direct trust to player $i \in \left[n\right]$ by $x \in \mathbb{N}$
+      \item Steal direct trust $x \in \mathbb{N}$ from player $i \in \left[n\right]$
+    \end{enumerate}
+  \end{enumerate}
+  Some of these messages (e.g.~\ref{msg:env:desires:abort}) are meaningful only when some
+  other messages have been delivered previously (e.g.~\ref{msg:env:desires:create}).
+  $\mathcal{E}$ may send such messages even when they are not meaningful; the protocol
+  should take care to reject/ignore such messages.
+
+  Let $i \in \left[n\right]$. $\Pi_i$ can send the following messages to $\mathcal{E}$:
+  \begin{enumerate}
+    \item Payment $x \in \mathbb{N}$ has been sent to player $j \in \left[n\right]$ for
+    the satisfaction of desire $d \in \mathcal{D}$
+    \item Player $j \in \left[n\right]$ has satisfied my desire $d \in \mathcal{D}$ with
+    satisfaction string $s$
+    \item Player $j \in \left[n\right]$ has partially satisfied my desire $d \in
+    \mathcal{D}$ with satisfaction string $s'$ (normally suitable for satisfying $d' \neq
+    d, d' \in \mathcal{D}$)
+    \item Player $j \in \left[n\right]$ has ignored my desire $d \in \mathcal{D}$
+    \item Direct trust to player $i \in \left[n\right]$ increased by $x \in \mathbb{N}$
+    \item Direct trust to player $i \in \left[n\right]$ decreased by $x \in \mathbb{N}$
+    \item Stole $x \in \mathbb{N}$ from player's $i \in \left[n\right]$ direct trust
+  \end{enumerate}
+  $\Pi_i$ should only send these messages when $\mathcal{E}$ is expecting them.
+
+  Let $i, j \in \left[n\right]$ The messages that can be sent between $\Pi_i$ and $\Pi_j$
+  are the following:
+  \begin{enumerate}
+    \item Can you satisfy $d \in \mathcal{D}$?
+    \item I can satisfy $d \in \mathcal{D}$ for a price $x \in \mathbb{N}$
+    \item \label{msg:pl:pay} Payment of $x \in \mathbb{N}$ for satisfaction of $d \in \mathcal{D}$ sent
+    \item \label{msg:pl:sat} Satisfaction string $s'$, response to payment of $x \in \mathbb{N}$ for $d \in
+    \mathcal{D}$
+  \end{enumerate}
+  $\Pi_i$ is supposed to send~\ref{msg:pl:pay} when it has already paid through
+  $\mathcal{F}_{Ledger}$. Similarly, it is supposed to send~\ref{msg:pl:sat} when it has
+  verified that the other party has sent the corresponding payment on
+  $\mathcal{F}_{Ledger}$.
