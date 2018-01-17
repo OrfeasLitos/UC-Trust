@@ -44,8 +44,17 @@
 
   Let $i \in \left[n\right]$. $\Pi_i$ can send the following messages to $\mathcal{E}$:
   \begin{enumerate}
+    \item No player in $L$ can satisfy my desire $d \in \mathcal{D}$
+    \item Desire $d \in \mathcal{D}$ made available for satisfaction amongst $L \subseteq
+    \left[n\right]$ for price $x \in \mathbb{N}$
+    \item Desire $d \in \mathcal{D}$ made unavailable for satisfaction amongst $L \subseteq
+    \left[n\right]$ for price $x \in \mathbb{N}$
     \item Payment $x \in \mathbb{N}$ has been sent to player $j \in \left[n\right]$ for
     the satisfaction of desire $d \in \mathcal{D}$
+    \item Correct Payment $x \in \mathbb{N}$ from player $j \in \left[n\right]$ for
+    the satisfaction of desire $d \in \mathcal{D}$ has been received
+    \item Wrong Payment $x \in \mathbb{N}$ from player $j \in \left[n\right]$ for
+    the satisfaction of desire $d \in \mathcal{D}$ has been received
     \item Player $j \in \left[n\right]$ has satisfied my desire $d \in \mathcal{D}$ with
     satisfaction string $s$
     \item Player $j \in \left[n\right]$ has partially satisfied my desire $d \in
@@ -63,6 +72,7 @@
   \begin{enumerate}
     \item Can you satisfy $d \in \mathcal{D}$?
     \item I can satisfy $d \in \mathcal{D}$ for a price $x \in \mathbb{N}$
+    \item I cannot satisfy $d \in \mathcal{D}$
     \item \label{msg:pl:pay} Payment of $x \in \mathbb{N}$ for satisfaction of $d \in \mathcal{D}$ sent
     \item \label{msg:pl:sat} Satisfaction string $s'$, response to payment of $x \in \mathbb{N}$ for $d \in
     \mathcal{D}$
