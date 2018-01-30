@@ -15,17 +15,17 @@ Upon receiving message satisfy((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*):
   While aux is not empty
     (*@$Bob$@*) = chooseBestSeller((*@$d$@*), aux) # (e.g. with Trust is Risk)
     send message canYouSatisfy((*@$d$@*)) to (*@$Bob$@*)
-    response1 = wait for response from (*@$Bob$@*) for (*@$\Delta_1$@*) steps
+    wait for response1 from (*@$Bob$@*) for (*@$\Delta_1$@*) steps
     If response1 (*@$\in \left\{\mbox{timeout}, \mbox{IcannotSatisfy(}d\mbox{)}, \mbox{invalid}\right\}$@*)
       aux = aux (*@$\setminus \left\{Bob\right\}$@*)
-    Else If response == IcanSatisfy((*@$d\mbox{, }x$@*))
+    Else If response1 == IcanSatisfy((*@$d\mbox{, }x$@*))
       send message doIhaveBalance((*@$x$@*)) to (*@$\mathcal{F}_{Ledger}$@*)
-      responseFromLedger = wait for response from (*@$\mathcal{F}_{Ledger}$@*) for (*@$\Delta_2$@*)
+      wait for responseFromLedger from (*@$\mathcal{F}_{Ledger}$@*) for (*@$\Delta_2$@*)
       If responseFromLedger == youHaveBalance((*@$x$@*))
         send message payment((*@$d\mbox{, }x$@*)) to (*@$Bob$@*)
         send message payment((*@$Bob\mbox{, }x$@*)) to (*@$\mathcal{F}_{Ledger}$@*)
         send message paymentSent((*@$d\mbox{, }x\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*)
-        response2 = wait for response from (*@$Bob$@*) for (*@$\Delta_3$@*) steps
+        wait for response2 from (*@$Bob$@*) for (*@$\Delta_3$@*) steps
         If response2 (*@$\in \left\{\mbox{timeout}, \mbox{invalid}\right\}$@*)
           send message ignored((*@$d\mbox{, }x\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*)
         Else If response2 == satString((*@$d\mbox{, }x\mbox{, }s$@*))

@@ -61,8 +61,8 @@ Upon receiving message satisfy((*@$d$@*), (*@$L$@*)) from (*@$\mathcal{P}$@*) (*
       For (*@$Bob$@*) in (*@$L$@*)
         If canSatisfy((*@$Bob\mbox{, }d\mbox{, }x$@*))
           send message doIhaveBalance((*@$x$@*)) to (*@$\mathcal{F}_{Ledger}$@*) as (*@$Alice$@*)
-          responseFromLedger = wait for response from (*@$\mathcal{F}_{Ledger}$@*) for (*@$\Delta_1$@*) steps
-          If responseFromLedger == youHaveBalance((*@$x$@*))
+          wait for response from (*@$\mathcal{F}_{Ledger}$@*) for (*@$\Delta_1$@*) steps
+          If response == youHaveBalance((*@$x$@*))
             send message payment((*@$Bob\mbox{, }x$@*)) to (*@$\mathcal{F}_{Ledger}$@*) as (*@$Alice$@*)
             send message paymentSent((*@$d\mbox{, }x\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
             listen for message fulfill((*@$d\mbox{, }Alice\mbox{, }s$@*)) or ignore((*@$d\mbox{, }Alice$@*)) from (*@$Bob$@*) for (*@$\Delta_2$@*) steps
