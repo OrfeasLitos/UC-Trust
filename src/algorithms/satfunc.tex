@@ -1,6 +1,6 @@
 \Suppressnumber
 \begin{lstlisting}[label=satfunc, style=numbers]
-(*@$\mathcal{F}_{SAT}\left(p\right)$ \Reactivatenumber@*)
+(*@$\mathcal{F}_{SAT}\left(p, \Delta_1, \Delta_2\right)$ \Reactivatenumber@*)
 Declarations:
   boolean allSet
   set pendingDesires
@@ -53,6 +53,26 @@ Upon receiving message satisfy((*@$d$@*), (*@$L$@*)) from (*@$\mathcal{P}$@*) (*
 #     Else # desire remains unsatisfied
 #       pendingDesires = pendingDesires (*@$\cup$@*) ((*@$Alice$@*), (*@$d$@*))
 #     Attempt to satisfy desires from pendingDesires (*@\newline@*) # How? Also, could be (*@$\mathcal{F}_{SAT}$@*) idle action
+    Else # If actPerfectly == False
+      listen for message abort((*@$d\mbox{, }L$@*)) from (*@$Alice$@*)
+        Upon receiving such message:
+          go to Idle State
+      (*@$L$@*) = reorderByBestSeller((*@$d\mbox{, }L$@*))
+      For (*@$Bob$@*) in (*@$L$@*)
+        If canSatisfy((*@$Bob\mbox{, }d\mbox{, }x$@*))
+          send message doIhaveBalance((*@$x$@*)) to (*@$\mathcal{F}_{Ledger}$@*) as (*@$Alice$@*)
+          responseFromLedger = wait for response from (*@$\mathcal{F}_{Ledger}$@*) for (*@$\Delta_1$@*) steps
+          If responseFromLedger == youHaveBalance((*@$x$@*))
+            send message payment((*@$Bob\mbox{, }x$@*)) to (*@$\mathcal{F}_{Ledger}$@*) as (*@$Alice$@*)
+            send message paymentSent((*@$d\mbox{, }x\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
+            listen for message fulfill((*@$d\mbox{, }Alice\mbox{, }s$@*)) or ignore((*@$d\mbox{, }Alice$@*)) from (*@$Bob$@*) for (*@$\Delta_2$@*) steps
+            Upon receiving message fulfill((*@$d\mbox{, }Alice\mbox{, }s$@*))
+              satString((*@$Alice$@*))((*@$d$@*)) = (*@$s$@*)
+              send message satisfied((*@$d\mbox{, }s\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
+            Upon receiving message ignore((*@$d\mbox{, }Alice$@*)) from (*@$Bob$@*)
+              send message ignored((*@$d\mbox{, }x\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
+            stop listening for message abort((*@$d\mbox{, }L$@*)) from (*@$Alice$@*)
+            go to Idle state
 
 Upon receiving message (*@\newline@*) getFulfillment((*@$\mathcal{D}$@*) desire) from (*@$\mathcal{P}$@*) (*@$Alice$@*):
   If allSet == True
