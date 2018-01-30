@@ -37,14 +37,14 @@ Upon receiving message satisfy((*@$\mathcal{D}$@*) desire) from (*@$\mathcal{P}$
     If tokens((*@$Alice$@*)) (*@$\geq$@*) minPrice
       tokens((*@$Alice$@*)) = tokens((*@$Alice$@*)) - minPrice
       fulfillment((*@$Alice$@*))(desire) = (*@$s$@*)((*@$Alice$@*), desire)
-    Else If utility((*@$Alice$@*))(satDesires((*@$Alice$@*)) (*@$\cup$@*) desire, unsatDesires((*@$Alice$@*)) (*@$\setminus$@*) desire) - utility((*@$Alice$@*))(satDesires((*@$Alice$@*)), unsatDesires((*@$Alice$@*))) > (utility that can be gained for other players for minPrice)
-      support = choosePayers(minPrice)
-      (*@$\forall$@*) ((*@$Bob$@*), partialPrice) (*@$\in$@*) support
-        tokens((*@$Bob$@*)) = tokens((*@$Bob$@*)) - partialPrice
-      fulfillment((*@$Alice$@*))(desire) = (*@$s$@*)((*@$Alice$@*), desire)
-    Else # desire remains unsatisfied
-      pendingDesires = pendingDesires (*@$\cup$@*) ((*@$Alice$@*), desire)
-    Attempt to satisfy desires from pendingDesires (*@\newline@*) # How? Also, could be (*@$\mathcal{F}_{SAT}$@*) idle action
+#     Else If utility((*@$Alice$@*))(satDesires((*@$Alice$@*)) (*@$\cup$@*) desire, unsatDesires((*@$Alice$@*)) (*@$\setminus$@*) desire) - utility((*@$Alice$@*))(satDesires((*@$Alice$@*)), unsatDesires((*@$Alice$@*))) > (utility that can be gained for other players for minPrice)
+#       support = choosePayers(minPrice)
+#       (*@$\forall$@*) ((*@$Bob$@*), partialPrice) (*@$\in$@*) support
+#         tokens((*@$Bob$@*)) = tokens((*@$Bob$@*)) - partialPrice
+#       fulfillment((*@$Alice$@*))(desire) = (*@$s$@*)((*@$Alice$@*), desire)
+#     Else # desire remains unsatisfied
+#       pendingDesires = pendingDesires (*@$\cup$@*) ((*@$Alice$@*), desire)
+#     Attempt to satisfy desires from pendingDesires (*@\newline@*) # How? Also, could be (*@$\mathcal{F}_{SAT}$@*) idle action
 
 Upon receiving message (*@\newline@*) getFulfillment((*@$\mathcal{D}$@*) desire) from (*@$\mathcal{P}$@*) (*@$Alice$@*):
   If allSet == True
