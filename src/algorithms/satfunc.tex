@@ -9,6 +9,7 @@ Declarations:
   map tokens((*@$\mathcal{P}$@*) => number)
   map fulfillment((*@$\mathcal{P}$@*) => map ((*@$\mathcal{D}$@*) => SAT))
   map utility((*@$\mathcal{P}$@*) => function(set, set): number) (*@\newline@*) # This map has hardcoded values
+  map offeredSats((*@$\mathcal{P}$@*) => set)
 
 Initialization:
   allSet = False
@@ -59,7 +60,7 @@ Upon receiving message satisfy((*@$d$@*), (*@$L$@*)) from (*@$\mathcal{P}$@*) (*
           go to Idle State
       (*@$L$@*) = reorderByBestSeller((*@$d\mbox{, }L$@*))
       For (*@$Bob$@*) in (*@$L$@*)
-        If canSatisfy((*@$Bob\mbox{, }d\mbox{, }x$@*))
+        If (*@$\exists (a, b, x) \in \mbox{offeredSats(}Bob\mbox{)}: (d == a \wedge Alice \in b)$@*)
           send message doIhaveBalance((*@$x$@*)) to (*@$\mathcal{F}_{Ledger}$@*) as (*@$Alice$@*)
           wait for response from (*@$\mathcal{F}_{Ledger}$@*) for (*@$\Delta_1$@*) steps
           If response == youHaveBalance((*@$x$@*))
@@ -76,6 +77,14 @@ Upon receiving message satisfy((*@$d$@*), (*@$L$@*)) from (*@$\mathcal{P}$@*) (*
             go to Idle state
       send message noOneSatisfies((*@$d\mbox{, }L$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
       stop listening for message abort((*@$d\mbox{, }L$@*)) from (*@$Alice$@*)
+
+Upon receiving message makeAvailable((*@$d\mbox{, }L\mbox{, }x$@*)) from (*@$Alice$@*)
+  offeredSats((*@$Alice$@*)) = (*@$\mbox{offeredSats(}Alice\mbox{)} \cup (d, L, x)$@*)
+  send message madeAvailable((*@$d\mbox{, }L\mbox{, }x$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
+
+Upon receiving message makeUnavailable((*@$d\mbox{, }L\mbox{, }x$@*)) from (*@$Alice$@*)
+  offeredSats((*@$Alice$@*)) = (*@$\mbox{offeredSats(}Alice\mbox{)} \setminus (d, L, x)$@*)
+  send message madeUnavailable((*@$d\mbox{, }L\mbox{, }x$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
 
 Upon receiving message (*@\newline@*) getFulfillment((*@$\mathcal{D}$@*) desire) from (*@$\mathcal{P}$@*) (*@$Alice$@*):
   If allSet == True
