@@ -1,6 +1,6 @@
 \Suppressnumber
 \begin{lstlisting}[label=protocol, style=numbers]
-(*@$\Pi\left(\Delta_1, \Delta_2, \Delta_3\right)$ \Reactivatenumber@*)
+(*@$\Pi\left(\Delta_1, \Delta_2, \Delta_3, \Delta_4\right)$ \Reactivatenumber@*)
 Declarations:
   set offeredSats
 
@@ -71,7 +71,7 @@ Upon receiving message canYouSatisfy((*@$d$@*)) from (*@$Alice$@*)
 Upon receiving message payment((*@$d\mbox{, }x$@*))  from (*@$Alice$@*)
   If (*@$\exists (a, b, c) \in \mbox{offeredSats}: (d == a \wedge Alice \in b)$@*)
     send message correctPaymentReceived((*@$Alice\mbox{, }d\mbox{, }x$@*)) to (*@$\mathcal{E}$@*)
-    listen for message fulfill((*@$d\mbox{, }Alice\mbox{, }s$@*)) or ignore((*@$d\mbox{, }Alice$@*)) from (*@$\mathcal{E}$@*)
+    listen for message fulfill((*@$d\mbox{, }Alice\mbox{, }s$@*)) or ignore((*@$d\mbox{, }Alice$@*)) from (*@$\mathcal{E}$@*) for (*@$\Delta_4$@*) steps
       Upon receiving message fulfill((*@$d\mbox{, }Alice\mbox{, }s$@*)) from (*@$\mathcal{E}$@*):
         send message satString((*@$d\mbox{, }x\mbox{, }s$@*)) to (*@$Alice$@*)
       Upon receiving message ignore((*@$d\mbox{, }Alice$@*)) from (*@$\mathcal{E}$@*):
