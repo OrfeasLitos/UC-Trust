@@ -13,7 +13,7 @@ Upon receiving message satisfy((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*):
       go to Idle State
   aux = (*@$L$@*)
   While aux is not empty
-    (*@$Bob$@*) = chooseBestSeller(aux) # (e.g. with Trust is Risk)
+    (*@$Bob$@*) = chooseBestSeller((*@$d$@*), aux) # (e.g. with Trust is Risk)
     send message canYouSatisfy((*@$d$@*)) to (*@$Bob$@*)
     response1 = wait for response from (*@$Bob$@*) for (*@$\Delta_1$@*) steps
     If response1 (*@$\in \left\{\mbox{timeout}, \mbox{IcannotSatisfy(}d\mbox{)}, \mbox{invalid}\right\}$@*)
