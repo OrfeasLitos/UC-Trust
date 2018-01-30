@@ -65,6 +65,7 @@ Upon receiving message satisfy((*@$d$@*), (*@$L$@*)) from (*@$\mathcal{P}$@*) (*
           If response == youHaveBalance((*@$x$@*))
             send message payment((*@$Bob\mbox{, }x$@*)) to (*@$\mathcal{F}_{Ledger}$@*) as (*@$Alice$@*)
             send message paymentSent((*@$d\mbox{, }x\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
+            send message correctPaymentReceived((*@$d\mbox{, }x\mbox{, }Alice$@*)) to (*@$\mathcal{E}$@*) as (*@$Bob$@*)
             listen for message fulfill((*@$d\mbox{, }Alice\mbox{, }s$@*)) or ignore((*@$d\mbox{, }Alice$@*)) from (*@$Bob$@*) for (*@$\Delta_2$@*) steps
             Upon receiving message fulfill((*@$d\mbox{, }Alice\mbox{, }s$@*))
               satString((*@$Alice$@*))((*@$d$@*)) = (*@$s$@*)
@@ -73,6 +74,8 @@ Upon receiving message satisfy((*@$d$@*), (*@$L$@*)) from (*@$\mathcal{P}$@*) (*
               send message ignored((*@$d\mbox{, }x\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
             stop listening for message abort((*@$d\mbox{, }L$@*)) from (*@$Alice$@*)
             go to Idle state
+      send message noOneSatisfies((*@$d\mbox{, }L$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
+      stop listening for message abort((*@$d\mbox{, }L$@*)) from (*@$Alice$@*)
 
 Upon receiving message (*@\newline@*) getFulfillment((*@$\mathcal{D}$@*) desire) from (*@$\mathcal{P}$@*) (*@$Alice$@*):
   If allSet == True
