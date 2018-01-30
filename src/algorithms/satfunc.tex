@@ -1,6 +1,6 @@
 \Suppressnumber
 \begin{lstlisting}[label=satfunc, style=numbers]
-(*@$\mathcal{F}_{SAT}$ \Reactivatenumber@*)
+(*@$\mathcal{F}_{SAT}\left(p\right)$ \Reactivatenumber@*)
 Declarations:
   boolean allSet
   set pendingDesires
@@ -31,19 +31,27 @@ Upon receiving message cost((*@$\mathcal{P}$@*) (*@$Bob$@*), (*@$\mathcal{D}$@*)
   If allSet == True
     send message price((*@$Bob$@*))(desire) to (*@$Alice$@*)
 
-Upon receiving message satisfy((*@$\mathcal{D}$@*) desire) from (*@$\mathcal{P}$@*) (*@$Alice$@*):
+Upon receiving message satisfy((*@$d$@*), (*@$L$@*)) from (*@$\mathcal{P}$@*) (*@$Alice$@*):
   If allSet == True
-    number minPrice = (*@$\min\limits_{Bob \in \mathcal{P}}\left\{\right.$@*)price((*@$Bob$@*))(desire)(*@$\left.\right\}$@*)
-    If tokens((*@$Alice$@*)) (*@$\geq$@*) minPrice
-      tokens((*@$Alice$@*)) = tokens((*@$Alice$@*)) - minPrice
-      fulfillment((*@$Alice$@*))(desire) = (*@$s$@*)((*@$Alice$@*), desire)
+    actPerfectly = flipCoin((*@$p$@*)) # probability (*@$p$@*) to act perfectly
+    If actPerfectly == True
+      number minPrice = (*@$\min\limits_{Bob \in \mathcal{P}}\left\{\right.$@*)price((*@$Bob$@*))((*@$d$@*))(*@$\left.\right\}$@*)
+      (*@$\mathcal{P}$@*) (*@$Bob$@*) = (*@$\argmin\limits_{Charlie \in \mathcal{P}}\left\{\right.$@*)price((*@$Charlie$@*))((*@$d$@*))(*@$\left.\right\}$@*)
+      If tokens((*@$Alice$@*)) (*@$\geq$@*) minPrice
+        tokens((*@$Alice$@*)) = tokens((*@$Alice$@*)) - minPrice
+        tokens((*@$Bob$@*)) = tokens((*@$Bob$@*)) + minPrice
+        leak message payment((*@$Bob\mbox{, }d$@*), minPrice) to (*@$\mathcal{A}$@*) # OK?
+        send message payment((*@$Bob$@*), minPrice) to (*@$\mathcal{F}_{Ledger}$@*)
+        satString((*@$Alice$@*))((*@$d$@*)) = (*@$s$@*)((*@$Alice$@*), (*@$d$@*))
 #     Else If utility((*@$Alice$@*))(satDesires((*@$Alice$@*)) (*@$\cup$@*) desire, unsatDesires((*@$Alice$@*)) (*@$\setminus$@*) desire) - utility((*@$Alice$@*))(satDesires((*@$Alice$@*)), unsatDesires((*@$Alice$@*))) > (utility that can be gained for other players for minPrice)
 #       support = choosePayers(minPrice)
 #       (*@$\forall$@*) ((*@$Bob$@*), partialPrice) (*@$\in$@*) support
 #         tokens((*@$Bob$@*)) = tokens((*@$Bob$@*)) - partialPrice
-#       fulfillment((*@$Alice$@*))(desire) = (*@$s$@*)((*@$Alice$@*), desire)
+#         leak message payment((*@$Bob\mbox{, }d$@*), partialPrice) to (*@$\mathcal{A}$@*)
+#         send message payment((*@$Bob$@*), partialPrice) to (*@$\mathcal{F}_{Ledger}$@*)
+#       satString((*@$Alice$@*))((*@$d$@*)) = (*@$s$@*)((*@$Alice$@*), (*@$d$@*))
 #     Else # desire remains unsatisfied
-#       pendingDesires = pendingDesires (*@$\cup$@*) ((*@$Alice$@*), desire)
+#       pendingDesires = pendingDesires (*@$\cup$@*) ((*@$Alice$@*), (*@$d$@*))
 #     Attempt to satisfy desires from pendingDesires (*@\newline@*) # How? Also, could be (*@$\mathcal{F}_{SAT}$@*) idle action
 
 Upon receiving message (*@\newline@*) getFulfillment((*@$\mathcal{D}$@*) desire) from (*@$\mathcal{P}$@*) (*@$Alice$@*):
