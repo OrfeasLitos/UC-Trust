@@ -1,4 +1,4 @@
-all: what_is_trust.pdf 
+all: what_is_trust.pdf
 
 #.ONESHELL:
 what_is_trust.pdf: src/*
