@@ -1,0 +1,73 @@
+
+\begin{tikzpicture}[>=latex,line join=bevel,]
+%%
+\begin{scope}
+  \definecolor{strokecol}{rgb}{0.0,0.0,0.0};
+  \pgfsetstrokecolor{strokecol}
+  \draw (236.45bp,11.5bp) node {\textbf{Fig. \figlabel{fig:allfuncs}:} (Almost) all functionalities};
+\end{scope}
+\begin{scope}
+  \pgfsetstrokecolor{black}
+  \definecolor{strokecol}{rgb}{1.0,1.0,1.0};
+  \pgfsetstrokecolor{strokecol}
+  \definecolor{fillcol}{rgb}{1.0,1.0,1.0};
+  \pgfsetfillcolor{fillcol}
+  \definecolor{strokecol}{rgb}{0.0,0.0,0.0};
+  \pgfsetstrokecolor{strokecol}
+  \draw (236.45bp,11.5bp) node {};
+\end{scope}
+\begin{scope}
+  \pgfsetstrokecolor{black}
+  \definecolor{strokecol}{rgb}{1.0,1.0,1.0};
+  \pgfsetstrokecolor{strokecol}
+  \definecolor{fillcol}{rgb}{1.0,1.0,1.0};
+  \pgfsetfillcolor{fillcol}
+  \definecolor{strokecol}{rgb}{0.0,0.0,0.0};
+  \pgfsetstrokecolor{strokecol}
+  \draw (236.45bp,11.5bp) node {};
+\end{scope}
+\begin{scope}
+  \pgfsetstrokecolor{black}
+  \definecolor{strokecol}{rgb}{1.0,1.0,1.0};
+  \pgfsetstrokecolor{strokecol}
+  \definecolor{fillcol}{rgb}{1.0,1.0,1.0};
+  \pgfsetfillcolor{fillcol}
+  \definecolor{strokecol}{rgb}{0.0,0.0,0.0};
+  \pgfsetstrokecolor{strokecol}
+  \draw (236.45bp,11.5bp) node {};
+\end{scope}
+\begin{scope}
+  \pgfsetstrokecolor{black}
+  \definecolor{strokecol}{rgb}{1.0,1.0,1.0};
+  \pgfsetstrokecolor{strokecol}
+  \definecolor{fillcol}{rgb}{1.0,1.0,1.0};
+  \pgfsetfillcolor{fillcol}
+  \definecolor{strokecol}{rgb}{0.0,0.0,0.0};
+  \pgfsetstrokecolor{strokecol}
+  \draw (236.45bp,11.5bp) node {};
+\end{scope}
+  \node (dum2) at (132.7bp,198.19bp) [draw,ellipse,dashed] {$P_n$};
+  \node (ftrade) at (405.7bp,357.89bp) [draw,regular polygon, regular polygon sides=4] {$\mathcal{F}_{Trade}$};
+  \node (dum1) at (24.698bp,198.19bp) [draw,ellipse,dashed] {$P_1$};
+  \node (env2) at (328.7bp,64.0bp) [draw,regular polygon, regular polygon sides=4] {$\mathcal{E}$};
+  \node (env1) at (78.698bp,64.0bp) [draw,regular polygon, regular polygon sides=4] {$\mathcal{E}$};
+  \node (ftrust) at (250.7bp,357.89bp) [draw,regular polygon, regular polygon sides=4] {$\mathcal{F}_{Trust}$};
+  \node (fsat) at (75.698bp,357.89bp) [draw,regular polygon, regular polygon sides=4] {$\mathcal{F}_{SAT}$};
+  \node (dots1) at (78.698bp,198.19bp) [draw=white,ellipse] {$\dots$};
+  \node (prot1) at (241.7bp,198.19bp) [draw,ellipse] {$\Pi_{SAT, 1}$};
+  \node (prot2) at (415.7bp,198.19bp) [draw,ellipse] {$\Pi_{SAT, n}$};
+  \node (dots2) at (328.7bp,198.19bp) [draw=white,ellipse] {$\dots$};
+  \draw [<->] (env2) ..controls (366.91bp,122.93bp) and (373.09bp,132.48bp)  .. (prot2);
+  \draw [<->] (dots2) ..controls (357.63bp,198.19bp) and (357.71bp,198.19bp)  .. (prot2);
+  \draw [<->] (prot2) ..controls (353.39bp,258.5bp) and (337.99bp,273.4bp)  .. (ftrust);
+  \draw [<->] (env1) ..controls (105.97bp,131.77bp) and (113.44bp,150.33bp)  .. (dum2);
+  \draw [<->] (env1) ..controls (51.425bp,131.77bp) and (43.958bp,150.33bp)  .. (dum1);
+  \draw [<->] (prot1) ..controls (245.81bp,271.08bp) and (246.13bp,276.8bp)  .. (ftrust);
+  \draw [<->] (prot2) ..controls (411.15bp,270.81bp) and (410.82bp,276.06bp)  .. (ftrade);
+  \draw [<->] (prot1) ..controls (303.07bp,198.19bp) and (303.12bp,198.19bp)  .. (dots2);
+  \draw [<->] (dum2) ..controls (115.33bp,246.86bp) and (108.48bp,266.06bp)  .. (fsat);
+  \draw [<->] (dum1) ..controls (40.215bp,246.78bp) and (46.315bp,265.88bp)  .. (fsat);
+  \draw [<->] (prot1) ..controls (303.43bp,258.31bp) and (317.78bp,272.28bp)  .. (ftrade);
+  \draw [<->] (env2) ..controls (290.49bp,122.93bp) and (284.3bp,132.48bp)  .. (prot1);
+%
+\end{tikzpicture}

@@ -1,0 +1,68 @@
+digraph G {
+  graph [
+    texmode=raw,
+    label="\\textbf{Fig. \\figlabel{fig:allfuncs}:} (Almost) all functionalities"
+  ];
+  node [shape="circle", texmode=math];
+  edge [texmode=math, dir=both];
+  nodesep=0.05;
+  minlen=0.05;
+
+  rankdir=BT;
+
+  {
+    graph [texlbl=""];
+
+    env1 -> dum1;
+    env1 -> dum2;
+
+    {
+      graph [texlbl=""];
+      rank=same;
+      rankdir=LR;
+      dum1 -> dots1 [style="invis"];
+      dots1 -> dum2 [style="invis"];
+    }
+
+    dum1 -> fsat;
+    dum2 -> fsat;
+
+    env1 [label="\mathcal{E}", shape="square"];
+    dum1 [label="P_1", style="dashed"];
+    dots1 [label="\dots", color="white"];
+    dum2 [label="P_n", style="dashed"];
+    fsat [label="\mathcal{F}_{SAT}", shape="square"];
+  }
+
+  {
+    graph [texlbl=""];
+
+    env2 [label="\mathcal{E}", shape="square"];
+    prot1 [label="\Pi_{SAT, 1}"];
+    dots2 [label="\dots", color="white"];
+    prot2 [label="\Pi_{SAT, n}"];
+    fsat [label="\mathcal{F}_{SAT}", shape="square"];
+    ftrade [label="\mathcal{F}_{Trade}", shape="square"];
+    ftrust [label="\mathcal{F}_{Trust}", shape="square"];
+
+    env2 -> prot1;
+    env2 -> prot2;
+
+    {
+      graph [texlbl=""];
+      rank=same;
+      rankdir=LR;
+      prot1 -> dots2;
+      dots2 -> prot2;
+    }
+
+    prot1 -> ftrust;
+    prot2 -> ftrust;
+    prot1 -> ftrade;
+    prot2 -> ftrade;
+  }
+
+  dum2 -> prot1 [
+    style="invis", ltail=cluster0, lhead=cluster1, constraint=false
+  ];
+}
