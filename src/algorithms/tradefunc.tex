@@ -1,0 +1,30 @@
+\Suppressnumber
+\begin{lstlisting}[label=tradefunc, style=numbers]
+(*@$\mathcal{F}_{Trade}$ \Reactivatenumber@*)
+Upon receiving trade(hers, his, (*@$Bob$@*)) from (*@$Alice$@*):
+  AliceOK = checkAvailability(hers, (*@$Alice$@*))
+  BobOK   = checkAvailability(his, (*@$Bob$@*))
+  If AliceOK and BobOK:
+    transfer(hers, (*@$Alice$@*), (*@$Bob$@*))
+    transfer(his, (*@$Bob$@*), (*@$Alice$@*))
+
+checkAvailability(object, player):
+  If object is money:
+    If player has enough money:
+      return True
+    Else:
+      Send notEnoughMoney(object) to player
+      return False
+  Else: # object is asset
+    If object is in the list of player's assets:
+      return True
+    Else:
+      Send assetUnavailable(object) to player
+      return False
+
+transfer(object, sender, receiver):
+  If object is money:
+    send pay(object, receiver) to (*@$\mathcal{F}_{Ledger}$@*) as sender
+  Else: # object is asset
+    send transfer(object, receiver) to (*@$\mathcal{F}_{Assets}$@*) as sender
+\end{lstlisting}

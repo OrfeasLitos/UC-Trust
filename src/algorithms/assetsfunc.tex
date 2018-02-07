@@ -1,0 +1,28 @@
+\Suppressnumber
+\begin{lstlisting}[label=assetsfunc, style=numbers]
+(*@$\mathcal{F}_{Assets}$ \Reactivatenumber@*)
+Upon receiving add((*@$asset$@*)) from (*@$Alice$@*):
+  Add (*@$asset$@*) to the list of assets belonging to (*@$Alice$@*)
+  Send added((*@$asset$@*)) to (*@$Alice$@*)
+
+Upon receiving remove((*@$asset$@*)) from (*@$Alice$@*):
+  If (*@$asset$@*) exists in (*@$Alice$@*)'s list of assets:
+    Remove (*@$asset$@*) from the list of assets belonging to (*@$Alice$@*)
+    Send removed((*@$asset$@*)) to (*@$Alice$@*)
+  Else:
+    Send unableToRemove((*@$asset$@*)) to (*@$Alice$@*)
+
+Upon receiving has((*@$asset$@*), (*@$Bob$@*)) from (*@$Alice$@*): # Privacy?
+  If (*@$asset$@*) exists in (*@$Bob$@*)'s list of assets:
+    Send true((*@$asset$@*), (*@$Bob$@*)) to (*@$Alice$@*)
+  Else:
+    Send false((*@$asset$@*), (*@$Bob$@*)) to (*@$Alice$@*)
+
+Upon receiving transfer((*@$asset$@*), (*@$Bob$@*)) from (*@$Alice$@*):
+  If (*@$asset$@*) exists in (*@$Alice$@*)'s list of assets:
+    Remove (*@$asset$@*) from the list of assets belonging to (*@$Alice$@*)
+    Add (*@$asset$@*) to the list of assets belonging to (*@$Bob$@*)
+    Send transferred((*@$asset$@*)) to (*@$Alice$@*)
+  Else:
+    Send unableToTransfer((*@$asset$@*), (*@$Bob$@*)) to (*@$Alice$@*)
+\end{lstlisting}
