@@ -1,0 +1,46 @@
+\Suppressnumber
+\begin{lstlisting}[label=tradeprot, style=numbers]
+(*@$\Pi_{Trade}$ \Reactivatenumber@*)
+Upon receiving trade(ours, theirs, (*@$Bob$@*)) from (*@$\mathcal{E}$@*):
+  If isAvailable(ours, (*@$Alice$@*)):
+    Send willYouExchange(ours, theirs) to (*@$Bob$@*)
+    Wait for response IwillExchange(ours, theirs) or IwillNotExchange(ours, theirs)
+    If (*@$Bob$@*) responded IwillExchange(ours, theirs):
+      Send willExchange((*@$Bob$@*), ours, theirs) to (*@$\mathcal{E}$@*)
+      Send letsTrade(ours, theirs) to (*@$Bob$@*)
+      transfer(ours, (*@$Bob$@*))
+      Send transferred(ours, (*@$Bob$@*)) to (*@$Bob$@*) and (*@$\mathcal{E}$@*)
+      Wait for response transferred(theirs, (*@$Bob$@*)) from (*@$Bob$@*)
+
+Upon receiving letsTrade(theirs, ours) from (*@$Bob$@*):
+  Send willWeCheat(theirs, ours, (*@$Bob$@*) to (*@$\mathcal{E}$@*)
+  Wait for message action(theirs, ours, (*@$Bob$@*)) from (*@$\mathcal{E}$@*)
+  If action is doNotCheat:
+    transfer(ours, (*@$Bob$@*))
+    Send transferred(ours, (*@$Bob$@*)) to (*@$Bob$@*) and (*@$\mathcal{E}$@*)
+  
+Upon receiving willYouExchange(theirs, ours) from (*@$Bob$@*):
+  Send willWeExchange(theirs, ours, (*@$Bob$@*)) to (*@$\mathcal{E}$@*)
+  Wait for message action(theirs, ours, (*@$Bob$@*)) from (*@$\mathcal{E}$@*)
+  If action is exchange:
+    Send IwillExchange(theirs, ours) to (*@$Bob$@*)
+  Else:
+    Send IwillNotExchange(theirs, ours) to (*@$Bob$@*)
+
+isAvailable(object, player):
+  If object is money:
+    Send queryBalance(player) to (*@$\mathcal{F}_{Ledger}$@*)
+    Wait for response balance((*@$coins$@*))
+    If (*@$coins$@*) >= object:
+      return True
+  Else: # object is asset
+    Send has(object, player) to (*@$\mathcal{F}_{Assets}$@*)
+    Wait for response has(object, player)
+    return has
+
+transfer(object, sender, receiver):
+  If object is money:
+    send pay(object, receiver) to (*@$\mathcal{F}_{Ledger}$@*) as sender
+  Else: # object is asset
+    send transfer(object, receiver) to (*@$\mathcal{F}_{Assets}$@*) as sender
+\end{lstlisting}
