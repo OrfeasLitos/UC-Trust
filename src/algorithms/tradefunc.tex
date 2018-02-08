@@ -8,18 +8,18 @@ Upon receiving trade(hers, his, (*@$Bob$@*)) from (*@$Alice$@*):
     transfer(hers, (*@$Alice$@*), (*@$Bob$@*))
     transfer(his, (*@$Bob$@*), (*@$Alice$@*))
 
-checkAvailability(object, player):
+checkAvailability(object, player, invoker):
   If object is money:
     If player has enough money:
       return True
     Else:
-      Send notEnoughMoney(object) to player
+      Send notEnoughMoney(object, player) to invoker
       return False
   Else: # object is asset
     If object is in the list of player's assets:
       return True
     Else:
-      Send assetUnavailable(object) to player
+      Send assetUnavailable(object, player) to invoker
       return False
 
 transfer(object, sender, receiver):
