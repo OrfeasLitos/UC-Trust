@@ -1,12 +1,12 @@
 \Suppressnumber
 \begin{lstlisting}[label=tradefunc, style=numbers]
 (*@$\mathcal{F}_{Trade}$ \Reactivatenumber@*)
-Upon receiving trade(hers, his, (*@$Bob$@*)) from (*@$Alice$@*):
-  AliceOK = checkAvailability(hers, (*@$Alice$@*))
-  BobOK   = checkAvailability(his, (*@$Bob$@*))
+Upon receiving trade(ours, theirs, (*@$Bob$@*)) from (*@$Alice$@*):
+  AliceOK = checkAvailability(ours, (*@$Alice$@*), (*@$Alice$@*))
+  BobOK    = checkAvailability(theirs, (*@$Bob$@*), (*@$Alice$@*))
   If AliceOK and BobOK:
-    transfer(hers, (*@$Alice$@*), (*@$Bob$@*))
-    transfer(his, (*@$Bob$@*), (*@$Alice$@*))
+    transfer(ours, (*@$Alice$@*), (*@$Bob$@*))
+    transfer(theirs, (*@$Bob$@*), (*@$Alice$@*))
 
 checkAvailability(object, player, invoker):
   If object is money:

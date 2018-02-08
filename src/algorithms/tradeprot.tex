@@ -13,12 +13,12 @@ Upon receiving trade(ours, theirs, (*@$Bob$@*)) from (*@$\mathcal{E}$@*):
       Wait for response transferred(theirs, (*@$Bob$@*)) from (*@$Bob$@*)
 
 Upon receiving letsTrade(theirs, ours) from (*@$Bob$@*):
-  Send willWeCheat(theirs, ours, (*@$Bob$@*) to (*@$\mathcal{E}$@*)
+  Send willWeCheat(theirs, ours, (*@$Bob$@*)) to (*@$\mathcal{E}$@*)
   Wait for message action(theirs, ours, (*@$Bob$@*)) from (*@$\mathcal{E}$@*)
   If action is doNotCheat:
     transfer(ours, (*@$Bob$@*))
     Send transferred(ours, (*@$Bob$@*)) to (*@$Bob$@*) and (*@$\mathcal{E}$@*)
-  
+
 Upon receiving willYouExchange(theirs, ours) from (*@$Bob$@*):
   Send willWeExchange(theirs, ours, (*@$Bob$@*)) to (*@$\mathcal{E}$@*)
   Wait for message action(theirs, ours, (*@$Bob$@*)) from (*@$\mathcal{E}$@*)
