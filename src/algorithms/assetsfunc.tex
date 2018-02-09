@@ -12,25 +12,11 @@ Upon receiving remove((*@$asset$@*)) from (*@$Alice$@*):
   Else:
     Send unableToRemove((*@$asset$@*)) to (*@$Alice$@*)
 
-Upon receiving allow((*@$asset$@*), (*@$Bob$@*)) from (*@$Alice$@*):
-  Add ((*@$asset$@*), (*@$Bob$@*)) to (*@$Alice$@*)'s list of allowed queries
-  Send allowed((*@$asset$@*), (*@$Bob$@*)) to (*@$Alice$@*)
-
-Upon receiving disallow((*@$asset$@*), (*@$Bob$@*)) from (*@$Alice$@*):
-  If (*@$Alice$@*) allows (*@$Bob$@*) to query (*@$asset$@*):
-    Remove ((*@$asset$@*), (*@$Bob$@*)) from (*@$Alice$@*)'s list of allowed queries
-    Send disallowed((*@$asset$@*), (*@$Bob$@*)) to (*@$Alice$@*)
+Upon receiving doIhave((*@$asset$@*)) from (*@$Alice$@*):
+  If (*@$asset$@*) exists in (*@$Alice$@*)'s list of assets:
+    Send youHave((*@$asset$@*)) to (*@$Alice$@*)
   Else:
-    Send alreadyDisallowed((*@$asset$@*), (*@$Bob$@*)) to (*@$Alice$@*)
-
-Upon receiving has((*@$asset$@*), (*@$Bob$@*)) from (*@$Alice$@*):
-  If (*@$Bob$@*) allows (*@$Alice$@*) to query (*@$asset$@*):
-    If (*@$asset$@*) exists in (*@$Bob$@*)'s list of assets:
-      Send true((*@$asset$@*), (*@$Bob$@*)) to (*@$Alice$@*)
-    Else:
-      Send false((*@$asset$@*), (*@$Bob$@*)) to (*@$Alice$@*)
-  Else:
-    Send notAllowed((*@$asset$@*), (*@$Bob$@*)) to (*@$Alice$@*)
+    Send youDoNotHave((*@$asset$@*)) to (*@$Alice$@*)
 
 Upon receiving transfer((*@$asset$@*), (*@$Bob$@*)) from (*@$Alice$@*):
   If (*@$asset$@*) exists in (*@$Alice$@*)'s list of assets:
