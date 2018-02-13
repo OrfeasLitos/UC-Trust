@@ -1,0 +1,34 @@
+\Suppressnumber
+\begin{lstlisting}[label=tirfunc, style=numbers]
+(*@$\mathcal{F}_{TIR}$ \Reactivatenumber@*)
+Initialization:
+for all (*@$Alice, Bob \in \mathcal{P}$@*)
+  (*@$DTr_{Alice \rightarrow Bob}$@*) = 0
+  (*@$Tr_{Alice \rightarrow Bob}$@*) = 0
+
+Upon receiving input entrust((*@$Bob$@*), 1(*@$^{\mbox{tokens}}$@*)) from (*@$Alice$@*):
+  (*@$DTr_{Alice \rightarrow Bob}$@*) += tokens
+
+Upon receiving message steal((*@$Bob$@*), tokens) from (*@$Alice$@*):
+  If (*@$DTr_{Bob \rightarrow Alice}$@*) >= tokens
+    (*@$DTr_{Bob \rightarrow Alice}$@*) -= tokens
+    input 1(*@$^{\mbox{tokens}}$@*) to (*@$Alice$@*)
+  Else discard request
+
+Upon receiving message distrust((*@$Bob$@*), tokens) from (*@$Alice$@*):
+  If (*@$DTr_{Alice \rightarrow Bob}$@*) >= tokens
+    (*@$DTr_{Alice \rightarrow Bob}$@*) -= tokens
+    input 1(*@$^{\mbox{tokens}}$@*) to (*@$Alice$@*)
+  Else discard request
+
+Upon receiving message query_direct_trust((*@$Alice$@*), (*@$Bob$@*)) from (*@$Charlie$@*):
+  If (*@$Charlie \in \{Alice, Bob\}$@*) # Privacy
+    send message (*@$DTr_{Alice \rightarrow Bob}$@*) to (*@$Charlie$@*)
+  Else discard request
+
+Upon receiving message query_indirect_trust((*@$Alice$@*), (*@$Bob$@*)) from (*@$Charlie$@*):
+  If (*@$Charlie$@*) == (*@$Alice$@*) # Privacy
+    (*@$Tr_{Alice \rightarrow Bob}$@*) = calculate_indirect_trust((*@$Alice$@*), (*@$Bob$@*), all direct trusts)
+    send message (*@$Tr_{Alice \rightarrow Bob}$@*) to (*@$Charlie$@*)
+  Else discard request
+\end{lstlisting}
