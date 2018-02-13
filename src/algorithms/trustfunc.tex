@@ -3,8 +3,18 @@
 (*@$\mathcal{F}_{Trust}$ \Reactivatenumber@*)
 Has oracle access to the players' utility functions (*@$U$@*)
 
-Upon receiving chooseBestSeller((*@$d$@*), (*@$L$@*), (*@$w_1$@*), (*@$w_2$@*)) from (*@$Alice$@*):
-  player = the player (*@$Bob$@*) in (*@$L$@*) that maximises (*@$w_{1}U_{Alice} +
-  w_{2}U_{Bob}$@*) when he delivers (*@$d$@*) to (*@$Alice$@*) for his set price
-  send message best((*@$d$@*), (*@$L$@*), player) to (*@$Alice$@*)
+Upon receiving chooseBestSeller((*@$d$@*), (*@$L$@*)) from (*@$Alice$@*):
+  choose (*@$Bob \in L$@*) such that:
+    1) according to his utility function, will complete the trade and
+    2) offers the minimum price and maximum quality of product (i.e. maximises (*@$Alice$@*)'s additional utility) amongst the players that satisfy (1)
+  send message bestSeller((*@$d$@*), (*@$L$@*), (*@$Bob$@*)) to (*@$Alice$@*)
 \end{lstlisting}
+
+Assumptions:
+\begin{itemize}
+  \item Trades are atomic. $\mathcal{F}_{Trust}$ can deterministically decide whether
+  $Bob$ will complete the trade.
+  \item The internal workings of $\mathcal{F}_{Trust}$ is common knowledge to the players.
+  Their utility depends on it.
+\end{itemize}
+
