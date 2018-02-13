@@ -4,9 +4,7 @@
 Has oracle access to the players' utility functions (*@$U$@*)
 
 Upon receiving chooseBestSeller((*@$d$@*), (*@$L$@*)) from (*@$Alice$@*):
-  choose (*@$Bob \in L$@*) such that:
-    1) according to his utility function, will complete the trade and
-    2) offers the minimum price and maximum quality of product (i.e. maximises (*@$Alice$@*)'s additional utility) amongst the players that satisfy (1)
+  choose (*@$Bob \in L$@*) that will maximise (*@$U_{Alice}$@*) after the transaction (goes through with the trade and offers the minimum price and maximum quality of product)
   send message bestSeller((*@$d$@*), (*@$L$@*), (*@$Bob$@*)) to (*@$Alice$@*)
 \end{lstlisting}
 
