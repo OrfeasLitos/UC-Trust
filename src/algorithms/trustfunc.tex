@@ -1,34 +1,10 @@
 \Suppressnumber
 \begin{lstlisting}[label=trustfunc, style=numbers]
 (*@$\mathcal{F}_{Trust}$ \Reactivatenumber@*)
-Initialization:
-for all (*@$Alice, Bob \in \mathcal{P}$@*)
-  (*@$DTr_{Alice \rightarrow Bob}$@*) = 0
-  (*@$Tr_{Alice \rightarrow Bob}$@*) = 0
+Has oracle access to the players' utility functions (*@$U$@*)
 
-Upon receiving input entrust((*@$Bob$@*), 1(*@$^{\mbox{tokens}}$@*)) from (*@$Alice$@*):
-  (*@$DTr_{Alice \rightarrow Bob}$@*) += tokens
-
-Upon receiving message steal((*@$Bob$@*), tokens) from (*@$Alice$@*):
-  If (*@$DTr_{Bob \rightarrow Alice}$@*) >= tokens
-    (*@$DTr_{Bob \rightarrow Alice}$@*) -= tokens
-    input 1(*@$^{\mbox{tokens}}$@*) to (*@$Alice$@*)
-  Else discard request
-
-Upon receiving message distrust((*@$Bob$@*), tokens) from (*@$Alice$@*):
-  If (*@$DTr_{Alice \rightarrow Bob}$@*) >= tokens
-    (*@$DTr_{Alice \rightarrow Bob}$@*) -= tokens
-    input 1(*@$^{\mbox{tokens}}$@*) to (*@$Alice$@*)
-  Else discard request
-
-Upon receiving message query_direct_trust((*@$Alice$@*), (*@$Bob$@*)) from (*@$Charlie$@*):
-  If (*@$Charlie \in \{Alice, Bob\}$@*) # Privacy
-    send message (*@$DTr_{Alice \rightarrow Bob}$@*) to (*@$Charlie$@*)
-  Else discard request
-
-Upon receiving message query_indirect_trust((*@$Alice$@*), (*@$Bob$@*)) from (*@$Charlie$@*):
-  If (*@$Charlie$@*) == (*@$Alice$@*) # Privacy
-    (*@$Tr_{Alice \rightarrow Bob}$@*) = calculate_indirect_trust((*@$Alice$@*), (*@$Bob$@*), all direct trusts)
-    send message (*@$Tr_{Alice \rightarrow Bob}$@*) to (*@$Charlie$@*)
-  Else discard request
+Upon receiving chooseBestSeller((*@$d$@*), (*@$L$@*), (*@$w_1$@*), (*@$w_2$@*)) from (*@$Alice$@*):
+  player = the player (*@$Bob$@*) in (*@$L$@*) that maximises (*@$w_{1}U_{Alice} +
+  w_{2}U_{Bob}$@*) when he delivers (*@$d$@*) to (*@$Alice$@*) for his set price
+  send message best((*@$d$@*), (*@$L$@*), player) to (*@$Alice$@*)
 \end{lstlisting}
