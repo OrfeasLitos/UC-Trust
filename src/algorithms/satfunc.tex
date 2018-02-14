@@ -1,116 +1,47 @@
 \Suppressnumber
 \begin{lstlisting}[label=satfunc, style=numbers]
-(*@$\mathcal{F}_{SAT}\left(p, \Delta_1, \Delta_2\right)$ \Reactivatenumber@*)
-Declarations:
-  boolean allSet
-  set pendingDesires
-  map isSet((*@$\mathcal{P}$@*) => boolean)
-  map price((*@$\mathcal{P}$@*) => map ((*@$\mathcal{D}$@*) => number))
-  map tokens((*@$\mathcal{P}$@*) => number)
-  map fulfillment((*@$\mathcal{P}$@*) => map ((*@$\mathcal{D}$@*) => SAT))
-  map utility((*@$\mathcal{P}$@*) => function(set, set): number) (*@\newline@*) # This map has hardcoded values
-  map offeredSats((*@$\mathcal{P}$@*) => set)
+(*@$\mathcal{F}_{SAT}$ \Reactivatenumber@*)
+Initialisation:
+  (*@$\forall Alice \in \mathcal{P},$@*)
+    util((*@$Alice$@*)) = (*@$\bot$@*)
+    assets((*@$Alice$@*)) = (*@$\bot$@*)
 
-Initialization:
-  allSet = False
-  pendingDesires = (*@$\emptyset$@*)
-  (*@$\forall$@*) (*@$Alice \in \mathcal{P}$@*)
-    isSet((*@$Alice$@*)) = False
-    price((*@$Alice$@*)) = null
-    tokens((*@$Alice$@*)) = (*@$\mathcal{F}_{Ledger}$@*).getTokens((*@$Alice$@*))
-    (*@$\forall$@*) desire (*@$\in \mathcal{D}$@*)
-      fulfillment((*@$Alice$@*))(desire) = null
+Upon receiving type((*@$t$@*)) from (*@$Alice$@*):
+  util((*@$Alice$@*)) = (*@$t$@*)
 
-Upon receiving message (*@\newline@*) init(map prices((*@$\mathcal{D}$@*) => number)) from (*@$\mathcal{P}$@*) (*@$Alice$@*):
-  If isSet((*@$Alice$@*)) == False
-    isSet((*@$Alice$@*)) = True
-    price((*@$Alice$@*)) = prices
-    If (*@$\forall$@*) (*@$Bob \in \mathcal{P},$@*) isSet((*@$Bob$@*)) == True
-      allSet = True
+Upon receiving satisfy((*@$d, L$@*)) from (*@$Alice$@*):
+  If util((*@$Alice$@*)) == (*@$\bot$@*):
+    Ignore request
+  Find sat = (*@$\left(Bob, x, s\right) \in L \times \mathbb{R} \times Assets$@*):
+    (*@$s \in$@*) assets((*@$Bob$@*)) and
+    If (*@$x > 0$@*):
+      (*@$Alice$@*) has at least (*@$x$@*) coins available
+    Else If (*@$x < 0$@*):
+      (*@$Bob$@*) has at least (*@$-x$@*) coins available
+    and
+    util((*@$Alice$@*))(after trade) > util((*@$Alice$@*))(before trade)
+    and
+    util((*@$Bob$@*))(after trade) > util((*@$Bob$@*))(before trade)
+    and
+    util((*@$Bob$@*))(after trade) > util((*@$Bob$@*))(after cheating)
+    and
+    util((*@$Alice$@*))(after trade) maximum amongst possible choices
+  With sat as (*@$\left(Bob, x, s\right)$@*):
+    If (*@$x > 0$@*):
+      Pay (*@$x$@*) from (*@$Alice$@*) to (*@$Bob$@*)
+    Else If (*@$x < 0$@*):
+      Pay (*@$-x$@*) from (*@$Bob$@*) to (*@$Alice$@*)
+    assets((*@$Bob$@*)) = assets((*@$Bob$@*))(*@$\setminus \left\{s\right\}$@*)
+    assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{s\right\}$@*)
+    send message satisfied((*@$d, L$@*)) to (*@$Alice$@*)
+  Else If sat == (*@$\bot$@*)
+    send message unsatisfied((*@$d, L$@*)) to (*@$Alice$@*)
 
-Upon receiving message cost((*@$\mathcal{P}$@*) (*@$Bob$@*), (*@$\mathcal{D}$@*) desire) from (*@$\mathcal{P}$@*) (*@$Alice$@*):
-  If allSet == True
-    send message price((*@$Bob$@*))(desire) to (*@$Alice$@*)
+Upon receiving obtain((*@$s$@*)) from (*@$Alice$@*):
+  assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{s\right\}$@*)
+  send message obtained((*@$s$@*)) to (*@$Alice$@*)
 
-Upon receiving message satisfy((*@$d$@*), (*@$L$@*)) from (*@$\mathcal{P}$@*) (*@$Alice$@*):
-  If allSet == True
-    actPerfectly = flipCoin((*@$p$@*)) # probability (*@$p$@*) to act perfectly
-    If actPerfectly == True
-      number minPrice = (*@$\min\limits_{Bob \in \mathcal{P}}\left\{\right.$@*)price((*@$Bob$@*))((*@$d$@*))(*@$\left.\right\}$@*)
-      (*@$\mathcal{P}$@*) (*@$Bob$@*) = (*@$\argmin\limits_{Charlie \in \mathcal{P}}\left\{\right.$@*)price((*@$Charlie$@*))((*@$d$@*))(*@$\left.\right\}$@*)
-      If tokens((*@$Alice$@*)) (*@$\geq$@*) minPrice
-        tokens((*@$Alice$@*)) = tokens((*@$Alice$@*)) - minPrice
-        tokens((*@$Bob$@*)) = tokens((*@$Bob$@*)) + minPrice
-        leak message payment((*@$Bob\mbox{, }d$@*), minPrice) to (*@$\mathcal{A}$@*) # OK?
-        send message payment((*@$Bob$@*), minPrice) to (*@$\mathcal{F}_{Ledger}$@*)
-        satString((*@$Alice$@*))((*@$d$@*)) = (*@$s$@*)((*@$Alice$@*), (*@$d$@*))
-#     Else If utility((*@$Alice$@*))(satDesires((*@$Alice$@*)) (*@$\cup$@*) desire, unsatDesires((*@$Alice$@*)) (*@$\setminus$@*) desire) - utility((*@$Alice$@*))(satDesires((*@$Alice$@*)), unsatDesires((*@$Alice$@*))) > (utility that can be gained for other players for minPrice)
-#       support = choosePayers(minPrice)
-#       (*@$\forall$@*) ((*@$Bob$@*), partialPrice) (*@$\in$@*) support
-#         tokens((*@$Bob$@*)) = tokens((*@$Bob$@*)) - partialPrice
-#         leak message payment((*@$Bob\mbox{, }d$@*), partialPrice) to (*@$\mathcal{A}$@*)
-#         send message payment((*@$Bob$@*), partialPrice) to (*@$\mathcal{F}_{Ledger}$@*)
-#       satString((*@$Alice$@*))((*@$d$@*)) = (*@$s$@*)((*@$Alice$@*), (*@$d$@*))
-#     Else # desire remains unsatisfied
-#       pendingDesires = pendingDesires (*@$\cup$@*) ((*@$Alice$@*), (*@$d$@*))
-#     Attempt to satisfy desires from pendingDesires (*@\newline@*) # How? Also, could be (*@$\mathcal{F}_{SAT}$@*) idle action
-    Else # If actPerfectly == False
-      listen for message abort((*@$d\mbox{, }L$@*)) from (*@$Alice$@*)
-        Upon receiving such message:
-          go to Idle State
-      (*@$L$@*) = reorderByBestSeller((*@$d\mbox{, }L$@*))
-      For (*@$Bob$@*) in (*@$L$@*)
-        If (*@$\exists (a, b, x) \in \mbox{offeredSats(}Bob\mbox{)}: (d == a \wedge Alice \in b)$@*)
-          send message doIhaveBalance((*@$x$@*)) to (*@$\mathcal{F}_{Ledger}$@*) as (*@$Alice$@*)
-          wait for response from (*@$\mathcal{F}_{Ledger}$@*) for (*@$\Delta_1$@*) steps
-          If response == youHaveBalance((*@$x$@*))
-            send message payment((*@$Bob\mbox{, }x$@*)) to (*@$\mathcal{F}_{Ledger}$@*) as (*@$Alice$@*)
-            send message paymentSent((*@$d\mbox{, }x\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
-            send message correctPaymentReceived((*@$d\mbox{, }x\mbox{, }Alice$@*)) to (*@$\mathcal{E}$@*) as (*@$Bob$@*)
-            listen for message fulfill((*@$d\mbox{, }Alice\mbox{, }s$@*)) or ignore((*@$d\mbox{, }Alice$@*)) from (*@$Bob$@*) for (*@$\Delta_2$@*) steps
-            Upon receiving message fulfill((*@$d\mbox{, }Alice\mbox{, }s$@*))
-              satString((*@$Alice$@*))((*@$d$@*)) = (*@$s$@*)
-              send message satisfied((*@$d\mbox{, }s\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
-            Upon receiving message ignore((*@$d\mbox{, }Alice$@*)) from (*@$Bob$@*)
-              send message ignored((*@$d\mbox{, }x\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
-            stop listening for message abort((*@$d\mbox{, }L$@*)) from (*@$Alice$@*)
-            go to Idle state
-      send message noOneSatisfies((*@$d\mbox{, }L$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
-      stop listening for message abort((*@$d\mbox{, }L$@*)) from (*@$Alice$@*)
-
-Upon receiving message makeAvailable((*@$d\mbox{, }L\mbox{, }x$@*)) from (*@$Alice$@*)
-  offeredSats((*@$Alice$@*)) = (*@$\mbox{offeredSats(}Alice\mbox{)} \cup (d, L, x)$@*)
-  send message madeAvailable((*@$d\mbox{, }L\mbox{, }x$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
-
-Upon receiving message makeUnavailable((*@$d\mbox{, }L\mbox{, }x$@*)) from (*@$Alice$@*)
-  offeredSats((*@$Alice$@*)) = (*@$\mbox{offeredSats(}Alice\mbox{)} \setminus (d, L, x)$@*)
-  send message madeUnavailable((*@$d\mbox{, }L\mbox{, }x$@*)) to (*@$\mathcal{E}$@*) as (*@$Alice$@*)
-
-Upon receiving message (*@\newline@*) getFulfillment((*@$\mathcal{D}$@*) desire) from (*@$\mathcal{P}$@*) (*@$Alice$@*):
-  If allSet == True
-    send message fulfillment((*@$Alice$@*))(desire) to (*@$Alice$@*)
-
-choosePayers(number price) returns set of ((*@$\mathcal{P}$@*), number)
-# Chooses to charge players that are most likely not to benefit by their tokens
-
-satDesires((*@$\mathcal{P}$@*) (*@$Alice$@*)) returns set:
-  ret = (*@$\emptyset$@*)
-  (*@$\forall$@*) desire (*@$\in$@*) (*@$\mathcal{D}$@*)
-    if fulfillment((*@$Alice$@*))(desire) (*@$\neq$@*) null
-    ret = ret (*@$\cup$@*) desire
-  return ret
-
-unsatDesires((*@$\mathcal{P}$@*) (*@$Alice$@*)) returns set:
-  ret = (*@$\emptyset$@*)
-  (*@$\forall$@*) desire (*@$\in$@*) (*@$\mathcal{D}$@*)
-    if fulfillment((*@$Alice$@*))(desire) == null
-    ret = ret (*@$\cup$@*) desire
-  return ret
-
-# May be redundant
-transfer((*@$\mathcal{P}$@*) (*@$Alice$@*), (*@$\mathcal{P}$@*) (*@$Bob$@*), number tokens):
-  If allSet == True
-    If tokens((*@$Alice$@*)) (*@$\geq$@*) tokens
-      tokens((*@$Alice$@*)) = tokens((*@$Alice$@*)) - tokens
-      tokens((*@$Bob$@*)) = tokens((*@$Bob$@*)) + tokens
+Upon receiving lose((*@$s$@*)) from (*@$Alice$@*):
+  assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\setminus \left\{s\right\}$@*)
+  send message lost((*@$s$@*)) to (*@$Alice$@*)
 \end{lstlisting}
