@@ -43,11 +43,11 @@ Upon receiving message satisfy((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*):
   stop listening for message abort((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*)
 
 Upon receiving message makeAvailable((*@$d\mbox{, }L\mbox{, }x$@*)) from (*@$\mathcal{E}$@*)
-  offeredSats = (*@$\mbox{offeredSats} \cup (d, L, x)$@*)
+  offeredSats = (*@$\mbox{offeredSats} \cup \left(d, L, x\right)$@*)
   send message madeAvailable((*@$d\mbox{, }L\mbox{, }x$@*)) to (*@$\mathcal{E}$@*)
 
 Upon receiving message makeUnavailable((*@$d\mbox{, }L\mbox{, }x$@*)) from (*@$\mathcal{E}$@*)
-  offeredSats = (*@$\mbox{offeredSats} \setminus (d, L, x)$@*)
+  offeredSats = (*@$\mbox{offeredSats} \setminus \left(d, L, x\right)$@*)
   send message madeUnavailable((*@$d\mbox{, }L\mbox{, }x$@*)) to (*@$\mathcal{E}$@*)
 
 Upon receiving message increaseDirectTrust((*@$Alice\mbox{, }x$@*)) from (*@$\mathcal{E}$@*)
@@ -68,7 +68,7 @@ Upon receiving message canYouSatisfy((*@$d$@*)) from (*@$Alice$@*)
   Else
     send message IcannotSatisfy((*@$d$@*)) to (*@$Alice$@*)
 
-Upon receiving message payment((*@$d\mbox{, }x$@*))  from (*@$Alice$@*)
+Upon receiving message payment((*@$d\mbox{, }x$@*)) from (*@$Alice$@*)
   If (*@$\exists (a, b, c) \in \mbox{offeredSats}: (d == a \wedge Alice \in b)$@*)
     send message correctPaymentReceived((*@$d\mbox{, }x\mbox{, }Alice$@*)) to (*@$\mathcal{E}$@*)
     listen for message fulfill((*@$d\mbox{, }Alice\mbox{, }s$@*)) or ignore((*@$d\mbox{, }Alice$@*)) from (*@$\mathcal{E}$@*) for (*@$\Delta_4$@*) steps
