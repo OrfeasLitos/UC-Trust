@@ -42,13 +42,13 @@ Upon receiving message satisfy((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*):
   send message noOneSatisfies((*@$d\mbox{, }L$@*)) to (*@$\mathcal{E}$@*)
   stop listening for message abort((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*)
 
-Upon receiving message makeAvailable((*@$d\mbox{, }L\mbox{, }x$@*)) from (*@$\mathcal{E}$@*)
-  offeredSats = (*@$\mbox{offeredSats} \cup \left(d, L, x\right)$@*)
-  send message madeAvailable((*@$d\mbox{, }L\mbox{, }x$@*)) to (*@$\mathcal{E}$@*)
+Upon receiving message makeAvailable((*@$d\mbox{, }L\mbox{, }x\mbox{, }s$@*)) from (*@$\mathcal{E}$@*)
+  offeredSats = (*@$\mbox{offeredSats} \cup \left(d, L, x, s\right)$@*)
+  send message madeAvailable((*@$d\mbox{, }L\mbox{, }x\mbox{, }s$@*)) to (*@$\mathcal{E}$@*)
 
-Upon receiving message makeUnavailable((*@$d\mbox{, }L\mbox{, }x$@*)) from (*@$\mathcal{E}$@*)
-  offeredSats = (*@$\mbox{offeredSats} \setminus \left(d, L, x\right)$@*)
-  send message madeUnavailable((*@$d\mbox{, }L\mbox{, }x$@*)) to (*@$\mathcal{E}$@*)
+Upon receiving message makeUnavailable((*@$d\mbox{, }L\mbox{, }x\mbox{, }s$@*)) from (*@$\mathcal{E}$@*)
+  offeredSats = (*@$\mbox{offeredSats} \setminus \left(d, L, x, s\right)$@*)
+  send message madeUnavailable((*@$d\mbox{, }L\mbox{, }x\mbox{, }s$@*)) to (*@$\mathcal{E}$@*)
 
 Upon receiving message increaseDirectTrust((*@$Alice\mbox{, }x$@*)) from (*@$\mathcal{E}$@*)
   (*@$\mathcal{F}_{Ledger}$@*).increaseDirectTrust((*@$Alice\mbox{, }x$@*))
