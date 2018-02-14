@@ -50,6 +50,22 @@ Upon receiving message makeUnavailable((*@$d\mbox{, }L\mbox{, }x\mbox{, }s$@*)) 
   offeredSats = (*@$\mbox{offeredSats} \setminus \left(d, L, x, s\right)$@*)
   send message madeUnavailable((*@$d\mbox{, }L\mbox{, }x\mbox{, }s$@*)) to (*@$\mathcal{E}$@*)
 
+Upon receiving message obtain((*@$s$@*)) from (*@$\mathcal{E}$@*)
+  send message obtain((*@$s$@*)) to (*@$\mathcal{F}_{Trade}$@*)
+  wait for response from (*@$\mathcal{F}_{Trade}$@*) (for some steps)
+  If response == obtained((*@$s$@*))
+    send message obtained((*@$s$@*)) to (*@$\mathcal{E}$@*)
+  Else
+    send message notObtained((*@$s$@*)) to (*@$\mathcal{E}$@*)
+
+Upon receiving message lose((*@$s$@*)) from (*@$\mathcal{E}$@*)
+  send message lose((*@$s$@*)) to (*@$\mathcal{F}_{Trade}$@*)
+  wait for response from (*@$\mathcal{F}_{Trade}$@*) (for some steps)
+  If response == lost((*@$s$@*))
+    send message lost((*@$s$@*)) to (*@$\mathcal{E}$@*)
+  Else
+    send message notLost((*@$s$@*)) to (*@$\mathcal{E}$@*)
+
 Upon receiving message increaseDirectTrust((*@$Alice\mbox{, }x$@*)) from (*@$\mathcal{E}$@*)
   (*@$\mathcal{F}_{Ledger}$@*).increaseDirectTrust((*@$Alice\mbox{, }x$@*))
   send message increasedDirectTrust((*@$Alice\mbox{, }x$@*)) to (*@$\mathcal{E}$@*)
