@@ -1,11 +1,7 @@
 \Suppressnumber
 \begin{lstlisting}[label=protocol, style=numbers]
-(*@$\Pi\left(\Delta_1, \Delta_2, \Delta_3, \Delta_4\right)$ \Reactivatenumber@*)
-Declarations:
-  set offeredSats
-
+(*@$\Pi$ \Reactivatenumber@*)
 Initalization:
-  offeredSats = (*@$\emptyset$@*)
 
 Upon receiving message satisfy((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*):
   listen for message abort((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*)
@@ -42,14 +38,6 @@ Upon receiving message satisfy((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*):
   send message noOneSatisfies((*@$d\mbox{, }L$@*)) to (*@$\mathcal{E}$@*)
   stop listening for message abort((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*)
 
-Upon receiving message makeAvailable((*@$d\mbox{, }L\mbox{, }x\mbox{, }s$@*)) from (*@$\mathcal{E}$@*)
-  offeredSats = (*@$\mbox{offeredSats} \cup \left(d, L, x, s\right)$@*)
-  send message madeAvailable((*@$d\mbox{, }L\mbox{, }x\mbox{, }s$@*)) to (*@$\mathcal{E}$@*)
-
-Upon receiving message makeUnavailable((*@$d\mbox{, }L\mbox{, }x\mbox{, }s$@*)) from (*@$\mathcal{E}$@*)
-  offeredSats = (*@$\mbox{offeredSats} \setminus \left(d, L, x, s\right)$@*)
-  send message madeUnavailable((*@$d\mbox{, }L\mbox{, }x\mbox{, }s$@*)) to (*@$\mathcal{E}$@*)
-
 Upon receiving message obtain((*@$s$@*)) from (*@$\mathcal{E}$@*)
   send message obtain((*@$s$@*)) to (*@$\mathcal{F}_{Trade}$@*)
   wait for response from (*@$\mathcal{F}_{Trade}$@*) (for some steps)
@@ -65,18 +53,6 @@ Upon receiving message lose((*@$s$@*)) from (*@$\mathcal{E}$@*)
     send message lost((*@$s$@*)) to (*@$\mathcal{E}$@*)
   Else
     send message notLost((*@$s$@*)) to (*@$\mathcal{E}$@*)
-
-Upon receiving message increaseDirectTrust((*@$Alice\mbox{, }x$@*)) from (*@$\mathcal{E}$@*)
-  (*@$\mathcal{F}_{Ledger}$@*).increaseDirectTrust((*@$Alice\mbox{, }x$@*))
-  send message increasedDirectTrust((*@$Alice\mbox{, }x$@*)) to (*@$\mathcal{E}$@*)
-
-Upon receiving message decreaseDirectTrust((*@$Alice\mbox{, }x$@*)) from (*@$\mathcal{E}$@*)
-  (*@$\mathcal{F}_{Ledger}$@*).decreaseDirectTrust((*@$Alice\mbox{, }x$@*))
-  send message decreasedDirectTrust((*@$Alice\mbox{, }x$@*)) to (*@$\mathcal{E}$@*)
-
-Upon receiving message stealDirectTrust((*@$Alice\mbox{, }x$@*)) from (*@$\mathcal{E}$@*)
-  (*@$\mathcal{F}_{Ledger}$@*).stealDirectTrust((*@$Alice\mbox{, }x$@*))
-  send message stoleDirectTrust((*@$Alice\mbox{, }x$@*)) to (*@$\mathcal{E}$@*)
 
 Upon receiving message canYouSatisfy((*@$d$@*)) from (*@$Alice$@*)
   If (*@$\exists (a, b, c) \in \mbox{offeredSats}: (d == a \wedge Alice \in b)$@*)
