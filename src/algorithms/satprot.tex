@@ -2,41 +2,39 @@
 \begin{lstlisting}[label=satprot, style=numbers]
 (*@$\Pi_{SAT}$ \Reactivatenumber@*)
 Initalization:
+  util = (*@$\bot$@*)
+
+Upon receiving type((*@$t$@*)) from (*@$\mathcal{E}$@*):
+  util = (*@$t$@*)
 
 Upon receiving message satisfy((*@$d, L$@*)) from (*@$\mathcal{E}$@*):
-  listen for message abort((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*)
-    Upon receiving such message:
-      go to Idle State
+  If util == (*@$\bot$@*):
+    send message utilityNotSet() to (*@$\mathcal{E}$@*)
+    go to Idle state
   aux = (*@$L$@*)
-  While aux is not empty
-    (*@$Bob$@*) = chooseBestSeller((*@$d$@*), aux) # (e.g. with Trust is Risk)
-    send message canYouSatisfy((*@$d$@*)) to (*@$Bob$@*)
-    wait for response1 from (*@$Bob$@*) for (*@$\Delta_1$@*) steps
-    If response1 (*@$\in \left\{\mbox{timeout}, \mbox{IcannotSatisfy(}d\mbox{)}, \mbox{invalid}\right\}$@*)
-      aux = aux (*@$\setminus \left\{Bob\right\}$@*)
-    Else If response1 == IcanSatisfy((*@$d\mbox{, }x$@*))
-      send message doIhaveBalance((*@$x$@*)) to (*@$\mathcal{F}_{Ledger}$@*)
-      wait for responseFromLedger from (*@$\mathcal{F}_{Ledger}$@*) for (*@$\Delta_2$@*)
-      If responseFromLedger == youHaveBalance((*@$x$@*))
-        send message payment((*@$d\mbox{, }x$@*)) to (*@$Bob$@*)
-        send message payment((*@$Bob\mbox{, }x$@*)) to (*@$\mathcal{F}_{Ledger}$@*)
-        send message paymentSent((*@$d\mbox{, }x\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*)
-        wait for response2 from (*@$Bob$@*) for (*@$\Delta_3$@*) steps
-        If response2 (*@$\in \left\{\mbox{timeout}, \mbox{invalid}\right\}$@*)
-          send message ignored((*@$d\mbox{, }x\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*)
-        Else If response2 == satString((*@$d\mbox{, }x\mbox{, }s$@*))
-          If stringSatisfies((*@$d\mbox{, }s$@*))
-            send message satisfied((*@$d\mbox{, }s\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*)
-          Else
-            send message partiallySatisfied((*@$d\mbox{, }s\mbox{, }Bob$@*)) to (*@$\mathcal{E}$@*)
-        Else
-          (Unreachable)
-        stop listening for message abort((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*)
-        go to Idle state
-    Else
-      (Unreachable)
-  send message noOneSatisfies((*@$d\mbox{, }L$@*)) to (*@$\mathcal{E}$@*)
-  stop listening for message abort((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*)
+  While (aux (*@$\neq \emptyset$@*)):
+    send message chooseBestSeller((*@$d$@*), aux) to (*@$\mathcal{F}_{Trust}$@*)
+    wait for response1 from (*@$\mathcal{F}_{Trust}$@*)
+    If response1 == bestSeller((*@$d, L, Bob$@*)):
+      send message canYouSatisfy((*@$d$@*)) to (*@$Bob$@*)
+      wait for response2 from (*@$Bob$@*)
+      If response2 == IcanSatisfy((*@$d, x, s$@*)):
+        If util(with (*@$s$@*), w/o (*@$x$@*)) > util(with (*@$x$@*), w/o (*@$s$@*)):
+          send message trade((*@$x, s, Bob$@*)) to (*@$\mathcal{F}_{Trade}$@*)
+          wait for response3 from (*@$\mathcal{F}_{Trade}$@*)
+            If response3 == traded((*@$x, s, Bob$@*)):
+              send message satisfied((*@$d, x, s, Bob$@*)) to (*@$\mathcal{F}_{Trust}$@*)
+              send message satisfied((*@$d, L$@*)) to (*@$\mathcal{E}$@*)
+              go to Idle state
+            Else If response3 == cheated((*@$x, s$@*), (*@$Bob$@*)):
+              send message cheated((*@$d, x, s, Bob$@*)) to (*@$\mathcal{F}_{Trust}$@*)
+              send message cheated((*@$d, L$@*)) to (*@$\mathcal{E}$@*)
+              go to Idle state
+    Else: # if response1 == (*@$\bot$@*)
+      send message unsatisfied((*@$d, L$@*)) to (*@$\mathcal{E}$@*)
+      go to Idle state
+    aux = aux (*@$\setminus \left\{Bob\right\}$@*)
+  send message unsatisfied((*@$d, L$@*)) to (*@$\mathcal{E}$@*)
 
 Upon receiving message obtain((*@$s$@*)) from (*@$\mathcal{E}$@*):
   send message obtain((*@$s$@*)) to (*@$\mathcal{F}_{Trade}$@*)
@@ -55,19 +53,16 @@ Upon receiving message lose((*@$s$@*)) from (*@$\mathcal{E}$@*):
     send message notLost((*@$s$@*)) to (*@$\mathcal{E}$@*)
 
 Upon receiving message canYouSatisfy((*@$d$@*)) from (*@$Alice$@*):
-  If (*@$\exists (a, b, c) \in \mbox{offeredSats}: (d == a \wedge Alice \in b)$@*)
-    send message IcanSatisfy((*@$d\mbox{, }c$@*)) to (*@$Alice$@*) # (*@$c$@*) is the price
+  If util == (*@$\bot$@*):
+    ignore request, go to Idle state
+  If util(proposing to (*@$Alice$@*) to trade our (*@$s$@*) for her (*@$x$@*)) > util(not proposing):
+    send message IcanSatisfy((*@$d, x, s$@*)) to (*@$Alice$@*) # (*@$x$@*) is the price
   Else:
     send message IcannotSatisfy((*@$d$@*)) to (*@$Alice$@*)
 
-Upon receiving message payment((*@$d\mbox{, }x$@*)) from (*@$Alice$@*):
-  If (*@$\exists (a, b, c) \in \mbox{offeredSats}: (d == a \wedge Alice \in b)$@*)
-    send message correctPaymentReceived((*@$d\mbox{, }x\mbox{, }Alice$@*)) to (*@$\mathcal{E}$@*)
-    listen for message fulfill((*@$d\mbox{, }Alice\mbox{, }s$@*)) or ignore((*@$d\mbox{, }Alice$@*)) from (*@$\mathcal{E}$@*) for (*@$\Delta_4$@*) steps
-      Upon receiving message fulfill((*@$d\mbox{, }Alice\mbox{, }s$@*)) from (*@$\mathcal{E}$@*):
-        send message satString((*@$d\mbox{, }x\mbox{, }s$@*)) to (*@$Alice$@*)
-      Upon receiving message ignore((*@$d\mbox{, }Alice$@*)) from (*@$\mathcal{E}$@*):
-        go to Idle state
-  Else
-    send message wrongPaymentReceived((*@$Alice\mbox{, }d\mbox{, }x$@*)) to (*@$\mathcal{E}$@*)
+Upon receiving message payment((*@$x, s, Alice$@*)) from (*@$\mathcal{F}_{Trade}$@*):
+  If util == (*@$\bot$@*):
+    ignore request, go to Idle state
+  If util(not cheating (*@$x, s, Alice$@*)) > util(cheating (*@$x, s, Alice$@*)):
+    send message complete((*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{Trade}$@*)
 \end{lstlisting}

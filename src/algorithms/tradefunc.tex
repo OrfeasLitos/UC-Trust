@@ -6,31 +6,48 @@ Initialisation:
     assets((*@$Alice$@*)) = (*@$\bot$@*)
 
 Upon receiving trade(ours, theirs, (*@$Bob$@*)) from (*@$Alice$@*):
-  AliceOK = checkAvailability(ours, (*@$Alice$@*), (*@$Alice$@*))
-  BobOK    = checkAvailability(theirs, (*@$Bob$@*), (*@$Alice$@*))
-  If AliceOK and BobOK:
-    transfer(ours, (*@$Alice$@*), (*@$Bob$@*))
-    transfer(theirs, (*@$Bob$@*), (*@$Alice$@*))
+  If not isAvailable(ours, (*@$Alice$@*)):
+    send message youDontHave(ours) to (*@$Alice$@*)
+    go to Idle state
+  send message payment(ours, theirs, (*@$Alice$@*)) to (*@$Bob$@*)
+  wait for response from (*@$Bob$@*)
+  If response == complete(*@$x, s, Alice$@*):
+    If not isAvailable((*@$s, Bob$@*)):
+      send message youDontHave((*@$s$@*)) to (*@$Bob$@*)
+      send message cheated(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
+      go to Idle state
+    If transfer(ours, (*@$Alice$@*), (*@$Bob$@*)) == done:
+      If transfer(theirs, (*@$Bob$@*), (*@$Alice$@*)) == done:
+        send message traded(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
+      Else # gave but did not receive (Unreachable)
+        send message cheated(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
+    Else # failed to give (Unreachable)
+      send message failed(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
 
-checkAvailability(object, player, invoker):
+isAvailable(object, player):
   If object is money:
-    If player has enough money:
+    send doIhaveBalance(object) to (*@$\mathcal{F}_{Ledger}$@*) as player
+    wait for response from (*@$\mathcal{F}_{Ledger}$@*)
+    If response == True()
       return True
     Else:
-      Send notEnoughMoney(object, player) to invoker
       return False
   Else: # object is asset
-    If object is in the list of player's assets:
+    If object (*@$\in$@*) assets(player):
       return True
     Else:
-      Send assetUnavailable(object, player) to invoker
       return False
 
 transfer(object, sender, receiver):
   If object is money:
     send pay(object, receiver) to (*@$\mathcal{F}_{Ledger}$@*) as sender
+    wait for response from (*@$\mathcal{F}_{Ledger}$@*)
+    Upon receiving paymentDone(object, receiver):
+      return done
   Else: # object is asset
-    send transfer(object, receiver) to (*@$\mathcal{F}_{Assets}$@*) as sender
+    assets(sender) = assets(sender) (*@$\setminus \left\{\right.$@*)object(*@$\left.\right\}$@*)
+    assets(receiver) = assets(receiver) (*@$\cup \left\{\right.$@*)object(*@$\left.\right\}$@*)
+    return done
 
 Upon receiving obtain((*@$s$@*)) from (*@$Alice$@*):
   assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{s\right\}$@*)
