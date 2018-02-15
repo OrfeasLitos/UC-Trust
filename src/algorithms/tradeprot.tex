@@ -43,4 +43,20 @@ transfer(object, sender, receiver):
     send pay(object, receiver) to (*@$\mathcal{F}_{Ledger}$@*) as sender
   Else: # object is asset
     send transfer(object, receiver) to (*@$\mathcal{F}_{Assets}$@*) as sender
+
+Upon receiving message obtain((*@$s$@*)) from (*@$\mathcal{E}$@*):
+  send message add((*@$s$@*)) to (*@$\mathcal{F}_{Assets}$@*)
+  wait for response from (*@$\mathcal{F}_{Assets}$@*)
+  If response == added((*@$s$@*))
+    send message obtained((*@$s$@*)) to (*@$\mathcal{E}$@*)
+  Else
+    send message notObtained((*@$s$@*)) to (*@$\mathcal{E}$@*)
+
+Upon receiving message lose((*@$s$@*)) from (*@$\mathcal{E}$@*):
+  send message remove((*@$s$@*)) to (*@$\mathcal{F}_{Assets}$@*)
+  wait for response from (*@$\mathcal{F}_{Assets}$@*)
+  If response == removed((*@$s$@*))
+    send message lost((*@$s$@*)) to (*@$\mathcal{E}$@*)
+  Else
+    send message notLost((*@$s$@*)) to (*@$\mathcal{E}$@*)
 \end{lstlisting}

@@ -1,6 +1,10 @@
 \Suppressnumber
 \begin{lstlisting}[label=tradefunc, style=numbers]
 (*@$\mathcal{F}_{Trade}$ \Reactivatenumber@*)
+Initialisation:
+  (*@$\forall Alice \in \mathcal{P},$@*)
+    assets((*@$Alice$@*)) = (*@$\bot$@*)
+
 Upon receiving trade(ours, theirs, (*@$Bob$@*)) from (*@$Alice$@*):
   AliceOK = checkAvailability(ours, (*@$Alice$@*), (*@$Alice$@*))
   BobOK    = checkAvailability(theirs, (*@$Bob$@*), (*@$Alice$@*))
@@ -27,4 +31,12 @@ transfer(object, sender, receiver):
     send pay(object, receiver) to (*@$\mathcal{F}_{Ledger}$@*) as sender
   Else: # object is asset
     send transfer(object, receiver) to (*@$\mathcal{F}_{Assets}$@*) as sender
+
+Upon receiving obtain((*@$s$@*)) from (*@$Alice$@*):
+  assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{s\right\}$@*)
+  send message obtained((*@$s$@*)) to (*@$Alice$@*)
+
+Upon receiving lose((*@$s$@*)) from (*@$Alice$@*):
+  assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\setminus \left\{s\right\}$@*)
+  send message lost((*@$s$@*)) to (*@$Alice$@*)
 \end{lstlisting}
