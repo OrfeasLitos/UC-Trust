@@ -60,9 +60,9 @@ Upon receiving message canYouSatisfy((*@$d$@*)) from (*@$Alice$@*):
   Else:
     send message IcannotSatisfy((*@$d$@*)) to (*@$Alice$@*)
 
-Upon receiving message payment((*@$x, s, Alice$@*)) from (*@$\mathcal{F}_{Trade}$@*):
+Upon receiving message willWeCheat((*@$x, s, Alice$@*)) from (*@$\mathcal{F}_{Trade}$@*):
   If util == (*@$\bot$@*):
     ignore request, go to Idle state
   If util(not cheating (*@$x, s, Alice$@*)) > util(cheating (*@$x, s, Alice$@*)):
-    send message complete((*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{Trade}$@*)
+    send message doNotCheat((*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{Trade}$@*)
 \end{lstlisting}
