@@ -65,4 +65,6 @@ Upon receiving message willWeCheat((*@$x, s, Alice$@*)) from (*@$\mathcal{F}_{Tr
     ignore request, go to Idle state
   If util(not cheating (*@$x, s, Alice$@*)) > util(cheating (*@$x, s, Alice$@*)):
     send message doNotCheat((*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{Trade}$@*)
+  Else:
+    send message cheat((*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{Trade}$@*)
 \end{lstlisting}
