@@ -3,7 +3,7 @@
 (*@$\Pi$ \Reactivatenumber@*)
 Initalization:
 
-Upon receiving message satisfy((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*):
+Upon receiving message satisfy((*@$d, L$@*)) from (*@$\mathcal{E}$@*):
   listen for message abort((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*)
     Upon receiving such message:
       go to Idle State
@@ -38,29 +38,29 @@ Upon receiving message satisfy((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*):
   send message noOneSatisfies((*@$d\mbox{, }L$@*)) to (*@$\mathcal{E}$@*)
   stop listening for message abort((*@$d\mbox{, }L$@*)) from (*@$\mathcal{E}$@*)
 
-Upon receiving message obtain((*@$s$@*)) from (*@$\mathcal{E}$@*)
+Upon receiving message obtain((*@$s$@*)) from (*@$\mathcal{E}$@*):
   send message obtain((*@$s$@*)) to (*@$\mathcal{F}_{Trade}$@*)
-  wait for response from (*@$\mathcal{F}_{Trade}$@*) (for some steps)
-  If response == obtained((*@$s$@*))
+  wait for response from (*@$\mathcal{F}_{Trade}$@*)
+  If response == obtained((*@$s$@*)):
     send message obtained((*@$s$@*)) to (*@$\mathcal{E}$@*)
-  Else
+  Else:
     send message notObtained((*@$s$@*)) to (*@$\mathcal{E}$@*)
 
-Upon receiving message lose((*@$s$@*)) from (*@$\mathcal{E}$@*)
+Upon receiving message lose((*@$s$@*)) from (*@$\mathcal{E}$@*):
   send message lose((*@$s$@*)) to (*@$\mathcal{F}_{Trade}$@*)
-  wait for response from (*@$\mathcal{F}_{Trade}$@*) (for some steps)
-  If response == lost((*@$s$@*))
+  wait for response from (*@$\mathcal{F}_{Trade}$@*)
+  If response == lost((*@$s$@*)):
     send message lost((*@$s$@*)) to (*@$\mathcal{E}$@*)
-  Else
+  Else:
     send message notLost((*@$s$@*)) to (*@$\mathcal{E}$@*)
 
-Upon receiving message canYouSatisfy((*@$d$@*)) from (*@$Alice$@*)
+Upon receiving message canYouSatisfy((*@$d$@*)) from (*@$Alice$@*):
   If (*@$\exists (a, b, c) \in \mbox{offeredSats}: (d == a \wedge Alice \in b)$@*)
     send message IcanSatisfy((*@$d\mbox{, }c$@*)) to (*@$Alice$@*) # (*@$c$@*) is the price
-  Else
+  Else:
     send message IcannotSatisfy((*@$d$@*)) to (*@$Alice$@*)
 
-Upon receiving message payment((*@$d\mbox{, }x$@*)) from (*@$Alice$@*)
+Upon receiving message payment((*@$d\mbox{, }x$@*)) from (*@$Alice$@*):
   If (*@$\exists (a, b, c) \in \mbox{offeredSats}: (d == a \wedge Alice \in b)$@*)
     send message correctPaymentReceived((*@$d\mbox{, }x\mbox{, }Alice$@*)) to (*@$\mathcal{E}$@*)
     listen for message fulfill((*@$d\mbox{, }Alice\mbox{, }s$@*)) or ignore((*@$d\mbox{, }Alice$@*)) from (*@$\mathcal{E}$@*) for (*@$\Delta_4$@*) steps
