@@ -19,7 +19,7 @@ Upon receiving message satisfy((*@$d, L$@*)) from (*@$\mathcal{E}$@*):
       send message canYouSatisfy((*@$d$@*)) to (*@$Bob$@*)
       wait for response2 from (*@$Bob$@*)
       If response2 == IcanSatisfy((*@$d, x, s$@*)):
-        If util(with (*@$s$@*), w/o (*@$x$@*)) > util(with (*@$x$@*), w/o (*@$s$@*)):
+        If util(with (*@$s$@*), w/o (*@$x$@*)) > util(with (*@$x$@*), w/o (*@$s$@*)) and (*@$s \in d$@*)
           send message trade((*@$x, s, Bob$@*)) to (*@$\mathcal{F}_{Trade}$@*)
           wait for response3 from (*@$\mathcal{F}_{Trade}$@*)
             If response3 == traded((*@$x, s, Bob$@*)):
@@ -56,7 +56,7 @@ Upon receiving message lose((*@$s$@*)) from (*@$\mathcal{E}$@*):
 Upon receiving message canYouSatisfy((*@$d$@*)) from (*@$Alice$@*):
   If util == (*@$\bot$@*):
     ignore request, go to Idle state
-  If util(proposing to (*@$Alice$@*) to trade our (*@$s$@*) for her (*@$x$@*)) > util(not proposing):
+  If util(proposing to (*@$Alice$@*) to trade our (*@$s$@*) for her (*@$x$@*)) > util(not proposing) and (*@$s \in d$@*):
     send message IcanSatisfy((*@$d, x, s$@*)) to (*@$Alice$@*) # (*@$x$@*) is the price
   Else:
     send message IcannotSatisfy((*@$d$@*)) to (*@$Alice$@*)
