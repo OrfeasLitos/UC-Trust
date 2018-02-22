@@ -4,68 +4,68 @@
 Initalization:
   util = (*@$\bot$@*)
 
-Upon receiving type((*@$t$@*)) from (*@$\mathcal{E}$@*):
+Upon receiving (type, (*@$t$@*)) from (*@$\mathcal{E}$@*):
   util = (*@$t$@*)
 
-Upon receiving message satisfy((*@$d, L$@*)) from (*@$\mathcal{E}$@*):
+Upon receiving message (satisfy, (*@$d, L$@*)) from (*@$\mathcal{E}$@*):
   If util == (*@$\bot$@*):
-    send message utilityNotSet() to (*@$\mathcal{E}$@*)
+    send message (utilityNotSet) to (*@$\mathcal{E}$@*)
     go to Idle state
   aux = (*@$L$@*)
   While (aux (*@$\neq \emptyset$@*)):
-    send message chooseBestSeller((*@$d$@*), aux) to (*@$\mathcal{F}_{Trust}$@*)
+    send message (chooseBestSeller, (*@$d$@*), aux) to (*@$\mathcal{F}_{Trust}$@*)
     wait for response1 from (*@$\mathcal{F}_{Trust}$@*)
-    If response1 == bestSeller((*@$d, L, Bob$@*)):
-      send message canYouSatisfy((*@$d$@*)) to (*@$Bob$@*)
+    If response1 == (bestSeller, (*@$d, L, Bob$@*)):
+      send message (canYouSatisfy, (*@$d$@*)) to (*@$Bob$@*)
       wait for response2 from (*@$Bob$@*)
-      If response2 == IcanSatisfy((*@$d, x, s$@*)):
+      If response2 == (IcanSatisfy, (*@$d, x, s$@*)):
         If util(with (*@$s$@*), w/o (*@$x$@*)) > util(with (*@$x$@*), w/o (*@$s$@*)) and (*@$s \in d$@*)
-          send message trade((*@$x, s, Bob$@*)) to (*@$\mathcal{F}_{Trade}$@*)
+          send message (trade, (*@$x, s, Bob$@*)) to (*@$\mathcal{F}_{Trade}$@*)
           wait for response3 from (*@$\mathcal{F}_{Trade}$@*)
-            If response3 == traded((*@$x, s, Bob$@*)):
-              send message satisfied((*@$d, x, s, Bob$@*)) to (*@$\mathcal{F}_{Trust}$@*)
+            If response3 == (traded, (*@$x, s, Bob$@*)):
+              send message (satisfied, (*@$d, x, s, Bob$@*)) to (*@$\mathcal{F}_{Trust}$@*)
               # maybe send only utility difference to (*@$\mathcal{F}_{Trust}$@*)
-              send message satisfied((*@$d, L$@*)) to (*@$\mathcal{E}$@*)
+              send message (satisfied, (*@$d, L$@*)) to (*@$\mathcal{E}$@*)
               go to Idle state
-            Else If response3 == cheated((*@$x, s$@*), (*@$Bob$@*)):
-              send message cheated((*@$d, x, s, Bob$@*)) to (*@$\mathcal{F}_{Trust}$@*)
-              send message cheated((*@$d, L$@*)) to (*@$\mathcal{E}$@*)
+            Else If response3 == (cheated, (*@$x, s$@*), (*@$Bob$@*)):
+              send message (cheated, (*@$d, x, s, Bob$@*)) to (*@$\mathcal{F}_{Trust}$@*)
+              send message (cheated, (*@$d, L$@*)) to (*@$\mathcal{E}$@*)
               go to Idle state
     Else: # if response1 == (*@$\bot$@*)
-      send message unsatisfied((*@$d, L$@*)) to (*@$\mathcal{E}$@*)
+      send message (unsatisfied, (*@$d, L$@*)) to (*@$\mathcal{E}$@*)
       go to Idle state
     aux = aux (*@$\setminus \left\{Bob\right\}$@*) # only when response2 is not good
-  send message unsatisfied((*@$d, L$@*)) to (*@$\mathcal{E}$@*)
+  send message (unsatisfied, (*@$d, L$@*)) to (*@$\mathcal{E}$@*)
 
-Upon receiving message obtain((*@$s$@*)) from (*@$\mathcal{E}$@*):
-  send message obtain((*@$s$@*)) to (*@$\mathcal{F}_{Trade}$@*)
+Upon receiving message (obtain, (*@$s$@*)) from (*@$\mathcal{E}$@*):
+  send message (obtain, (*@$s$@*)) to (*@$\mathcal{F}_{Trade}$@*)
   wait for response from (*@$\mathcal{F}_{Trade}$@*)
-  If response == obtained((*@$s$@*)):
-    send message obtained((*@$s$@*)) to (*@$\mathcal{E}$@*)
+  If response == (obtained, (*@$s$@*)):
+    send message (obtained, (*@$s$@*)) to (*@$\mathcal{E}$@*)
   Else:
-    send message notObtained((*@$s$@*)) to (*@$\mathcal{E}$@*)
+    send message (notObtained, (*@$s$@*)) to (*@$\mathcal{E}$@*)
 
-Upon receiving message lose((*@$s$@*)) from (*@$\mathcal{E}$@*):
-  send message lose((*@$s$@*)) to (*@$\mathcal{F}_{Trade}$@*)
+Upon receiving message (lose, (*@$s$@*)) from (*@$\mathcal{E}$@*):
+  send message (lose, (*@$s$@*)) to (*@$\mathcal{F}_{Trade}$@*)
   wait for response from (*@$\mathcal{F}_{Trade}$@*)
-  If response == lost((*@$s$@*)):
-    send message lost((*@$s$@*)) to (*@$\mathcal{E}$@*)
+  If response == (lost, (*@$s$@*)):
+    send message (lost, (*@$s$@*)) to (*@$\mathcal{E}$@*)
   Else:
-    send message notLost((*@$s$@*)) to (*@$\mathcal{E}$@*)
+    send message (notLost, (*@$s$@*)) to (*@$\mathcal{E}$@*)
 
-Upon receiving message canYouSatisfy((*@$d$@*)) from (*@$Alice$@*):
+Upon receiving message (canYouSatisfy, (*@$d$@*)) from (*@$Alice$@*):
   If util == (*@$\bot$@*):
     ignore request, go to Idle state
   If util(proposing to (*@$Alice$@*) to trade our (*@$s$@*) for her (*@$x$@*)) > util(not proposing) and (*@$s \in d$@*):
-    send message IcanSatisfy((*@$d, x, s$@*)) to (*@$Alice$@*) # (*@$x$@*) is the price
+    send message (IcanSatisfy, (*@$d, x, s$@*)) to (*@$Alice$@*) # (*@$x$@*) is the price
   Else:
-    send message IcannotSatisfy((*@$d$@*)) to (*@$Alice$@*)
+    send message (IcannotSatisfy, (*@$d$@*)) to (*@$Alice$@*)
 
-Upon receiving message willWeCheat((*@$x, s, Alice$@*)) from (*@$\mathcal{F}_{Trade}$@*):
+Upon receiving message (willWeCheat, (*@$x, s, Alice$@*)) from (*@$\mathcal{F}_{Trade}$@*):
   If util == (*@$\bot$@*): # (Unreachable since we've already engaged)
     ignore request, go to Idle state
   If util(not cheating (*@$x, s, Alice$@*)) > util(cheating (*@$x, s, Alice$@*)):
-    send message doNotCheat((*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{Trade}$@*)
+    send message (doNotCheat, (*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{Trade}$@*)
   Else:
-    send message cheat((*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{Trade}$@*)
+    send message (cheat, (*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{Trade}$@*)
 \end{lstlisting}

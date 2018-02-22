@@ -6,12 +6,12 @@ Initialisation:
     util((*@$Alice$@*)) = (*@$\bot$@*)
     assets((*@$Alice$@*)) = (*@$\bot$@*)
 
-Upon receiving type((*@$t$@*)) from (*@$Alice$@*):
+Upon receiving (type, (*@$t$@*)) from (*@$Alice$@*):
   util((*@$Alice$@*)) = (*@$t$@*)
 
-Upon receiving satisfy((*@$d, L$@*)) from (*@$Alice$@*):
+Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
   If util((*@$Alice$@*)) == (*@$\bot$@*):
-    send message utilityNotSet() to (*@$Alice$@*)
+    send message (utilityNotSet) to (*@$Alice$@*)
     go to Idle state
   Find sat = (*@$\left(Bob, x, s\right) \in L \times \mathbb{R} \times Assets$@*):
     (*@$s \in$@*) assets((*@$Bob$@*)) and (*@$s \in d$@*) and (*@$x \geq 0$@*) and
@@ -28,15 +28,15 @@ Upon receiving satisfy((*@$d, L$@*)) from (*@$Alice$@*):
       Pay (*@$x$@*) from (*@$Alice$@*) to (*@$Bob$@*)
     assets((*@$Bob$@*)) = assets((*@$Bob$@*))(*@$\setminus \left\{s\right\}$@*)
     assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{s\right\}$@*)
-    send message satisfied((*@$d, L$@*)) to (*@$Alice$@*)
+    send message (satisfied, (*@$d, L$@*)) to (*@$Alice$@*)
   Else If sat == (*@$\bot$@*)
-    send message unsatisfied((*@$d, L$@*)) to (*@$Alice$@*)
+    send message (unsatisfied, (*@$d, L$@*)) to (*@$Alice$@*)
 
-Upon receiving obtain((*@$s$@*)) from (*@$Alice$@*):
+Upon receiving (obtain, (*@$s$@*)) from (*@$Alice$@*):
   assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{s\right\}$@*)
-  send message obtained((*@$s$@*)) to (*@$Alice$@*)
+  send message (obtained, (*@$s$@*)) to (*@$Alice$@*)
 
-Upon receiving lose((*@$s$@*)) from (*@$Alice$@*):
+Upon receiving (lose, (*@$s$@*)) from (*@$Alice$@*):
   assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\setminus \left\{s\right\}$@*)
-  send message lost((*@$s$@*)) to (*@$Alice$@*)
+  send message (lost, (*@$s$@*)) to (*@$Alice$@*)
 \end{lstlisting}

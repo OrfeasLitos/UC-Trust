@@ -3,11 +3,11 @@
 (*@$\mathcal{F}_{Trust}$ \Reactivatenumber@*)
 Has oracle access to the players' utility functions (*@$U$@*)
 
-Upon receiving chooseBestSeller((*@$d$@*), (*@$L$@*)) from (*@$Alice$@*):
+Upon receiving (chooseBestSeller, (*@$d$@*), (*@$L$@*)) from (*@$Alice$@*):
   choose (*@$Bob \in L$@*) that will maximise (*@$U_{Alice}$@*) after the transaction (goes through with the trade and offers the minimum price and maximum quality of product)
   If (*@$U_{Alice, before} > U_{Alice, after}$@*):
     (*@$Bob$@*) = (*@$\bot$@*)
-  send message bestSeller((*@$d$@*), (*@$L$@*), (*@$Bob$@*)) to (*@$Alice$@*)
+  send message (bestSeller, (*@$d$@*), (*@$L$@*), (*@$Bob$@*)) to (*@$Alice$@*)
 \end{lstlisting}
 
 Assumptions:

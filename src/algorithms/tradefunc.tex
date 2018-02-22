@@ -5,27 +5,27 @@ Initialisation:
   (*@$\forall Alice \in \mathcal{P},$@*)
     assets((*@$Alice$@*)) = (*@$\bot$@*)
 
-Upon receiving trade(ours, theirs, (*@$Bob$@*)) from (*@$Alice$@*):
+Upon receiving (trade, ours, theirs, (*@$Bob$@*)) from (*@$Alice$@*):
   If not isAvailable(ours, (*@$Alice$@*)):
-    send message youDontHave(ours) to (*@$Alice$@*)
+    send message (youDontHave, ours) to (*@$Alice$@*)
     go to Idle state
   If transfer(ours, (*@$Alice$@*), (*@$Bob$@*)) == True:
-    send message willWeCheat(ours, theirs, (*@$Alice$@*)) to (*@$Bob$@*)
+    send message (willWeCheat, ours, theirs, (*@$Alice$@*)) to (*@$Bob$@*)
     wait for response from (*@$Bob$@*)
-    If (response == complete((*@$x, s, Alice$@*)) and
+    If (response == (complete, (*@$x, s, Alice$@*)) and
       not isAvailable((*@$s, Bob$@*))) or
-      response (*@$\neq$@*) complete((*@$x, s, Alice$@*)):
-        send message youDontHave((*@$s$@*)) to (*@$Bob$@*)
-        send message cheated(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
+      response (*@$\neq$@*) (complete, (*@$x, s, Alice$@*)):
+        send message (youDontHave, (*@$s$@*)) to (*@$Bob$@*)
+        send message (cheated, ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
         go to Idle state
-    Else If transfer(theirs, (*@$Bob$@*), (*@$Alice$@*)) == True:
-      send message traded(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
+    Else If (transfer, theirs, (*@$Bob$@*), (*@$Alice$@*)) == True:
+      send message (traded, ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
   Else # failed to give (Unreachable for a good (*@$\mathcal{F}_{Ledger}$@*))
-    send message failed(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
+    send message (failed, ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
 
 isAvailable(object, player):
   If object is money:
-    send doIhaveBalance(object) to (*@$\mathcal{F}_{Ledger}$@*) as player
+    send (doIhaveBalance, object) to (*@$\mathcal{F}_{Ledger}$@*) as player
     wait for response from (*@$\mathcal{F}_{Ledger}$@*)
     return response
   Else: # object is asset
@@ -37,9 +37,9 @@ isAvailable(object, player):
 transfer(object, sender, receiver):
   If isAvailable(object):
     If object is money:
-      send pay(object, receiver) to (*@$\mathcal{F}_{Ledger}$@*) as sender
+      send (pay, object, receiver) to (*@$\mathcal{F}_{Ledger}$@*) as sender
       wait for response from (*@$\mathcal{F}_{Ledger}$@*)
-      Upon receiving paymentDone(object, receiver):
+      Upon receiving (paymentDone, object, receiver):
         return True
     Else: # object is asset
       assets(sender) = assets(sender) (*@$\setminus \left\{\right.$@*)object(*@$\left.\right\}$@*)
@@ -47,11 +47,11 @@ transfer(object, sender, receiver):
       return True
   return False
 
-Upon receiving obtain((*@$s$@*)) from (*@$Alice$@*):
+Upon receiving (obtain, (*@$s$@*)) from (*@$Alice$@*):
   assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{s\right\}$@*)
-  send message obtained((*@$s$@*)) to (*@$Alice$@*)
+  send message (obtained, (*@$s$@*)) to (*@$Alice$@*)
 
-Upon receiving lose((*@$s$@*)) from (*@$Alice$@*):
+Upon receiving (lose, (*@$s$@*)) from (*@$Alice$@*):
   assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\setminus \left\{s\right\}$@*)
-  send message lost((*@$s$@*)) to (*@$Alice$@*)
+  send message (lost, (*@$s$@*)) to (*@$Alice$@*)
 \end{lstlisting}

@@ -1,63 +1,63 @@
 \Suppressnumber
 \begin{lstlisting}[label=tradeprot, style=numbers]
 (*@$\Pi_{Trade}$ \Reactivatenumber@*)
-Upon receiving trade(ours, theirs, (*@$Bob$@*)) from (*@$\mathcal{E}$@*):
-  Send letsTrade(ours, theirs) to (*@$Bob$@*)
+Upon receiving (trade, ours, theirs, (*@$Bob$@*)) from (*@$\mathcal{E}$@*):
+  Send (letsTrade, ours, theirs) to (*@$Bob$@*)
   If transfer(ours, (*@$Bob$@*)) == True:
-    Send transferred(ours, (*@$Bob$@*)) to (*@$Bob$@*) and (*@$\mathcal{E}$@*)
+    Send (transferred, ours, (*@$Bob$@*)) to (*@$Bob$@*) and (*@$\mathcal{E}$@*)
     Wait for response from (*@$Bob$@*)
-    If response == transferred(theirs, (*@$Bob$@*)):
-      send message traded(ours, theirs, (*@$Bob$@*)) to (*@$\mathcal{E}$@*)
+    If response == (transferred, theirs, (*@$Bob$@*)):
+      send message (traded, ours, theirs, (*@$Bob$@*)) to (*@$\mathcal{E}$@*)
     Else:
-      send message cheated(ours, theirs, (*@$Bob$@*)) to (*@$\mathcal{E}$@*)
+      send message (cheated, ours, theirs, (*@$Bob$@*)) to (*@$\mathcal{E}$@*)
 
-Upon receiving letsTrade(theirs, ours) from (*@$Bob$@*):
-  Send willWeCheat(theirs, ours, (*@$Bob$@*)) to (*@$\mathcal{E}$@*)
+Upon receiving (letsTrade, theirs, ours) from (*@$Bob$@*):
+  Send (willWeCheat, theirs, ours, (*@$Bob$@*)) to (*@$\mathcal{E}$@*)
   Wait for response from (*@$\mathcal{E}$@*)
-  If response is doNotCheat(theirs, ours, (*@$Bob$@*)):
-    If transfer(ours, (*@$Bob$@*)) == True:
-      Send transferred(ours, (*@$Bob$@*)) to (*@$Bob$@*) and (*@$\mathcal{E}$@*)
+  If response is (doNotCheat, theirs, ours, (*@$Bob$@*)):
+    If (transfer, ours, (*@$Bob$@*)) == True:
+      Send (transferred, ours, (*@$Bob$@*)) to (*@$Bob$@*) and (*@$\mathcal{E}$@*)
 
 transfer(object, receiver):
   If isAvailable(object):
     If object is money:
-      send pay(object, receiver) to (*@$\mathcal{F}_{Ledger}$@*)
+      send (pay, object, receiver) to (*@$\mathcal{F}_{Ledger}$@*)
       wait for response from (*@$\mathcal{F}_{Ledger}$@*)
-      Upon receiving paymentDone(object, receiver):
+      Upon receiving (paymentDone, object, receiver):
         return True
     Else: # object is asset
-      send transfer(object, receiver) to (*@$\mathcal{F}_{Assets}$@*)
+      send (transfer, object, receiver) to (*@$\mathcal{F}_{Assets}$@*)
       wait for response from (*@$\mathcal{F}_{Assets}$@*)
-      Upon receiving transferDone(object, receiver):
+      Upon receiving (transferDone, object, receiver):
         return True
   return False
 
 isAvailable(object):
   If object is money:
-    send doIhaveBalance(object) to (*@$\mathcal{F}_{Ledger}$@*)
+    send (doIhaveBalance, object) to (*@$\mathcal{F}_{Ledger}$@*)
     wait for response from (*@$\mathcal{F}_{Ledger}$@*)
     return response
   Else: # object is asset
-    Send doIHave(object) to (*@$\mathcal{F}_{Assets}$@*)
+    Send (doIHave, object) to (*@$\mathcal{F}_{Assets}$@*)
     wait for response from (*@$\mathcal{F}_{Assets}$@*)
-    If response == youHave(object):
+    If response == (youHave, object):
       return True
     Else:
       return False
 
-Upon receiving message obtain((*@$s$@*)) from (*@$\mathcal{E}$@*):
-  send message add((*@$s$@*)) to (*@$\mathcal{F}_{Assets}$@*)
+Upon receiving message (obtain, (*@$s$@*)) from (*@$\mathcal{E}$@*):
+  send message (add, (*@$s$@*)) to (*@$\mathcal{F}_{Assets}$@*)
   wait for response from (*@$\mathcal{F}_{Assets}$@*)
-  If response == added((*@$s$@*))
-    send message obtained((*@$s$@*)) to (*@$\mathcal{E}$@*)
+  If response == (added, (*@$s$@*))
+    send message (obtained, (*@$s$@*)) to (*@$\mathcal{E}$@*)
   Else
-    send message notObtained((*@$s$@*)) to (*@$\mathcal{E}$@*)
+    send message (notObtained, (*@$s$@*)) to (*@$\mathcal{E}$@*)
 
-Upon receiving message lose((*@$s$@*)) from (*@$\mathcal{E}$@*):
-  send message remove((*@$s$@*)) to (*@$\mathcal{F}_{Assets}$@*)
+Upon receiving message (lose, (*@$s$@*)) from (*@$\mathcal{E}$@*):
+  send message (remove, (*@$s$@*)) to (*@$\mathcal{F}_{Assets}$@*)
   wait for response from (*@$\mathcal{F}_{Assets}$@*)
-  If response == removed((*@$s$@*))
-    send message lost((*@$s$@*)) to (*@$\mathcal{E}$@*)
+  If response == (removed, (*@$s$@*))
+    send message (lost, (*@$s$@*)) to (*@$\mathcal{E}$@*)
   Else
-    send message notLost((*@$s$@*)) to (*@$\mathcal{E}$@*)
+    send message (notLost, (*@$s$@*)) to (*@$\mathcal{E}$@*)
 \end{lstlisting}
