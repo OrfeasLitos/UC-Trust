@@ -24,6 +24,7 @@ Upon receiving message satisfy((*@$d, L$@*)) from (*@$\mathcal{E}$@*):
           wait for response3 from (*@$\mathcal{F}_{Trade}$@*)
             If response3 == traded((*@$x, s, Bob$@*)):
               send message satisfied((*@$d, x, s, Bob$@*)) to (*@$\mathcal{F}_{Trust}$@*)
+              # maybe send only utility difference to (*@$\mathcal{F}_{Trust}$@*)
               send message satisfied((*@$d, L$@*)) to (*@$\mathcal{E}$@*)
               go to Idle state
             Else If response3 == cheated((*@$x, s$@*), (*@$Bob$@*)):
@@ -33,7 +34,7 @@ Upon receiving message satisfy((*@$d, L$@*)) from (*@$\mathcal{E}$@*):
     Else: # if response1 == (*@$\bot$@*)
       send message unsatisfied((*@$d, L$@*)) to (*@$\mathcal{E}$@*)
       go to Idle state
-    aux = aux (*@$\setminus \left\{Bob\right\}$@*)
+    aux = aux (*@$\setminus \left\{Bob\right\}$@*) # only when response2 is not good
   send message unsatisfied((*@$d, L$@*)) to (*@$\mathcal{E}$@*)
 
 Upon receiving message obtain((*@$s$@*)) from (*@$\mathcal{E}$@*):
@@ -61,7 +62,7 @@ Upon receiving message canYouSatisfy((*@$d$@*)) from (*@$Alice$@*):
     send message IcannotSatisfy((*@$d$@*)) to (*@$Alice$@*)
 
 Upon receiving message willWeCheat((*@$x, s, Alice$@*)) from (*@$\mathcal{F}_{Trade}$@*):
-  If util == (*@$\bot$@*):
+  If util == (*@$\bot$@*): # (Unreachable since we've already engaged)
     ignore request, go to Idle state
   If util(not cheating (*@$x, s, Alice$@*)) > util(cheating (*@$x, s, Alice$@*)):
     send message doNotCheat((*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{Trade}$@*)
