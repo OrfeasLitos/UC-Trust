@@ -9,20 +9,19 @@ Upon receiving trade(ours, theirs, (*@$Bob$@*)) from (*@$Alice$@*):
   If not isAvailable(ours, (*@$Alice$@*)):
     send message youDontHave(ours) to (*@$Alice$@*)
     go to Idle state
-  send message payment(ours, theirs, (*@$Alice$@*)) to (*@$Bob$@*)
-  wait for response from (*@$Bob$@*)
-  If response == complete(*@$x, s, Alice$@*):
-    If not isAvailable((*@$s, Bob$@*)):
-      send message youDontHave((*@$s$@*)) to (*@$Bob$@*)
-      send message cheated(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
-      go to Idle state
-    If transfer(ours, (*@$Alice$@*), (*@$Bob$@*)) == done:
-      If transfer(theirs, (*@$Bob$@*), (*@$Alice$@*)) == done:
-        send message traded(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
-      Else # gave but did not receive (Unreachable)
+  If transfer(ours, (*@$Alice$@*), (*@$Bob$@*)) == done:
+    send message willWeCheat(ours, theirs, (*@$Alice$@*)) to (*@$Bob$@*)
+    wait for response from (*@$Bob$@*)
+    If (response == complete((*@$x, s, Alice$@*)) and
+      not isAvailable((*@$s, Bob$@*))) or
+      response (*@$\neq$@*) complete((*@$x, s, Alice$@*)):
+        send message youDontHave((*@$s$@*)) to (*@$Bob$@*)
         send message cheated(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
-    Else # failed to give (Unreachable)
-      send message failed(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
+        go to Idle state
+    Else If transfer(theirs, (*@$Bob$@*), (*@$Alice$@*)) == done:
+      send message traded(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
+  Else # failed to give (Unreachable for a good (*@$\mathcal{F}_{Ledger}$@*))
+    send message failed(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
 
 isAvailable(object, player):
   If object is money:
