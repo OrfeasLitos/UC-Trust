@@ -15,20 +15,27 @@ Upon receiving letsTrade(theirs, ours) from (*@$Bob$@*):
   Send willWeCheat(theirs, ours, (*@$Bob$@*)) to (*@$\mathcal{E}$@*)
   Wait for response from (*@$\mathcal{E}$@*)
   If response is doNotCheat(theirs, ours, (*@$Bob$@*)):
-    transfer(ours, (*@$Bob$@*))
-    Send transferred(ours, (*@$Bob$@*)) to (*@$Bob$@*) and (*@$\mathcal{E}$@*)
+    If transfer(ours, (*@$Bob$@*)) == True:
+      Send transferred(ours, (*@$Bob$@*)) to (*@$Bob$@*) and (*@$\mathcal{E}$@*)
 
 transfer(object, receiver):
   If isAvailable(object):
     If object is money:
       send pay(object, receiver) to (*@$\mathcal{F}_{Ledger}$@*)
+      wait for response from (*@$\mathcal{F}_{Ledger}$@*)
+      Upon receiving paymentDone(object, receiver):
+        return True
     Else: # object is asset
       send transfer(object, receiver) to (*@$\mathcal{F}_{Assets}$@*)
+      wait for response from (*@$\mathcal{F}_{Assets}$@*)
+      Upon receiving transferDone(object, receiver):
+        return True
+  return False
 
 isAvailable(object):
   If object is money:
-    Send message doIhaveBalance(object) to (*@$\mathcal{F}_{Ledger}$@*)
-    Wait for response from (*@$\mathcal{F}_{Ledger}$@*)
+    send doIhaveBalance(object) to (*@$\mathcal{F}_{Ledger}$@*)
+    wait for response from (*@$\mathcal{F}_{Ledger}$@*)
     return response
   Else: # object is asset
     Send doIHave(object) to (*@$\mathcal{F}_{Assets}$@*)

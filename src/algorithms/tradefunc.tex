@@ -9,7 +9,7 @@ Upon receiving trade(ours, theirs, (*@$Bob$@*)) from (*@$Alice$@*):
   If not isAvailable(ours, (*@$Alice$@*)):
     send message youDontHave(ours) to (*@$Alice$@*)
     go to Idle state
-  If transfer(ours, (*@$Alice$@*), (*@$Bob$@*)) == done:
+  If transfer(ours, (*@$Alice$@*), (*@$Bob$@*)) == True:
     send message willWeCheat(ours, theirs, (*@$Alice$@*)) to (*@$Bob$@*)
     wait for response from (*@$Bob$@*)
     If (response == complete((*@$x, s, Alice$@*)) and
@@ -18,7 +18,7 @@ Upon receiving trade(ours, theirs, (*@$Bob$@*)) from (*@$Alice$@*):
         send message youDontHave((*@$s$@*)) to (*@$Bob$@*)
         send message cheated(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
         go to Idle state
-    Else If transfer(theirs, (*@$Bob$@*), (*@$Alice$@*)) == done:
+    Else If transfer(theirs, (*@$Bob$@*), (*@$Alice$@*)) == True:
       send message traded(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
   Else # failed to give (Unreachable for a good (*@$\mathcal{F}_{Ledger}$@*))
     send message failed(ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
@@ -27,10 +27,7 @@ isAvailable(object, player):
   If object is money:
     send doIhaveBalance(object) to (*@$\mathcal{F}_{Ledger}$@*) as player
     wait for response from (*@$\mathcal{F}_{Ledger}$@*)
-    If response == True()
-      return True
-    Else:
-      return False
+    return response
   Else: # object is asset
     If object (*@$\in$@*) assets(player):
       return True
@@ -38,15 +35,17 @@ isAvailable(object, player):
       return False
 
 transfer(object, sender, receiver):
-  If object is money:
-    send pay(object, receiver) to (*@$\mathcal{F}_{Ledger}$@*) as sender
-    wait for response from (*@$\mathcal{F}_{Ledger}$@*)
-    Upon receiving paymentDone(object, receiver):
-      return done
-  Else: # object is asset
-    assets(sender) = assets(sender) (*@$\setminus \left\{\right.$@*)object(*@$\left.\right\}$@*)
-    assets(receiver) = assets(receiver) (*@$\cup \left\{\right.$@*)object(*@$\left.\right\}$@*)
-    return done
+  If isAvailable(object):
+    If object is money:
+      send pay(object, receiver) to (*@$\mathcal{F}_{Ledger}$@*) as sender
+      wait for response from (*@$\mathcal{F}_{Ledger}$@*)
+      Upon receiving paymentDone(object, receiver):
+        return True
+    Else: # object is asset
+      assets(sender) = assets(sender) (*@$\setminus \left\{\right.$@*)object(*@$\left.\right\}$@*)
+      assets(receiver) = assets(receiver) (*@$\cup \left\{\right.$@*)object(*@$\left.\right\}$@*)
+      return True
+  return False
 
 Upon receiving obtain((*@$s$@*)) from (*@$Alice$@*):
   assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{s\right\}$@*)
