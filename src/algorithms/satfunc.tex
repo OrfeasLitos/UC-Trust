@@ -13,23 +13,23 @@ Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
   If util((*@$Alice$@*)) == (*@$\bot$@*):
     send message (utilityNotSet) to (*@$Alice$@*)
     go to Idle state
-  Find sat = (*@$\left(Bob, x, s\right) \in L \times \mathbb{R} \times Assets$@*):
+  Find list = (*@$\left\{\left(Bob, x, s\right) \in L \times \mathbb{R} \times Assets :\right.$@*)
     (*@$s \in$@*) assets((*@$Bob$@*)) and (*@$s \in d$@*) and (*@$x \geq 0$@*) and
     (*@$Alice$@*) has at least (*@$x$@*) coins available and
     util((*@$Alice$@*))(after trade) > util((*@$Alice$@*))(before trade)
     and
     util((*@$Bob$@*))(after trade) > util((*@$Bob$@*))(before trade)
     and
-    util((*@$Bob$@*))(after trade) > util((*@$Bob$@*))(after cheating)
-    and
-    util((*@$Alice$@*))(after trade) maximum amongst possible choices
-  With sat as (*@$\left(Bob, x, s\right)$@*):
+    util((*@$Bob$@*))(after trade) > util((*@$Bob$@*))(after cheating)(*@$\left.\right\}$@*)
+  send (chooseBestSeller, list) to (*@$\mathcal{A}$@*)
+  wait for response from (*@$\mathcal{A}$@*)
+  With response as (bestSeller, list, (*@$Bob, x, s$@*)):
     If (*@$x > 0$@*):
       Pay (*@$x$@*) from (*@$Alice$@*) to (*@$Bob$@*)
     assets((*@$Bob$@*)) = assets((*@$Bob$@*))(*@$\setminus \left\{s\right\}$@*)
     assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{s\right\}$@*)
     send message (satisfied, (*@$d, L$@*)) to (*@$Alice$@*)
-  Else If sat == (*@$\bot$@*)
+  Else If response (*@$\neq$@*) (bestSeller, list, (*@$Bob, x, s$@*)):
     send message (unsatisfied, (*@$d, L$@*)) to (*@$Alice$@*)
 
 Upon receiving (obtain, (*@$s$@*)) from (*@$Alice$@*):
