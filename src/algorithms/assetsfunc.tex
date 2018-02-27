@@ -6,11 +6,8 @@ Initialisation:
     assets((*@$Alice$@*)) = (*@$\bot$@*)
 
 Upon receiving (add, (*@$asset$@*)) from (*@$Alice$@*):
-  If (*@$asset \in$@*) assets((*@$Alice$@*)):
-    send (youAlreadyHave, (*@$asset$@*)) to (*@$Alice$@*)
-  Else:
-    assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{asset\right\}$@*)
-    send (added, (*@$asset$@*)) to (*@$Alice$@*)
+  assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{asset\right\}$@*)
+  send (added, (*@$asset$@*)) to (*@$Alice$@*)
 
 Upon receiving (remove, (*@$asset$@*)) from (*@$Alice$@*):
   If (*@$asset \in$@*) assets((*@$Alice$@*)):
@@ -19,11 +16,8 @@ Upon receiving (remove, (*@$asset$@*)) from (*@$Alice$@*):
   Else:
     send (unableToRemove, (*@$asset$@*)) to (*@$Alice$@*)
 
-Upon receiving (doIhave, (*@$asset$@*)) from (*@$Alice$@*):
-  If (*@$asset \in$@*) assets((*@$Alice$@*)):
-    send (youHave, (*@$asset$@*)) to (*@$Alice$@*)
-  Else:
-    send (youDoNotHave, (*@$asset$@*)) to (*@$Alice$@*)
+Upon receiving (howManyDoIhave, (*@$asset$@*)) from (*@$Alice$@*):
+  send (youHave, assets((*@$Alice$@*)).count((*@$asset$@*))) to (*@$Alice$@*)
 
 Upon receiving (transfer, (*@$asset$@*), (*@$Bob$@*)) from (*@$Alice$@*):
   If (*@$asset \in$@*) assets((*@$Alice$@*)):
