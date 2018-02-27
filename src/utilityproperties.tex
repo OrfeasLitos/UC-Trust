@@ -1,36 +1,34 @@
 \section{Utility Function Properties}
-  Let $v \in \mathcal{P}$. The only property that any utility function should satisfy is that having more desires satisfied
-  and less desires unsatisfied leads to a higher utility.
-  More formally, consider two executions of the game (1) and (2):
-  \begin{equation*}
-    \begin{rcases}
-    \begin{aligned}
-      SatDesires_1\left(v\right) &\subseteq SatDesires_2\left(v\right) \\
-      UnsatDesires_2\left(v\right) &\subseteq UnsatDesires_1\left(v\right)
-    \end{aligned}
-    \end{rcases}
-    \Rightarrow u_{v,1} \leq u_{v,2} \enspace.
-  \end{equation*}
-  If one of the two subset is strict, then the inequality becomes strict as well.
+  Before $Alice$ (an ITM that executes $\Pi_{SAT}$) can take any action, she must be
+  assigned a utility function and a discount function by $\mathcal{E}$. We denote these
+  functions with $U_{Alice}$ and $\lambda_{Alice}$ respectively.
+  \begin{definition}[Utility Function]
+    $U_{Alice} : Money \times multiset\left(Asset\right) \times Rep \rightarrow
+    Utility$, where $Money, Rep \in \mathbb{N}, Utility \in \mathbb{R}$.
+  \end{definition}
+  The utility function is strictly increasing with respect to the integer $Money$ and may
+  do anything with respect to the quantity of any single $Asset$ or combination of
+  $Asset$s. It is also strictly increasing with respect to the integer $Rep$.
 
-  As an example, consider two executions of the game (1) and (2) in which $v$ was input exactly the same desires and satisfied
-  the same desires, except for $\left(idx, d\right)$, which was satisfied only in game (2) and remained unsatisfied in game
-  (1). Then $u_{v,1} < u_{v,2}$. Going in some detail:
-  \begin{gather*}
-    \mbox{Let } Desires_1\left(v\right) = Desires_2\left(v\right) = \{\left(idx, d\right)\} \cup Rest \enspace. \\
-    \mbox{It is: } \:\:
-    \begin{aligned}
-      SatDesires_1\left(v\right) &= Rest \enspace, \\
-      UnsatDesires_1\left(v\right) &= Rest \cup \{\left(idx, d\right)\} \enspace, \\
-      SatDesires_2\left(v\right) &= Rest \cup \{\left(idx, d\right)\} \enspace\mbox{and} \\
-      UnsatDesires_2\left(v\right) &= Rest \enspace,
-    \end{aligned} \\
-    \mbox{thus:   } \:\: 
-    \begin{rcases}
-    \begin{aligned}
-      SatDesires_1\left(v\right) &\subset SatDesires_2\left(v\right) \\
-      UnsatDesires_2\left(v\right) &\subset UnsatDesires_1\left(v\right)
-    \end{aligned}
-    \end{rcases}
-    \Rightarrow u_{v,1} < u_{v,2} \enspace.
-  \end{gather*}
+  $Rep$ is an integer that corresponds to $Alice$'s perceived rank in a partial ordering
+  of all the players where $Alice$ assumes that she has a higher rank than $Bob$ if the
+  average probability of third players choosing her before $Bob$ when they want to buy
+  something amongst a list of $Asset$s that $Alice$ is interested in selling is higher
+  than $Bob$'s corresponding probability for the same $Asset$s, as perceived by $Alice$.
+
+  \begin{definition}[Discount function]
+    $\lambda_{Alice} : Time \rightarrow \left[0, 1\right]$, where $Time \in \mathbb{N}$
+    and $\lambda$ is strictly decreasing.
+  \end{definition}
+  \begin{definition}[State]
+  Let $state_{Alice} : Time \rightarrow Money \times multiset\left(Asset\right) \times
+  Rep$.
+  \end{definition}
+  $Alice$'s target is to maximise
+  \begin{equation*}
+    \sum\limits_{t = 1}^{\infty}
+    \lambda_{Alice}\left(t\right)\left(\sum\limits_{\overset{\left(m, a, r\right)
+    \in}{Money \times mset\left(Asset\right) \times Rep}} U_{Alice}\left(m, a,
+    r\right) \cdot \Pr\left[state_{Alice}\left(t\right) = \left(m, a,
+    r\right)\right]\right) \enspace.
+  \end{equation*}
