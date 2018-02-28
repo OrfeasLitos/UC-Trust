@@ -10,6 +10,20 @@
   do anything with respect to the quantity of any single $Asset$ or combination of
   $Asset$s. It is also strictly increasing with respect to the integer $Rep$.
 
+  \begin{definition}[Reputation function]
+    $Reputation : \mathcal{P} \times Time \times 2^{Asset} \rightarrow Rep$, where $Time,
+    Rep \in \mathbb{N}$
+  \end{definition}
+  \begin{gather*}
+    Rep\left(Alice, t, set\right) > Rep\left(Bob, t, set\right) \overset{def}{\iff} \\
+    \begin{aligned}
+      \Pr\left[Alice \mbox{ receives message } \left(\mbox{canYouSatisfy}, d\right) \mbox{
+      at time t}\right] &> \\
+      \Pr\left[Bob \mbox{ receives message } \left(\mbox{canYouSatisfy}, d\right) \mbox{ at
+      time t}\right] &
+    \end{aligned} \\
+    \mbox{where } d \in set
+  \end{gather*}
   $Rep$ is an integer that corresponds to $Alice$'s perceived rank in a partial ordering
   of all the players where $Alice$ assumes that she has a higher rank than $Bob$ if the
   average probability of third players choosing her before $Bob$ when they want to buy
