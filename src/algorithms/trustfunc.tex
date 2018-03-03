@@ -1,11 +1,16 @@
 \Suppressnumber
 \begin{lstlisting}[label=trustfunc, style=numbers]
 (*@$\mathcal{F}_{Trust}$ \Reactivatenumber@*)
-Has oracle access to the players' utility functions (*@$U$@*)
+Has oracle access to every player's (*@$Alice$@*) utility function util((*@$Alice$@*))
 
 Upon receiving (chooseBestSeller, (*@$d$@*), (*@$L$@*)) from (*@$Alice$@*):
-  choose (*@$Bob \in L$@*) that will maximise (*@$U_{Alice}$@*) after the transaction (goes through with the trade and offers the minimum price and maximum quality of product)
-  If (*@$U_{Alice, before} > U_{Alice, after}$@*):
+  (*@$Bob$@*) =
+  (*@$\argmax\limits_{Bob \in L}\left\{\right.$@*) util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)) (*@$:$@*)
+  (*@$s \in d \wedge s \in$@*) assets((*@$Bob$@*)) (*@$\wedge$@*) (*@$Alice$@*) has (*@$x$@*) coins (*@$\wedge$@*)
+  (util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x + goodRep$@*)) >
+  util((*@$Bob$@*))((*@$state_{Bob} + x + badRep$@*))) (*@$\wedge$@*)
+  util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x + goodRep$@*)) > util((*@$Bob$@*))((*@$state_{Bob}$@*)) (*@$\left.\right\}$@*)
+  If util((*@$Alice$@*))((*@$state_{Alice}$@*)) (*@$\geq$@*) util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)):
     (*@$Bob$@*) = (*@$\bot$@*)
   send message (bestSeller, (*@$d$@*), (*@$L$@*), (*@$Bob$@*)) to (*@$Alice$@*)
 \end{lstlisting}

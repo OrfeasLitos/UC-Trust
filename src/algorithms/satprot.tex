@@ -19,7 +19,7 @@ Upon receiving message (satisfy, (*@$d, L$@*)) from (*@$\mathcal{E}$@*):
       send message (canYouSatisfy, (*@$d$@*)) to (*@$Bob$@*)
       wait for response2 from (*@$Bob$@*)
       If response2 == (IcanSatisfy, (*@$d, x, s$@*)):
-        If util(with (*@$s$@*), w/o (*@$x$@*)) > util(with (*@$x$@*), w/o (*@$s$@*)) and (*@$s \in d$@*)
+        If util((*@$state \cup s - x$@*)) > util((*@$state$@*)) and (*@$s \in d$@*)
           send message (trade, (*@$x, s, Bob$@*)) to (*@$\mathcal{F}_{Trade}$@*)
           wait for response3 from (*@$\mathcal{F}_{Trade}$@*)
             If response3 == (traded, (*@$x, s, Bob$@*)):
@@ -56,7 +56,8 @@ Upon receiving message (lose, (*@$s$@*)) from (*@$\mathcal{E}$@*):
 Upon receiving message (canYouSatisfy, (*@$d$@*)) from (*@$Alice$@*):
   If util == (*@$\bot$@*):
     ignore request, go to Idle state
-  If util(proposing to (*@$Alice$@*) to trade our (*@$s$@*) for her (*@$x$@*)) > util(not proposing) and (*@$s \in d$@*):
+  If (util((*@$state + x + badRep$@*)) > util((*@$state$@*)) or
+      util((*@$state \setminus s + x + goodRep$@*)) > util((*@$state$@*))) and (*@$s \in d$@*):
     send message (IcanSatisfy, (*@$d, x, s$@*)) to (*@$Alice$@*) # (*@$x$@*) is the price
   Else:
     send message (IcannotSatisfy, (*@$d$@*)) to (*@$Alice$@*)
@@ -64,7 +65,7 @@ Upon receiving message (canYouSatisfy, (*@$d$@*)) from (*@$Alice$@*):
 Upon receiving message (willWeCheat, (*@$x, s, Alice$@*)) from (*@$\mathcal{F}_{Trade}$@*):
   If util == (*@$\bot$@*): # (Unreachable since we've already engaged)
     ignore request, go to Idle state
-  If util(not cheating (*@$x, s, Alice$@*)) > util(cheating (*@$x, s, Alice$@*)):
+  If util((*@$state \setminus s + x + goodRep$@*)) (*@$\geq$@*) util((*@$state + x + badRep$@*)):
     send message (doNotCheat, (*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{Trade}$@*)
   Else:
     send message (cheat, (*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{Trade}$@*)

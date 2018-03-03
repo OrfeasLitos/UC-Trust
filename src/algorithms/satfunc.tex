@@ -16,11 +16,11 @@ Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
   Find list = (*@$\left\{\left(Bob, x, s\right) \in L \times \mathbb{R} \times Assets :\right.$@*)
     (*@$s \in$@*) assets((*@$Bob$@*)) and (*@$s \in d$@*) and (*@$x \geq 0$@*) and
     (*@$Alice$@*) has at least (*@$x$@*) coins available and
-    util((*@$Alice$@*))(after trade) > util((*@$Alice$@*))(before trade)
+    util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)) > util((*@$Alice$@*))((*@$state_{Alice}$@*))
     and
-    util((*@$Bob$@*))(after trade) > util((*@$Bob$@*))(before trade)
+    util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x + goodRep$@*)) > util((*@$Bob$@*))((*@$state_{Bob}$@*))
     and
-    util((*@$Bob$@*))(after trade) > util((*@$Bob$@*))(after cheating)(*@$\left.\right\}$@*)
+    util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x + goodRep$@*)) > util((*@$Bob$@*))((*@$state_{Bob} + x + badRep$@*))(*@$\left.\right\}$@*)
   send (chooseBestSeller, list) to (*@$\mathcal{A}$@*)
   wait for response from (*@$\mathcal{A}$@*)
   With response as (bestSeller, list, (*@$Bob, x, s$@*)):
