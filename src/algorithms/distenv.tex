@@ -1,0 +1,18 @@
+\Suppressnumber
+\begin{lstlisting}[label=distenv, style=numbers]
+(*@$\mathcal{E}$@*) distinguisher(*@\Reactivatenumber@*)
+(*@$\forall Alice \in \mathcal{P}$@*):
+  create any valid utility function util((*@$Alice$@*))
+  send message (type, util((*@$Alice$@*))) to (*@$Alice$@*)
+(*@$Alice \overset{R}{\leftarrow} \mathcal{P}$@*)
+(*@$d \overset{R}{\leftarrow} 2^{Asset}$@*)
+(*@$L \overset{R}{\leftarrow} 2^{\mathcal{P} \setminus Alice}$@*)
+send message (satisfy, (*@$d$@*), (*@$L$@*)) to (*@$Alice$@*)
+
+Upon receiving message (x, (*@$d$@*), (*@$L$@*)) from (*@$Alice$@*):
+  If x (*@$\in \left\{\right.$@*)satisfied, unsatisfied(*@$\left.\right\}$@*)
+    res (*@$\overset{R}{\leftarrow} \left\{\right.$@*)functionality, protocol(*@$\left.\right\}$@*)
+    return res
+  Else # if x == cheated
+    return protocol
+\end{lstlisting}

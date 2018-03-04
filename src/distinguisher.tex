@@ -1,0 +1,26 @@
+\section{$\mathcal{F}_{SAT}$ and $\Pi_{SAT}$ are potentially distinguishable}
+  Consider the hybrid world of Fig.~\ref{fig:allfuncs} (right) with $n$ ITMs executing
+  $\Pi_{SAT}$, where $\mathcal{F}_{Trust}$ is replaced by $\mathcal{F}'_{Trust}$:
+  \subimport{algorithms/}{badtrustfunc.tex}
+  We will show here that $\mathcal{E}$ can distinguish between $\mathcal{F}_{SAT}$ and a
+  $\Pi_{SAT}$ that uses $\mathcal{F}'_{Trust}$. We define the advantage of the
+  environment:
+  \begin{equation*}
+    Adv\left(\mathcal{E}\right) = \left|\Pr\left[\mathcal{E} =
+    \mbox{\texttt{functionality}} | \mathcal{F}_{SAT}\right] - \Pr\left[\mathcal{E} =
+    \mbox{\texttt{functionality}} | \Pi_{SAT}\right]\right|
+  \end{equation*}
+
+  \begin{proof}[Distinguishability]
+    Consider the following adversary and environment:
+    \subimport{algorithms/}{distadv.tex}
+    \subimport{algorithms/}{distenv.tex}
+    Then $\Pr\left[\mathcal{E} = \mbox{\texttt{functionality}} | \mathcal{F}_{SAT}\right]
+    = \frac{L}{L + 1}$ because $\mathcal{F}_{SAT}$ (through $Alice$) responds with
+    \texttt{unsatisfied} only when $\mathcal{F}'_{Trust}$ responds with (\_, \_, \_,
+    $\bot$), an event that happens with probability $\frac{1}{L}$. In the rest of the
+    cases
+
+    Furthermore, $\Pr\left[\mathcal{E} = \mbox{\texttt{functionality}} | \Pi_{SAT}\right]
+    = 0$ because $Alice$ responds with \texttt{unsatisfied} with probability
+  \end{proof}
