@@ -21,7 +21,7 @@ Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
     util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x + goodRep$@*)) > util((*@$Bob$@*))((*@$state_{Bob}$@*))
     and
     util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x + goodRep$@*)) > util((*@$Bob$@*))((*@$state_{Bob} + x + badRep$@*))(*@$\left.\right\}$@*)
-  send (chooseBestSeller, list) to (*@$\mathcal{A}$@*)
+  send (chooseBestSeller, list, (*@$d$@*), (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
   wait for response from (*@$\mathcal{A}$@*)
   With response as (bestSeller, list, (*@$Bob, x, s$@*)):
     If (*@$x > 0$@*):
