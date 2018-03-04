@@ -23,13 +23,13 @@ Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
     util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x + goodRep$@*)) > util((*@$Bob$@*))((*@$state_{Bob} + x + badRep$@*))(*@$\left.\right\}$@*)
   send (chooseBestSeller, list, (*@$d$@*), (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
   wait for response from (*@$\mathcal{A}$@*)
-  With response as (bestSeller, list, (*@$Bob, x, s$@*)):
+  With response as (bestSeller, list, (*@$Bob, x, s$@*)), (*@$Bob \in \mathcal{P}$@*):
     If (*@$x > 0$@*):
       Pay (*@$x$@*) from (*@$Alice$@*) to (*@$Bob$@*)
     assets((*@$Bob$@*)) = assets((*@$Bob$@*))(*@$\setminus \left\{s\right\}$@*)
     assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{s\right\}$@*)
     send message (satisfied, (*@$d, L$@*)) to (*@$Alice$@*)
-  Else If response (*@$\neq$@*) (bestSeller, list, (*@$Bob, x, s$@*)):
+  Else If response (*@$\neq$@*) (bestSeller, list, (*@$Bob, x, s$@*)): # e.g. (*@$Bob = \bot$@*)
     send message (unsatisfied, (*@$d, L$@*)) to (*@$Alice$@*)
 
 Upon receiving (obtain, (*@$s$@*)) from (*@$Alice$@*):
