@@ -2,18 +2,20 @@
 \begin{lstlisting}[label=distenv, style=numbers]
 (*@$\mathcal{E}$@*) distinguisher(*@\Reactivatenumber@*)
 (*@$\forall Alice \in \mathcal{P}$@*):
-  util((*@$Alice$@*))((*@$\left\{assets\right\}, x, r$@*))  = (*@$\left|\left\{assets\right\}\right| + x + 2^r$@*)
+  util((*@$Alice$@*))((*@$\left\{assets\right\}, x, r$@*))  = (*@$\left|\left\{assets\right\}\right| + \frac{x}{2} + 2^r$@*)
   (*@$\lambda\left(Alice\right)\left(t\right)$@*) = (*@$\frac{1}{t^2}$@*)
   send message (type, util((*@$Alice$@*)), (*@$\lambda\left(Alice\right)$@*)) to (*@$Alice$@*)
 (*@$Alice \overset{R}{\leftarrow} \mathcal{P}$@*)
+(*@$Bob \overset{R}{\leftarrow} \mathcal{P} \setminus \left\{Alice\right\}$@*)
 (*@$d \overset{R}{\leftarrow} 2^{Asset}$@*)
-(*@$L \overset{R}{\leftarrow} 2^{\mathcal{P} \setminus Alice}$@*)
+(*@$s \overset{R}{\leftarrow} d$@*)
+send message (obtain, (*@$s$@*)) to (*@$Bob$@*)
+(*@$L$@*) = (*@$\left\{Bob\right\}$@*)
 send message (satisfy, (*@$d$@*), (*@$L$@*)) to (*@$Alice$@*)
 
 Upon receiving message (x, (*@$d$@*), (*@$L$@*)) from (*@$Alice$@*):
-  If x (*@$\in \left\{\right.$@*)satisfied, unsatisfied(*@$\left.\right\}$@*)
-    res (*@$\overset{R}{\leftarrow} \left\{\right.$@*)functionality, protocol(*@$\left.\right\}$@*)
-    return res
-  Else # if x == cheated
+  If x == satisfied:
+    return functionality
+  Else: # if x (*@$\in \left\{\right.$@*)cheated, unsatisfied(*@$\left.\right\}$@*)
     return protocol
 \end{lstlisting}
