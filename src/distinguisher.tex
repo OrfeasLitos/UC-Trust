@@ -3,14 +3,7 @@
   $\Pi_{SAT}$, where $\mathcal{F}_{Trust}$ is replaced by $\mathcal{F}'_{Trust}$:
   \subimport{algorithms/}{badtrustfunc.tex}
   We will show here that $\mathcal{E}$ can distinguish between $\mathcal{F}_{SAT}$ and a
-  $\Pi_{SAT}$ that uses $\mathcal{F}'_{Trust}$. We define the advantage of the
-  environment:
-  \begin{equation*}
-    Adv\left(\mathcal{E}\right) = \left|\Pr\left[\mathcal{E} =
-    \mbox{\texttt{functionality}} | \mathcal{F}_{SAT}\right] - \Pr\left[\mathcal{E} =
-    \mbox{\texttt{functionality}} | \Pi_{SAT}\right]\right|
-  \end{equation*}
-
+  $\Pi_{SAT}$ that uses $\mathcal{F}'_{Trust}$.
   \begin{proof}[Distinguishability]
     Consider the following adversary and environment:
     \subimport{algorithms/}{distadv.tex}
