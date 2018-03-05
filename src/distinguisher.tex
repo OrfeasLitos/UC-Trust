@@ -8,12 +8,26 @@
     Consider the following adversary and environment:
     \subimport{algorithms/}{distadv.tex}
     \subimport{algorithms/}{distenv.tex}
-    Then $\Pr\left[\mathcal{E} = \mbox{\texttt{functionality}} | \mathcal{F}_{SAT}\right]
-    = \frac{L}{L + 1}$ because $\mathcal{F}_{SAT}$ (through $Alice$) responds with
-    \texttt{unsatisfied} only when $\mathcal{F}'_{Trust}$ responds with (\_, \_, \_,
-    $\bot$), an event that happens with probability $\frac{1}{L}$. In the rest of the
-    cases
 
-    Furthermore, $\Pr\left[\mathcal{E} = \mbox{\texttt{functionality}} | \Pi_{SAT}\right]
-    = 0$ because $Alice$ responds with \texttt{unsatisfied} with probability
+    Because of the way $\mathcal{E}$ is built, there always exists a seller that can
+    satisfy the desire of the buyer.
+
+    In case $\mathcal{E}$ interacts with $\mathcal{F}_{SAT}$, then $\mathcal{A}$ will
+    always match the buyer and the seller because of the way the former is built.
+    Additionally, the price of 1 is cheap enough for the buyer to want to buy the asset.
+    Furthermore, the boost in reputation is enough for the seller to not want to cheat,
+    thus the exchange will always complete correctly and $\mathcal{E}$ will receive
+    \texttt{satisfied} as response. $\mathcal{E}$ will always correctly output
+    \texttt{functionality}.
+
+    On the other hand, in case $\mathcal{E}$ interacts with $\Pi_{SAT}$, then
+    \begin{enumerate}
+      \item $\mathcal{F}'_{Trust}$ does not modify the players' reputation and
+      \item $\mathcal{F}'_{Trust}$ does not choose players depending on their reputation.
+    \end{enumerate}
+    Thus, if $\mathcal{F}'_{Trust}$ does not respond with $\bot$, it is always in the
+    seller's interest to cheat and $\mathcal{E}$ will always receive \texttt{cheated} as
+    response. If $\mathcal{F}'_{Trust}$ responds with $\bot$, the trade will not go
+    through and $\mathcal{E}$ will receive \texttt{unsatisfied} as a response. In all
+    cases $\mathcal{E}$ will correctly output \texttt{protocol}.
   \end{proof}
