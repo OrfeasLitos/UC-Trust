@@ -1,13 +1,10 @@
 \Suppressnumber
 \begin{lstlisting}[label=distadv, style=numbers]
 (*@$\mathcal{A}$ \Reactivatenumber@*)
-Has oracle access to every player's (*@$Alice$@*) utility function util((*@$Alice$@*))
-
 Upon receiving (chooseBestSeller, list, (*@$d$@*), (*@$Alice$@*)):
-  (*@$Bob$@*) = (*@$\argmax\limits_{Bob \in \mbox{\texttt{list}}}\left\{\right.$@*) util((*@$Alice$@*))((*@$state_{Alice} \cup s - 1 coin$@*)) (*@$:$@*)
-  (*@$s \in d \wedge s \in$@*) assets((*@$Bob$@*)) (*@$\wedge$@*) (*@$Alice$@*) has (*@$1$@*) coin (*@$\wedge$@*)
-  (util((*@$Bob$@*))((*@$state_{Bob} \setminus s + 1 coin + 100 Rep$@*)) >
-  util((*@$Bob$@*))((*@$state_{Bob} + 1 coin - 100 Rep$@*))) (*@$\wedge$@*)
-  util((*@$Bob$@*))((*@$state_{Bob} \setminus s + 1 coin + 100 Rep$@*)) > util((*@$Bob$@*))((*@$state_{Bob}$@*)) (*@$\left.\right\}$@*)
+  If (*@$\left|\mbox{\texttt{list}}\right| \neq 1 \vee \left|d\right| \neq 1$@*):
+    go to Idle State
+  (*@$Bob$@*) = (*@$p: p \in$@*) list
+  (*@$s$@*) = (*@$asset: asset \in d$@*)
   return (bestSeller, list, (*@$Bob$@*), (*@$1$@*), (*@$s$@*))
 \end{lstlisting}

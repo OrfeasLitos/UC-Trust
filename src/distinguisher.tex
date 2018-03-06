@@ -9,25 +9,24 @@
     \subimport{algorithms/}{distadv.tex}
     \subimport{algorithms/}{distenv.tex}
 
-    Because of the way $\mathcal{E}$ is built, there always exists a seller that can
-    satisfy the desire of the buyer.
+    Because of the way $\mathcal{E}$ is built, there always exists a seller ($Bob$) that
+    can satisfy the desire of the buyer ($Alice$).
 
     In case $\mathcal{E}$ interacts with $\mathcal{F}_{SAT}$, then $\mathcal{A}$ will
     always match the buyer and the seller because of the way the former is built.
-    Additionally, the price of 1 is cheap enough for the buyer to want to buy the asset.
-    Furthermore, the boost in reputation is enough for the seller to not want to cheat,
-    thus the exchange will always complete correctly and $\mathcal{E}$ will receive
-    \texttt{satisfied} as response. $\mathcal{E}$ will always correctly output
-    \texttt{functionality}.
+    Additionally, the price of 1 is cheap enough for $Alice$ to want to buy the asset,
+    since she values acquiring one asset more than one coin.
 
-    On the other hand, in case $\mathcal{E}$ interacts with $\Pi_{SAT}$, then
-    \begin{enumerate}
-      \item $\mathcal{F}'_{Trust}$ does not modify the players' reputation and
-      \item $\mathcal{F}'_{Trust}$ does not choose players depending on their reputation.
-    \end{enumerate}
-    Thus, if $\mathcal{F}'_{Trust}$ does not respond with $\bot$, it is always in the
-    seller's interest to cheat and $\mathcal{E}$ will always receive \texttt{cheated} as
-    response. If $\mathcal{F}'_{Trust}$ responds with $\bot$, the trade will not go
-    through and $\mathcal{E}$ will receive \texttt{unsatisfied} as a response. In all
-    cases $\mathcal{E}$ will correctly output \texttt{protocol}.
+    Furthermore, $\mathcal{F}_{SAT}$ never cheats on a trade, thus the exchange will
+    always complete correctly and $\mathcal{E}$ will receive \texttt{satisfied} as
+    response. $\mathcal{E}$ will always correctly output \texttt{functionality}.
+
+    On the other hand, in case $\mathcal{E}$ interacts with $\Pi_{SAT}$, then we observe
+    that $\mathcal{F}'_{Trust}$ does not choose players depending on their reputation.
+    Thus, if $\mathcal{F}'_{Trust}$ does not respond with $\bot$, it is always in $Bob$'s
+    interest to cheat (since keeping the asset is preferrable to giving it) and
+    $\mathcal{E}$ will always receive \texttt{cheated} as response. If
+    $\mathcal{F}'_{Trust}$ responds with $\bot$, the trade will not go through and
+    $\mathcal{E}$ will receive \texttt{unsatisfied} as a response. In all cases
+    $\mathcal{E}$ will correctly output \texttt{protocol}.
   \end{proof}

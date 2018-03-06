@@ -1,19 +1,18 @@
 \Suppressnumber
 \begin{lstlisting}[label=distenv, style=numbers]
 (*@$\mathcal{E}$@*) distinguisher(*@\Reactivatenumber@*)
-(*@$\forall Alice \in \mathcal{P}$@*):
-  util((*@$Alice$@*))((*@$\left\{assets\right\}, x, r$@*))  = (*@$\left|\left\{assets\right\}\right| + \frac{x}{2} + 2^r$@*)
-  (*@$\lambda\left(Alice\right)\left(t\right)$@*) = (*@$\frac{1}{t^2}$@*)
-  send message (type, util((*@$Alice$@*)), (*@$\lambda\left(Alice\right)$@*)) to (*@$Alice$@*)
 (*@$Alice \overset{R}{\leftarrow} \mathcal{P}$@*)
 (*@$Bob \overset{R}{\leftarrow} \mathcal{P} \setminus \left\{Alice\right\}$@*)
-(*@$d \overset{R}{\leftarrow} 2^{Asset}$@*)
-(*@$s \overset{R}{\leftarrow} d$@*)
+util((*@$Alice$@*))((*@$\left\{assets\right\}, x, r$@*)) = (*@$2\left|\left\{assets\right\}\right| + x$@*)
+util((*@$Bob$@*))((*@$\left\{assets\right\}, x, r$@*)) = (*@$\left|\left\{assets\right\}\right| + 2x$@*)
+(*@$\lambda\left(Alice\right)\left(t\right)$@*) = (*@$\lambda\left(Bob\right)\left(t\right)$@*) = (*@$\frac{1}{t^2}$@*)
+(*@$\forall p \in \left\{Alice, Bob\right\}$@*):
+  send message (type, util((*@$p$@*)), (*@$\lambda\left(p\right)$@*)) to (*@$p$@*)
+(*@$s \overset{R}{\leftarrow} Asset$@*)
 send message (obtain, (*@$s$@*)) to (*@$Bob$@*)
-(*@$L$@*) = (*@$\left\{Bob\right\}$@*)
-send message (satisfy, (*@$d$@*), (*@$L$@*)) to (*@$Alice$@*)
+send message (satisfy, (*@$\left\{s\right\}$@*), (*@$\left\{Bob\right\}$@*)) to (*@$Alice$@*)
 
-Upon receiving message (x, (*@$d$@*), (*@$L$@*)) from (*@$Alice$@*):
+Upon receiving message (x, (*@$\left\{s\right\}$@*), (*@$\left\{Bob\right\}$@*)) from (*@$Alice$@*):
   If x == satisfied:
     return functionality
   Else: # if x (*@$\in \left\{\right.$@*)cheated, unsatisfied(*@$\left.\right\}$@*)
