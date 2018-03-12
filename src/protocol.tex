@@ -1,8 +1,8 @@
 \section{Protocol}
   In this section we will describe the real protocol executed by the players in the
-  absence of the $\mathcal{F}_{SAT}$ ideal functionality. The description of this protocol
-  does not need any utility function; all the "important" decisions are taken by the
-  environment.
+  absence of the $\mathcal{F}_{\mathrm{SAT}}$ ideal functionality. The description of this
+  protocol does not need any utility function; all the "important" decisions are taken by
+  the environment.
 
   Consider an environment $\mathcal{E}$, and adversary $\mathcal{A}$ and $n$ players
   executing copies of the same protocol $\Pi_1, \dots, \Pi_n$. $\mathcal{E}$ can send the
@@ -78,9 +78,9 @@
     \mathcal{D}$
   \end{enumerate}
   $\Pi_i$ is supposed to send~\ref{msg:pl:pay} when it has already paid through
-  $\mathcal{F}_{Ledger}$. Similarly, it is supposed to send~\ref{msg:pl:sat} when it has
-  verified that the other party has sent the corresponding payment on
-  $\mathcal{F}_{Ledger}$.
+  $\mathcal{F}_{\mathrm{Ledger}}$. Similarly, it is supposed to send~\ref{msg:pl:sat} when
+  it has verified that the other party has sent the corresponding payment on
+  $\mathcal{F}_{\mathrm{Ledger}}$.
 
   Going in more detail, the actual protocol is as follows:
   \subimport{algorithms/}{satprot.tex}

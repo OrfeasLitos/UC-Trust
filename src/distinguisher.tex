@@ -1,9 +1,12 @@
-\section{$\mathcal{F}_{SAT}$ and $\Pi_{SAT}$ are potentially distinguishable}
+\section{$\mathcal{F}_{\mathrm{SAT}}$ and $\Pi_{\mathrm{SAT}}$ are potentially
+distinguishable}
   Consider the hybrid world of Fig.~\ref{fig:allfuncs} (right) with $n$ ITMs executing
-  $\Pi_{SAT}$, where $\mathcal{F}_{Trust}$ is replaced by $\mathcal{F}'_{Trust}$:
+  $\Pi_{\mathrm{SAT}}$, where $\mathcal{F}_{\mathrm{Trust}}$ is replaced by
+  $\mathcal{F}'_{\mathrm{Trust}}$:
   \subimport{algorithms/}{badtrustfunc.tex}
-  We will show here that $\mathcal{E}$ can distinguish between $\mathcal{F}_{SAT}$ and a
-  $\Pi_{SAT}$ that uses $\mathcal{F}'_{Trust}$.
+  We will show here that $\mathcal{E}$ can distinguish between
+  $\mathcal{F}_{\mathrm{SAT}}$ and a $\Pi_{\mathrm{SAT}}$ that uses
+  $\mathcal{F}'_{\mathrm{Trust}}$.
   \begin{proof}[Distinguishability]
     Consider the following adversary and environment:
     \subimport{algorithms/}{distadv.tex}
@@ -12,21 +15,21 @@
     Because of the way $\mathcal{E}$ is built, there always exists a seller ($Bob$) that
     can satisfy the desire of the buyer ($Alice$).
 
-    In case $\mathcal{E}$ interacts with $\mathcal{F}_{SAT}$, then $\mathcal{A}$ will
-    always match the buyer and the seller because of the way the former is built.
+    In case $\mathcal{E}$ interacts with $\mathcal{F}_{\mathrm{SAT}}$, then $\mathcal{A}$
+    will always match the buyer and the seller because of the way the former is built.
     Additionally, the price of 1 is cheap enough for $Alice$ to want to buy the asset,
     since she values acquiring one asset more than one coin.
 
-    Furthermore, $\mathcal{F}_{SAT}$ never cheats on a trade, thus the exchange will
-    always complete correctly and $\mathcal{E}$ will receive \texttt{satisfied} as
+    Furthermore, $\mathcal{F}_{\mathrm{SAT}}$ never cheats on a trade, thus the exchange
+    will always complete correctly and $\mathcal{E}$ will receive \texttt{satisfied} as
     response. $\mathcal{E}$ will always correctly output \texttt{functionality}.
 
-    On the other hand, in case $\mathcal{E}$ interacts with $\Pi_{SAT}$, then we observe
-    that $\mathcal{F}'_{Trust}$ does not choose players depending on their reputation.
-    Thus, if $\mathcal{F}'_{Trust}$ does not respond with $\bot$, it is always in $Bob$'s
-    interest to cheat (since keeping the asset is preferrable to giving it) and
-    $\mathcal{E}$ will always receive \texttt{cheated} as response. If
-    $\mathcal{F}'_{Trust}$ responds with $\bot$, the trade will not go through and
-    $\mathcal{E}$ will receive \texttt{unsatisfied} as a response. In all cases
-    $\mathcal{E}$ will correctly output \texttt{protocol}.
+    On the other hand, in case $\mathcal{E}$ interacts with $\Pi_{\mathrm{SAT}}$, then we
+    observe that $\mathcal{F}'_{\mathrm{Trust}}$ does not choose players depending on
+    their reputation.  Thus, if $\mathcal{F}'_{\mathrm{Trust}}$ does not respond with
+    $\bot$, it is always in $Bob$'s interest to cheat (since keeping the asset is
+    preferrable to giving it) and $\mathcal{E}$ will always receive \texttt{cheated} as
+    response. If $\mathcal{F}'_{\mathrm{Trust}}$ responds with $\bot$, the trade will not
+    go through and $\mathcal{E}$ will receive \texttt{unsatisfied} as a response. In all
+    cases $\mathcal{E}$ will correctly output \texttt{protocol}.
   \end{proof}

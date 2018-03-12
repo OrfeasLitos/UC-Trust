@@ -1,6 +1,6 @@
 \Suppressnumber
 \begin{lstlisting}[label=tradeprot, style=numbers]
-(*@$\Pi_{Trade}$ \Reactivatenumber@*)
+(*@$\Pi_{\mathrm{Trade}}$ \Reactivatenumber@*)
 Upon receiving (trade, ours, theirs, (*@$Bob$@*)) from (*@$\mathcal{E}$@*):
   Send (letsTrade, ours, theirs) to (*@$Bob$@*)
   If transfer(ours, (*@$Bob$@*)) == True:
@@ -21,41 +21,41 @@ Upon receiving (letsTrade, theirs, ours) from (*@$Bob$@*):
 transfer(object, receiver):
   If isAvailable(object):
     If object is money:
-      send (pay, object, receiver) to (*@$\mathcal{F}_{Ledger}$@*)
-      wait for response from (*@$\mathcal{F}_{Ledger}$@*)
+      send (pay, object, receiver) to (*@$\mathcal{F}_{\mathrm{Ledger}}$@*)
+      wait for response from (*@$\mathcal{F}_{\mathrm{Ledger}}$@*)
       Upon receiving (paymentDone, object, receiver):
         return True
     Else: # object is asset
-      send (transfer, object, receiver) to (*@$\mathcal{F}_{Assets}$@*)
-      wait for response from (*@$\mathcal{F}_{Assets}$@*)
+      send (transfer, object, receiver) to (*@$\mathcal{F}_{\mathrm{Assets}}$@*)
+      wait for response from (*@$\mathcal{F}_{\mathrm{Assets}}$@*)
       Upon receiving (transferDone, object, receiver):
         return True
   return False
 
 isAvailable(object):
   If object is money:
-    send (doIhaveBalance, object) to (*@$\mathcal{F}_{Ledger}$@*)
-    wait for response from (*@$\mathcal{F}_{Ledger}$@*)
+    send (doIhaveBalance, object) to (*@$\mathcal{F}_{\mathrm{Ledger}}$@*)
+    wait for response from (*@$\mathcal{F}_{\mathrm{Ledger}}$@*)
     return response
   Else: # object is asset
-    Send (doIHave, object) to (*@$\mathcal{F}_{Assets}$@*)
-    wait for response from (*@$\mathcal{F}_{Assets}$@*)
+    Send (doIHave, object) to (*@$\mathcal{F}_{\mathrm{Assets}}$@*)
+    wait for response from (*@$\mathcal{F}_{\mathrm{Assets}}$@*)
     If response == (youHave, object):
       return True
     Else:
       return False
 
 Upon receiving message (obtain, (*@$s$@*)) from (*@$\mathcal{E}$@*):
-  send message (add, (*@$s$@*)) to (*@$\mathcal{F}_{Assets}$@*)
-  wait for response from (*@$\mathcal{F}_{Assets}$@*)
+  send message (add, (*@$s$@*)) to (*@$\mathcal{F}_{\mathrm{Assets}}$@*)
+  wait for response from (*@$\mathcal{F}_{\mathrm{Assets}}$@*)
   If response == (added, (*@$s$@*))
     send message (obtained, (*@$s$@*)) to (*@$\mathcal{E}$@*)
   Else
     send message (notObtained, (*@$s$@*)) to (*@$\mathcal{E}$@*)
 
 Upon receiving message (lose, (*@$s$@*)) from (*@$\mathcal{E}$@*):
-  send message (remove, (*@$s$@*)) to (*@$\mathcal{F}_{Assets}$@*)
-  wait for response from (*@$\mathcal{F}_{Assets}$@*)
+  send message (remove, (*@$s$@*)) to (*@$\mathcal{F}_{\mathrm{Assets}}$@*)
+  wait for response from (*@$\mathcal{F}_{\mathrm{Assets}}$@*)
   If response == (removed, (*@$s$@*))
     send message (lost, (*@$s$@*)) to (*@$\mathcal{E}$@*)
   Else

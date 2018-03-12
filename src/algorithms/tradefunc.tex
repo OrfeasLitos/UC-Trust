@@ -1,6 +1,6 @@
 \Suppressnumber
 \begin{lstlisting}[label=tradefunc, style=numbers]
-(*@$\mathcal{F}_{Trade}$ \Reactivatenumber@*)
+(*@$\mathcal{F}_{\mathrm{Trade}}$ \Reactivatenumber@*)
 Initialisation:
   (*@$\forall Alice \in \mathcal{P},$@*)
     assets((*@$Alice$@*)) = (*@$\bot$@*)
@@ -20,13 +20,13 @@ Upon receiving (trade, ours, theirs, (*@$Bob$@*)) from (*@$Alice$@*):
         go to Idle state
     Else If (transfer, theirs, (*@$Bob$@*), (*@$Alice$@*)) == True:
       send message (traded, ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
-  Else # failed to give (Unreachable for a good (*@$\mathcal{F}_{Ledger}$@*))
+  Else # failed to give (Unreachable for a good (*@$\mathcal{F}_{\mathrm{Ledger}}$@*))
     send message (failed, ours, theirs, (*@$Bob$@*)) to (*@$Alice$@*)
 
 isAvailable(object, player):
   If object is money:
-    send (doIhaveBalance, object) to (*@$\mathcal{F}_{Ledger}$@*) as player
-    wait for response from (*@$\mathcal{F}_{Ledger}$@*)
+    send (doIhaveBalance, object) to (*@$\mathcal{F}_{\mathrm{Ledger}}$@*) as player
+    wait for response from (*@$\mathcal{F}_{\mathrm{Ledger}}$@*)
     return response
   Else: # object is asset
     If object (*@$\in$@*) assets(player):
@@ -37,8 +37,8 @@ isAvailable(object, player):
 transfer(object, sender, receiver):
   If isAvailable(object):
     If object is money:
-      send (pay, object, receiver) to (*@$\mathcal{F}_{Ledger}$@*) as sender
-      wait for response from (*@$\mathcal{F}_{Ledger}$@*)
+      send (pay, object, receiver) to (*@$\mathcal{F}_{\mathrm{Ledger}}$@*) as sender
+      wait for response from (*@$\mathcal{F}_{\mathrm{Ledger}}$@*)
       Upon receiving (paymentDone, object, receiver):
         return True
     Else: # object is asset

@@ -18,9 +18,9 @@
   Since $Bob$ can commit fraud and get the tokens without satisfying $Alice$'s desire in
   exchange, $Alice$ must be well informed on the trustworthiness of potential
   collaborators before handing in the tokens. $Alice$ can use any out-of-band means to
-  this end, which we model as an oracle $\mathcal{O}_{Trust}$ which is input a desire and
-  a list of potential players and returns the player that increases the utility the most
-  (on expectation), along with the expected utility increase.
+  this end, which we model as an oracle $\mathcal{O}_{\mathrm{Trust}}$ which is input a
+  desire and a list of potential players and returns the player that increases the utility
+  the most (on expectation), along with the expected utility increase.
 
   \subimport{./definitions/}{costofdesire.tex}
 
@@ -53,9 +53,9 @@
   at any moment in time.
 
   The game begins with all players being created by $\mathcal{E}$, each allocated a number
-  of tokens determined by the $\mathcal{F}_{Ledger}$ functionality (more on that later).
-  The game ends at a moment specified by the $\mathcal{E}$, which is unknown to the
-  players. At that moment $\mathcal{E}$ assigns a utility to each player depending on
+  of tokens determined by the $\mathcal{F}_{\mathrm{Ledger}}$ functionality (more on that
+  later).  The game ends at a moment specified by the $\mathcal{E}$, which is unknown to
+  the players. At that moment $\mathcal{E}$ assigns a utility to each player depending on
   which desires were satisfied throughout the game.
 
   \subimport{./definitions/}{utility.tex}

@@ -1,6 +1,6 @@
 \Suppressnumber
 \begin{lstlisting}[label=satprot, style=numbers]
-(*@$\Pi_{SAT}$ \Reactivatenumber@*)
+(*@$\Pi_{\mathrm{SAT}}$ \Reactivatenumber@*)
 Initalization:
   util = (*@$\bot$@*)
 
@@ -13,22 +13,22 @@ Upon receiving message (satisfy, (*@$d, L$@*)) from (*@$\mathcal{E}$@*):
     go to Idle state
   aux = (*@$L$@*)
   While (aux (*@$\neq \emptyset$@*)):
-    send message (chooseBestSeller, (*@$d$@*), aux) to (*@$\mathcal{F}_{Trust}$@*)
-    wait for response1 from (*@$\mathcal{F}_{Trust}$@*)
+    send message (chooseBestSeller, (*@$d$@*), aux) to (*@$\mathcal{F}_{\mathrm{Trust}}$@*)
+    wait for response1 from (*@$\mathcal{F}_{\mathrm{Trust}}$@*)
     If response1 == (bestSeller, (*@$d, L, Bob$@*)):
       send message (canYouSatisfy, (*@$d$@*)) to (*@$Bob$@*)
       wait for response2 from (*@$Bob$@*)
       If response2 == (IcanSatisfy, (*@$d, x, s$@*)):
         If util((*@$state \cup s - x$@*)) > util((*@$state$@*)) and (*@$s \in d$@*)
-          send message (trade, (*@$x, s, Bob$@*)) to (*@$\mathcal{F}_{Trade}$@*)
-          wait for response3 from (*@$\mathcal{F}_{Trade}$@*)
+          send message (trade, (*@$x, s, Bob$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
+          wait for response3 from (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
             If response3 == (traded, (*@$x, s, Bob$@*)):
-              send message (satisfied, (*@$d, x, s, Bob$@*)) to (*@$\mathcal{F}_{Trust}$@*)
-              # maybe send only utility difference to (*@$\mathcal{F}_{Trust}$@*)
+              send message (satisfied, (*@$d, x, s, Bob$@*)) to (*@$\mathcal{F}_{\mathrm{Trust}}$@*)
+              # maybe send only utility difference to (*@$\mathcal{F}_{\mathrm{Trust}}$@*)
               send message (satisfied, (*@$d, L$@*)) to (*@$\mathcal{E}$@*)
               go to Idle state
             Else If response3 == (cheated, (*@$x, s$@*), (*@$Bob$@*)):
-              send message (cheated, (*@$d, x, s, Bob$@*)) to (*@$\mathcal{F}_{Trust}$@*)
+              send message (cheated, (*@$d, x, s, Bob$@*)) to (*@$\mathcal{F}_{\mathrm{Trust}}$@*)
               send message (cheated, (*@$d, L$@*)) to (*@$\mathcal{E}$@*)
               go to Idle state
     Else: # if response1 == (*@$\bot$@*)
@@ -38,16 +38,16 @@ Upon receiving message (satisfy, (*@$d, L$@*)) from (*@$\mathcal{E}$@*):
   send message (unsatisfied, (*@$d, L$@*)) to (*@$\mathcal{E}$@*)
 
 Upon receiving message (obtain, (*@$s$@*)) from (*@$\mathcal{E}$@*):
-  send message (obtain, (*@$s$@*)) to (*@$\mathcal{F}_{Trade}$@*)
-  wait for response from (*@$\mathcal{F}_{Trade}$@*)
+  send message (obtain, (*@$s$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
+  wait for response from (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
   If response == (obtained, (*@$s$@*)):
     send message (obtained, (*@$s$@*)) to (*@$\mathcal{E}$@*)
   Else:
     send message (notObtained, (*@$s$@*)) to (*@$\mathcal{E}$@*)
 
 Upon receiving message (lose, (*@$s$@*)) from (*@$\mathcal{E}$@*):
-  send message (lose, (*@$s$@*)) to (*@$\mathcal{F}_{Trade}$@*)
-  wait for response from (*@$\mathcal{F}_{Trade}$@*)
+  send message (lose, (*@$s$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
+  wait for response from (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
   If response == (lost, (*@$s$@*)):
     send message (lost, (*@$s$@*)) to (*@$\mathcal{E}$@*)
   Else:
@@ -62,11 +62,11 @@ Upon receiving message (canYouSatisfy, (*@$d$@*)) from (*@$Alice$@*):
   Else:
     send message (IcannotSatisfy, (*@$d$@*)) to (*@$Alice$@*)
 
-Upon receiving message (willWeCheat, (*@$x, s, Alice$@*)) from (*@$\mathcal{F}_{Trade}$@*):
+Upon receiving message (willWeCheat, (*@$x, s, Alice$@*)) from (*@$\mathcal{F}_{\mathrm{Trade}}$@*):
   If util == (*@$\bot$@*): # (Unreachable since we've already engaged)
     ignore request, go to Idle state
   If util((*@$state \setminus s + x + goodRep$@*)) (*@$\geq$@*) util((*@$state + x + badRep$@*)):
-    send message (doNotCheat, (*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{Trade}$@*)
+    send message (doNotCheat, (*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
   Else:
-    send message (cheat, (*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{Trade}$@*)
+    send message (cheat, (*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
 \end{lstlisting}

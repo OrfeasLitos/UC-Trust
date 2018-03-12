@@ -31,19 +31,19 @@ digraph G {
     dum1 [label="P_1", style="dashed"];
     dots1 [label="\dots", color="white"];
     dum2 [label="P_n", style="dashed"];
-    ftrade [label="\mathcal{F}_{Trade}", shape="square"];
+    ftrade [label="\mathcal{F}_{\mathrm{Trade}}", shape="square"];
   }
 
   {
     graph [texlbl=""];
 
     env2 [label="\mathcal{E}", shape="square"];
-    prot1 [label="\Pi_{Trade, 1}"];
+    prot1 [label="\Pi_{\mathrm{Trade, 1}}"];
     dots2 [label="\dots", color="white"];
-    prot2 [label="\Pi_{Trade, n}"];
-    ftrade [label="\mathcal{F}_{Trade}", shape="square"];
-    fledger [label="\mathcal{F}_{Ledger}", shape="square"];
-    fassets [label="\mathcal{F}_{Assets}", shape="square"];
+    prot2 [label="\Pi_{\mathrm{Trade}, n}"];
+    ftrade [label="\mathcal{F}_{\mathrm{Trade}}", shape="square"];
+    fledger [label="\mathcal{F}_{\mathrm{Ledger}}", shape="square"];
+    fassets [label="\mathcal{F}_{\mathrm{Assets}}", shape="square"];
 
     env2 -> prot1;
     env2 -> prot2;
