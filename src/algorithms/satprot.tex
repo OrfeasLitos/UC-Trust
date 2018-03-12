@@ -31,8 +31,8 @@ Upon receiving message (satisfy, (*@$d, L$@*)) from (*@$\mathcal{E}$@*):
               send message (cheated, (*@$d, x, s, Bob$@*)) to (*@$\mathcal{F}_{\mathrm{Trust}}$@*)
               send message (cheated, (*@$d, L$@*)) to (*@$\mathcal{E}$@*)
               go to Idle state
-    Else: # if response1 == (*@$\bot$@*)
-      send message (unsatisfied, (*@$d, L$@*)) to (*@$\mathcal{E}$@*)
+    Else: # if response1 == (*@$\bot$@*) (*@\label{satprot:badtrustresponse}@*)
+      send message (unsatisfied, (*@$d, L$@*)) to (*@$\mathcal{E}$@*) (*@\label{satprot:unsat}@*)
       go to Idle state
     aux = aux (*@$\setminus \left\{Bob\right\}$@*) # only when response2 is not good
   send message (unsatisfied, (*@$d, L$@*)) to (*@$\mathcal{E}$@*)

@@ -35,10 +35,15 @@ distinguishable}
 
     On the other hand, in case $\mathcal{E}$ interacts with $\Pi_{\mathrm{SAT}}$, then we
     observe that $\mathcal{F}'_{\mathrm{Trust}}$ does not choose players depending on
-    their reputation.  Thus, if $\mathcal{F}'_{\mathrm{Trust}}$ does not respond with
-    $\bot$, it is always in $Bob$'s interest to cheat (since keeping the asset is
-    preferrable to giving it) and $\mathcal{E}$ will always receive \texttt{cheated} as
-    response. If $\mathcal{F}'_{\mathrm{Trust}}$ responds with $\bot$, the trade will not
-    go through and $\mathcal{E}$ will receive \texttt{unsatisfied} as a response. In all
-    cases $\mathcal{E}$ will correctly output \texttt{protocol}.
+    their reputation (line~\ref{badtrust:Bob}), thus in this particular setting the
+    utility of the players does not depend on their reputation. Thus, if
+    $\mathcal{F}'_{\mathrm{Trust}}$ does not respond with $\bot$, it is always in $Bob$'s
+    interest to cheat, since keeping the asset is preferrable to giving it ($\mathcal{E}$,
+    lines~\ref{distenv:setutil:Bob} and~\ref{distenv:sendutil}). Thus $Alice$'s response
+    to $\mathcal{E}$ will always be \texttt{cheated}. If $\mathcal{F}'_{\mathrm{Trust}}$
+    responds with $\bot$ (line~\ref{badtrust:Bob}), the trade will not go through
+    ($\Pi_{\mathrm{SAT}}$, lines~\ref{satprot:badtrustresponse}-\ref{satprot:unsat}) and
+    $\mathcal{E}$ will receive \texttt{unsatisfied} as a response. In all cases
+    $\mathcal{E}$ will correctly output 0 (which corresponds to the protocol,
+    line~\ref{distenv:prot}).
   \end{proof}
