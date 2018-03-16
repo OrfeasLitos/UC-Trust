@@ -12,12 +12,34 @@ distinguishable}
     \subimport{algorithms/}{distenv.tex}
 
     Because of the way $\mathcal{E}$ is built, there always exists a seller ($Bob$,
-    line~\ref{distenv:Bob}) who has an asset (line~\ref{distenv:obtain}) that can satisfy
-    the desire (line~\ref{distenv:satisfy}) of the buyer ($Alice$,
+    line~\ref{distenv:Bob}) who has an asset (line~\ref{distenv:obtain:Bob}) that can
+    satisfy the desire (line~\ref{distenv:satisfy}) of the buyer ($Alice$,
     line~\ref{distenv:Alice}).
 
     In case $\mathcal{E}$ interacts with $\mathcal{F}_{\mathrm{SAT}}$, let $\mathcal{S}$
-    simulator that tries to simulate $\mathcal{A}$. $\mathcal{S}$ should always match the
+    simulator that tries to simulate $\mathcal{A}$. $\mathcal{F}_{\mathrm{SAT}}$ will
+    always send the message \texttt{(chooseBestSeller,} $\left\{Bob, 1,
+    s\right\}$\texttt{,} $\left\{s\right\}$\texttt{,} $Alice$\texttt{)} to $\mathcal{S}$
+    because:
+    \begin{enumerate}
+      \item $Alice$ has one coin according to $\mathcal{E}$,
+      line~\ref{distenv:obtain:Alice}, as required by $\mathcal{F}_{\textrm{SAT}}$,
+      line~\ref{satfunc:hascoins}.
+      \item It is in $Alice$'s benefit for the trade to go through, since she values
+      acquiring one asset more than one coin
+      (\texttt{util(}$Alice$\texttt{)(}$\left\{s\right\}, 0$\texttt{)} $= 2 > 1 = $
+      \texttt{util(}$Alice$\texttt{)(}$\emptyset, 1$\texttt{)} as can be seen in
+      $\mathcal{E}$, lines~\ref{distenv:setutil:Alice} and~\ref{distenv:sendutil}), as
+      required in $\mathcal{F}_{\textrm{SAT}}$, line~\ref{satfunc:gains:Alice}.
+      \item It is in $Bob$'s benefit for the trade to go through, since he values
+      acquiring one coin more than one asset
+      (\texttt{util(}$Bob$\texttt{)(}$\left\{s\right\}, 0$\texttt{)} $= 1 < 2 = $
+      \texttt{util(}$Bob$\texttt{)(}$\emptyset, 1$\texttt{)} as can be seen in
+      $\mathcal{E}$, lines~\ref{distenv:setutil:Bob} and~\ref{distenv:sendutil}), as
+      required in $\mathcal{F}_{\textrm{SAT}}$, line~\ref{satfunc:gains:Bob}.
+    \end{enumerate}
+
+    $\mathcal{S}$ should always match the
     buyer and the seller because of the way $\mathcal{A}$ is built. More precisely,
     $\mathcal{S}$ must always respond to \texttt{(chooseBestSeller,}
     $\left\{Bob\right\}$\texttt{,} $\left\{s\right\}$\texttt{,} \texttt{\_)} with
@@ -25,19 +47,15 @@ distinguishable}
     $s$\texttt{)} in order to correctly simulate $\mathcal{A}$
     (lines~\ref{distadv:Bob}-\ref{distadv:return}). Additionally, the price of 1 is cheap
     enough for $Alice$ to want to buy the asset, since she values acquiring one asset more
-    than one coin (lines~\ref{distenv:setutil:Alice} and~\ref{distenv:sendutil}).
+    than one coin (\texttt{util(}$Alice$\texttt{)(}$\left\{s\right\}, 0$\texttt{)} $= 2 >
+    1 = $ \texttt{util(}$Alice$\texttt{)(}$\emptyset, 1$\texttt{)} as can be seen in
+    $\mathcal{E}$, lines~\ref{distenv:setutil:Alice} and~\ref{distenv:sendutil}).
 
     Furthermore, $\mathcal{F}_{\mathrm{SAT}}$ never cheats on a trade and always chooses a
-    suitable seller, price and asset, given that there exists one. In our case, it is
-    \texttt{util}$\left(Alice\right)\left(\left\{s\right\}, 0\right) = 2 > 1 =$
-    \texttt{util}$\left(Alice\right)\left(\emptyset, 1\right)$, so
-    line~\ref{satfunc:gain:Alice} is satisfied. Furthermore, it is
-    \texttt{util}$\left(Bob\right)\left(\emptyset, 1\right) = 2 > 1 =$
-    \texttt{util}$\left(Alice\right)\left(\left\{s\right\}, 0\right)$, so
-    line~\ref{satfunc:gain:Bob} is satisfied as well.  Thus the exchange will always
-    complete correctly and $\mathcal{E}$ will receive \texttt{satisfied} as response.
-    $\mathcal{E}$ will always correctly output 1 (which corresponds to the functionality,
-    line~\ref{distenv:func}).
+    suitable seller, price and asset (given that there exists one, which is the case here
+    as we saw earlier), thus the exchange will always complete correctly and $\mathcal{E}$
+    will receive \texttt{satisfied} as response. $\mathcal{E}$ will always correctly
+    output 1 (which corresponds to the functionality, line~\ref{distenv:func}).
 
     On the other hand, in case $\mathcal{E}$ interacts with $\Pi_{\mathrm{SAT}}$, then we
     observe that $\mathcal{F}'_{\mathrm{Trust}}$ does not choose players depending on
