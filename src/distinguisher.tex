@@ -28,10 +28,16 @@ distinguishable}
     than one coin (lines~\ref{distenv:setutil:Alice} and~\ref{distenv:sendutil}).
 
     Furthermore, $\mathcal{F}_{\mathrm{SAT}}$ never cheats on a trade and always chooses a
-    suitable seller, price and asset (given that there exists one, which is the case here
-    as we saw earlier), thus the exchange will always complete correctly and $\mathcal{E}$
-    will receive \texttt{satisfied} as response. $\mathcal{E}$ will always correctly
-    output 1 (which corresponds to the functionality, line~\ref{distenv:func}).
+    suitable seller, price and asset, given that there exists one. In our case, it is
+    \texttt{util}$\left(Alice\right)\left(\left\{s\right\}, 0\right) = 2 > 1 =$
+    \texttt{util}$\left(Alice\right)\left(\emptyset, 1\right)$, so
+    line~\ref{satfunc:gain:Alice} is satisfied. Furthermore, it is
+    \texttt{util}$\left(Bob\right)\left(\emptyset, 1\right) = 2 > 1 =$
+    \texttt{util}$\left(Alice\right)\left(\left\{s\right\}, 0\right)$, so
+    line~\ref{satfunc:gain:Bob} is satisfied as well.  Thus the exchange will always
+    complete correctly and $\mathcal{E}$ will receive \texttt{satisfied} as response.
+    $\mathcal{E}$ will always correctly output 1 (which corresponds to the functionality,
+    line~\ref{distenv:func}).
 
     On the other hand, in case $\mathcal{E}$ interacts with $\Pi_{\mathrm{SAT}}$, then we
     observe that $\mathcal{F}'_{\mathrm{Trust}}$ does not choose players depending on

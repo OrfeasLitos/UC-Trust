@@ -16,9 +16,9 @@ Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
   find list = (*@$\left\{\left(Bob, x, s\right) \in L \times \mathbb{R} \times Assets :\right.$@*)
     (*@$s \in$@*) assets((*@$Bob$@*)) and (*@$s \in d$@*) and (*@$x \geq 0$@*) and
     (*@$Alice$@*) has at least (*@$x$@*) coins available and
-    util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)) > util((*@$Alice$@*))((*@$state_{Alice}$@*))
+    util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)) > util((*@$Alice$@*))((*@$state_{Alice}$@*)) (*@\label{satfunc:gain:Alice}@*)
     and
-    util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x$@*)) (*@$\geq$@*) util((*@$Bob$@*))((*@$state_{Bob}$@*))
+    util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x$@*)) (*@$\geq$@*) util((*@$Bob$@*))((*@$state_{Bob}$@*)) (*@\label{satfunc:gain:Bob}@*)
   send (chooseBestSeller, list, (*@$d$@*), (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
   wait for response from (*@$\mathcal{A}$@*)
   If response (*@$\neq$@*) (bestSeller, list, (*@$Bob, x, s$@*)), (*@$Bob \in \mathcal{P}, x \in Money, s \in Asset$@*):
