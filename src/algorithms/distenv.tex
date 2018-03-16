@@ -9,7 +9,8 @@ util((*@$Bob$@*))((*@$\left\{assets\right\}, x, r$@*)) = (*@$\left|\left\{assets
 (*@$\forall p \in \left\{Alice, Bob\right\}$@*):
   send message (type, util((*@$p$@*)), (*@$\lambda\left(p\right)$@*)) to (*@$p$@*) (*@\label{distenv:sendutil}@*)
 (*@$s \overset{R}{\leftarrow} Asset$@*)
-send message (obtain, (*@$s$@*)) to (*@$Bob$@*) (*@\label{distenv:obtain}@*)
+send message (obtain, 1 coin) to (*$Alice$@*) (*@\label{distenv:obtain:Alice}@*)
+send message (obtain, (*@$s$@*)) to (*@$Bob$@*) (*@\label{distenv:obtain:Bob}@*)
 send message (satisfy, (*@$\left\{s\right\}$@*), (*@$\left\{Bob\right\}$@*)) to (*@$Alice$@*) (*@\label{distenv:satisfy}@*)
 
 Upon receiving message (x, (*@$\left\{s\right\}$@*), (*@$\left\{Bob\right\}$@*)) from (*@$Alice$@*):
