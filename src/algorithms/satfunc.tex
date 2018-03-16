@@ -18,14 +18,12 @@ Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
     (*@$Alice$@*) has at least (*@$x$@*) coins available and
     util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)) > util((*@$Alice$@*))((*@$state_{Alice}$@*))
     and
-    util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x + goodRep$@*)) > util((*@$Bob$@*))((*@$state_{Bob}$@*))
-    and
-    util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x + goodRep$@*)) > util((*@$Bob$@*))((*@$state_{Bob} + x + badRep$@*))(*@$\left.\right\}$@*)
+    util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x$@*)) (*@$\geq$@*) util((*@$Bob$@*))((*@$state_{Bob}$@*))
   send (chooseBestSeller, list, (*@$d$@*), (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
   wait for response from (*@$\mathcal{A}$@*)
   If response (*@$\neq$@*) (bestSeller, list, (*@$Bob, x, s$@*)), (*@$Bob \in \mathcal{P}, x \in Money, s \in Asset$@*):
     # e.g. (*@$Bob = \bot$@*)
-    ((*@$Bob, x, s$@*)) = (*@$\argmax\limits_{\left(Bob, x, s\right) \in \texttt{list}}\left\{\right.$@*) util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*))(*@$\left.\right\}$@*)
+    ((*@$Bob, x, s$@*)) = (*@$\argmax\limits_{\left(Bob, x, s\right) \in \texttt{list}}\left\{\right.$@*)util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*))(*@$\left.\right\}$@*)
   Else:
     parse response as (bestSeller, list, (*@$Bob, x, s$@*))
   pay (*@$x$@*) from (*@$Alice$@*) to (*@$Bob$@*)
