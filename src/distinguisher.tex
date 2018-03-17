@@ -18,9 +18,9 @@ distinguishable}
 
     In case $\mathcal{E}$ interacts with $\mathcal{F}_{\mathrm{SAT}}$, let $\mathcal{S}$
     simulator that tries to simulate $\mathcal{A}$. $\mathcal{F}_{\mathrm{SAT}}$ will
-    always send the message \texttt{(chooseBestSeller,} $\left\{Bob, 1,
-    s\right\}$\texttt{,} $\left\{s\right\}$\texttt{,} $Alice$\texttt{)} to $\mathcal{S}$
-    because:
+    always send the message \texttt{(chooseBestSeller,} $\left\{\left(Bob, 1,
+    s\right)\right\}$\texttt{,} $\left\{s\right\}$\texttt{,} $Alice$\texttt{)} to
+    $\mathcal{S}$ because:
     \begin{enumerate}
       \item $Alice$ has one coin according to $\mathcal{E}$,
       line~\ref{distenv:obtain:Alice}, as required by $\mathcal{F}_{\textrm{SAT}}$,
@@ -39,23 +39,20 @@ distinguishable}
       required in $\mathcal{F}_{\textrm{SAT}}$, line~\ref{satfunc:gains:Bob}.
     \end{enumerate}
 
-    $\mathcal{S}$ should always match the
-    buyer and the seller because of the way $\mathcal{A}$ is built. More precisely,
-    $\mathcal{S}$ must always respond to \texttt{(chooseBestSeller,}
-    $\left\{Bob\right\}$\texttt{,} $\left\{s\right\}$\texttt{,} \texttt{\_)} with
-    \texttt{(bestSeller,} $\left\{Bob\right\}$\texttt{,} $Bob$\texttt{,} 1\texttt{,}
+    $\mathcal{S}$ should always match the buyer and the seller because of the way
+    $\mathcal{A}$ is built. More precisely, $\mathcal{S}$ must always respond to
+    \texttt{(chooseBestSeller,} $\left\{\left(Bob, 1, s\right)\right\}$\texttt{,}
+    $\left\{s\right\}$\texttt{,} \texttt{\_)} with \texttt{(bestSeller,}
+    $\left\{\left(Bob, 1, s\right)\right\}$\texttt{,} $Bob$\texttt{,} 1\texttt{,}
     $s$\texttt{)} in order to correctly simulate $\mathcal{A}$
-    (lines~\ref{distadv:Bob}-\ref{distadv:return}). Additionally, the price of 1 is cheap
-    enough for $Alice$ to want to buy the asset, since she values acquiring one asset more
-    than one coin (\texttt{util(}$Alice$\texttt{)(}$\left\{s\right\}, 0$\texttt{)} $= 2 >
-    1 = $ \texttt{util(}$Alice$\texttt{)(}$\emptyset, 1$\texttt{)} as can be seen in
-    $\mathcal{E}$, lines~\ref{distenv:setutil:Alice} and~\ref{distenv:sendutil}).
+    (lines~\ref{distadv:Bob}-\ref{distadv:return}).
 
     Furthermore, $\mathcal{F}_{\mathrm{SAT}}$ never cheats on a trade and always chooses a
     suitable seller, price and asset (given that there exists one, which is the case here
-    as we saw earlier), thus the exchange will always complete correctly and $\mathcal{E}$
-    will receive \texttt{satisfied} as response. $\mathcal{E}$ will always correctly
-    output 1 (which corresponds to the functionality, line~\ref{distenv:func}).
+    as we saw earlier) (lines~\ref{satfunc:badresponse}-\ref{satfunc:send:satisfied}),
+    thus the exchange will always complete correctly and $\mathcal{E}$ will receive
+    \texttt{satisfied} as response. $\mathcal{E}$ will always correctly output 1 (which
+    corresponds to the functionality, line~\ref{distenv:func}).
 
     On the other hand, in case $\mathcal{E}$ interacts with $\Pi_{\mathrm{SAT}}$, then we
     observe that $\mathcal{F}'_{\mathrm{Trust}}$ does not choose players depending on

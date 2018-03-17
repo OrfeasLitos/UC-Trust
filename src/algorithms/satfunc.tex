@@ -16,12 +16,12 @@ Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
   find list = (*@$\left\{\left(Bob, x, s\right) \in L \times \mathbb{R} \times Assets :\right.$@*)
     (*@$s \in$@*) assets((*@$Bob$@*)) and (*@$s \in d$@*) and (*@$x \geq 0$@*) and
     (*@$Alice$@*) has at least (*@$x$@*) coins available and (*@\label{satfunc:hascoins}@*)
-    util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)) > util((*@$Alice$@*))((*@$state_{Alice}$@*)) (*@\label{satfunc:gain:Alice}@*)
+    util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)) > util((*@$Alice$@*))((*@$state_{Alice}$@*)) (*@\label{satfunc:gains:Alice}@*)
     and
-    util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x$@*)) (*@$\geq$@*) util((*@$Bob$@*))((*@$state_{Bob}$@*)) (*@\label{satfunc:gain:Bob}@*)
+    util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x$@*)) (*@$\geq$@*) util((*@$Bob$@*))((*@$state_{Bob}$@*))(*@$\left.\right\}$@*) (*@\label{satfunc:gains:Bob}@*)
   send (chooseBestSeller, list, (*@$d$@*), (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
   wait for response from (*@$\mathcal{A}$@*)
-  If response (*@$\neq$@*) (bestSeller, list, (*@$Bob, x, s$@*)), (*@$Bob \in \mathcal{P}, x \in Money, s \in Asset$@*):
+  If response (*@$\neq$@*) (bestSeller, list, (*@$Bob, x, s$@*)), (*@$Bob \in \mathcal{P}, x \in Money, s \in Asset$@*): (*@\label{satfunc:badresponse}@*)
     # e.g. (*@$Bob = \bot$@*)
     ((*@$Bob, x, s$@*)) = (*@$\argmax\limits_{\left(Bob, x, s\right) \in \texttt{list}}\left\{\right.$@*)util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*))(*@$\left.\right\}$@*)
   Else:
@@ -29,7 +29,7 @@ Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
   pay (*@$x$@*) from (*@$Alice$@*) to (*@$Bob$@*)
   assets((*@$Bob$@*)) = assets((*@$Bob$@*))(*@$\setminus \left\{s\right\}$@*)
   assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{s\right\}$@*)
-  send message (satisfied, (*@$d, L$@*)) to (*@$Alice$@*)
+  send message (satisfied, (*@$d, L$@*)) to (*@$Alice$@*) (*@\label{satfunc:send:satisfied}@*)
 
 Upon receiving (obtain, (*@$s$@*)) from (*@$Alice$@*):
   assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{s\right\}$@*)
