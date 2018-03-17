@@ -18,9 +18,9 @@ distinguishable}
 
     In case $\mathcal{E}$ interacts with $\mathcal{F}_{\mathrm{SAT}}$, let $\mathcal{S}$
     simulator that tries to simulate $\mathcal{A}$. $\mathcal{F}_{\mathrm{SAT}}$ will
-    always send the message \texttt{(chooseBestSeller,} $\left\{\left(Bob, 1,
-    s\right)\right\}$\texttt{,} $\left\{s\right\}$\texttt{,} $Alice$\texttt{)} to
-    $\mathcal{S}$ because:
+    always send the message \texttt{(chooseBestSeller,} $\left\{s\right\}$\texttt{,}
+    $\left\{\left(Bob, 1, s\right)\right\}$\texttt{,} $Alice$\texttt{)} to $\mathcal{S}$
+    because:
     \begin{enumerate}
       \item $Alice$ has one coin according to $\mathcal{E}$,
       line~\ref{distenv:obtain:Alice}, as required by $\mathcal{F}_{\textrm{SAT}}$,
@@ -41,11 +41,10 @@ distinguishable}
 
     $\mathcal{S}$ should always match the buyer and the seller because of the way
     $\mathcal{A}$ is built. More precisely, $\mathcal{S}$ must always respond to
-    \texttt{(chooseBestSeller,} $\left\{\left(Bob, 1, s\right)\right\}$\texttt{,}
-    $\left\{s\right\}$\texttt{,} \texttt{\_)} with \texttt{(bestSeller,}
-    $\left\{\left(Bob, 1, s\right)\right\}$\texttt{,} $Bob$\texttt{,} 1\texttt{,}
-    $s$\texttt{)} in order to correctly simulate $\mathcal{A}$
-    (lines~\ref{distadv:Bob}-\ref{distadv:return}).
+    \texttt{(chooseBestSeller,} $\left\{s\right\}$\texttt{,} $\left\{\left(Bob, 1,
+    s\right)\right\}$\texttt{,} \texttt{\_)} with \texttt{(bestSeller,} $\left\{\left(Bob,
+    1, s\right)\right\}$\texttt{,} $Bob$\texttt{,} 1\texttt{,} $s$\texttt{)} in order to
+    correctly simulate $\mathcal{A}$ (lines~\ref{distadv:Bob}-\ref{distadv:return}).
 
     Furthermore, $\mathcal{F}_{\mathrm{SAT}}$ never cheats on a trade and always chooses a
     suitable seller, price and asset (given that there exists one, which is the case here

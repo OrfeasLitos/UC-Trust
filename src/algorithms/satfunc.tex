@@ -19,7 +19,7 @@ Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
     util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)) > util((*@$Alice$@*))((*@$state_{Alice}$@*)) (*@\label{satfunc:gains:Alice}@*)
     and
     util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x$@*)) (*@$\geq$@*) util((*@$Bob$@*))((*@$state_{Bob}$@*))(*@$\left.\right\}$@*) (*@\label{satfunc:gains:Bob}@*)
-  send (chooseBestSeller, list, (*@$d$@*), (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
+  send (chooseBestSeller, (*@$d$@*), list, (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
   wait for response from (*@$\mathcal{A}$@*)
   If response (*@$\neq$@*) (bestSeller, list, (*@$Bob, x, s$@*)), (*@$Bob \in \mathcal{P}, x \in Money, s \in Asset$@*): (*@\label{satfunc:badresponse}@*)
     # e.g. (*@$Bob = \bot$@*)
