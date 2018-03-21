@@ -7,9 +7,9 @@ Upon receiving (chooseBestSeller, (*@$d$@*), (*@$L$@*)) from (*@$Alice$@*):
   (*@$Bob$@*) =
   (*@$\argmax\limits_{Bob \in L}\left\{\right.$@*) util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)) (*@$:$@*)
   (*@$s \in d \wedge s \in$@*) assets((*@$Bob$@*)) (*@$\wedge$@*) (*@$Alice$@*) has (*@$x$@*) coins (*@$\wedge$@*)
-  (util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x + goodRep$@*)) >
-  util((*@$Bob$@*))((*@$state_{Bob} + x + badRep$@*))) (*@$\wedge$@*)
-  util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x + goodRep$@*)) > util((*@$Bob$@*))((*@$state_{Bob}$@*)) (*@$\left.\right\}$@*)
+  (util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x \: \mathrm{coins} + 1 \: \mathrm{point}$@*)) >
+  util((*@$Bob$@*))((*@$state_{Bob} + x \: \mathrm{coins} - 1 \: \mathrm{point}$@*))) (*@$\wedge$@*)
+  util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x \: \mathrm{coins} + 1 \: \mathrm{point}$@*)) > util((*@$Bob$@*))((*@$state_{Bob}$@*)) (*@$\left.\right\}$@*)
   If util((*@$Alice$@*))((*@$state_{Alice}$@*)) (*@$\geq$@*) util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)):
     (*@$Bob$@*) = (*@$\bot$@*)
   send message (bestSeller, (*@$d$@*), (*@$L$@*), (*@$Bob$@*)) to (*@$Alice$@*)

@@ -3,6 +3,7 @@
 (*@$\Pi_{\mathrm{SAT}}$ \Reactivatenumber@*)
 Initalization:
   util = (*@$\bot$@*)
+  score = 0
 
 Upon receiving (type, (*@$t$@*)) from (*@$\mathcal{E}$@*):
   util = (*@$t$@*)
@@ -56,8 +57,8 @@ Upon receiving message (lose, (*@$s$@*)) from (*@$\mathcal{E}$@*):
 Upon receiving message (canYouSatisfy, (*@$d$@*)) from (*@$Alice$@*):
   If util == (*@$\bot$@*):
     ignore request, go to Idle state
-  If (util((*@$state + x + badRep$@*)) > util((*@$state$@*)) or
-      util((*@$state \setminus s + x + goodRep$@*)) > util((*@$state$@*))) and (*@$s \in d$@*):
+  If (util((*@$state + x \: \mathrm{coins} - 1 \: \mathrm{point}$@*)) > util((*@$state$@*)) or
+      util((*@$state \setminus s + x \: \mathrm{coins} + 1 \: \mathrm{point}$@*)) > util((*@$state$@*))) and (*@$s \in d$@*):
     send message (IcanSatisfy, (*@$d, x, s$@*)) to (*@$Alice$@*) # (*@$x$@*) is the price
   Else:
     send message (IcannotSatisfy, (*@$d$@*)) to (*@$Alice$@*)
@@ -65,8 +66,10 @@ Upon receiving message (canYouSatisfy, (*@$d$@*)) from (*@$Alice$@*):
 Upon receiving message (willWeCheat, (*@$x, s, Alice$@*)) from (*@$\mathcal{F}_{\mathrm{Trade}}$@*):
   If util == (*@$\bot$@*): # (Unreachable since we've already engaged)
     ignore request, go to Idle state
-  If util((*@$state \setminus s + x + goodRep$@*)) (*@$\geq$@*) util((*@$state + x + badRep$@*)):
+  If util((*@$state \setminus s + x \: \mathrm{coins} + 1 \: \mathrm{point}$@*)) (*@$\geq$@*) util((*@$state + x \: \mathrm{coins} - 1 \: \mathrm{point}$@*)):
     send message (doNotCheat, (*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
+    score = score + 1
   Else:
     send message (cheat, (*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
+    score = score - 1
 \end{lstlisting}
