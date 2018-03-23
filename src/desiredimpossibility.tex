@@ -1,0 +1,15 @@
+\section{An open source reputation management algorithm is impossible}
+  \begin{theorem}
+    Let $U_{Alice} : Money \times multiset\left(Assets\right) \times Rep \rightarrow
+    \mathbb{R},$ where $Rep \in \mathbb{N}$. ($\mathcal{F}_{\mathrm{Trust}}$ does not have
+    access to any oracle.) Then $\nexists \mathcal{F}_{\mathrm{Trust}}:
+    \Pi_{\mathrm{SAT}}$ UC-realizes $\mathcal{F}_{\mathrm{SAT}}$.
+  \end{theorem}
+  \begin{proof}
+    We will prove this by contradiction. Let $\mathcal{F}_{\mathrm{Trust}}$ be such a
+    functionality. If it does not allow for cheats (grim trigger for seller on buyer
+    reporting a cheat), then a malicious buyer (also prospective seller) can try buying
+    from a competitor, falsely report a cheat and beat the competition (thus increasing
+    their utility). If it allows for cheats, then it does not emulate
+    $\mathcal{F}_{\mathrm{SAT}}$.
+  \end{proof}
