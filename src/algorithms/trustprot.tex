@@ -1,0 +1,13 @@
+\Suppressnumber
+\begin{lstlisting}[label=trustprot, style=numbers]
+(*@$\Pi_{\mathrm{Trust}}$ \Reactivatenumber@*)
+Upon receiving (chooseBestSeller, (*@$d$@*), (*@$L$@*)) from (*@$Alice$@*):
+  (*@$Bob$@*) =
+  (*@$\argmax\limits_{\left(Bob, x\right) \in L}\left\{\mathcal{O}_{\mathrm{Rep}}\left(Alice, Bob, s\right)\right.$@*)util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)) +
+  (*@$\left(1 - \mathcal{O}_{\mathrm{Rep}}\left(Alice, Bob, s\right)\right)$@*)util((*@$Alice$@*))((*@$state_{Alice} - x$@*)) (*@$:$@*)
+  (*@$s \in d \wedge s \in$@*) assets((*@$Bob$@*)) (*@$\wedge$@*) (*@$Alice$@*) has (*@$x$@*) coins (*@$\left.\right\}$@*)
+  # drop "Bob has s"?
+  If util((*@$Alice$@*))((*@$state_{Alice}$@*)) (*@$\geq$@*) util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)):
+    (*@$Bob$@*) = (*@$\bot$@*)
+  send message (bestSeller, (*@$d$@*), (*@$L$@*), (*@$Bob$@*)) to (*@$Alice$@*)
+\end{lstlisting}
