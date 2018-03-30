@@ -2,23 +2,27 @@
   Before $Alice$ (an ITM that executes $\Pi_{\mathrm{SAT}}$) can take any action, she must
   be assigned a utility function, $U_{Alice}$, and a discount function, $\lambda_{Alice}$,
   by $\mathcal{E}$.
-  \begin{definition}[Utility Function]
-    $U_{Alice} : Money \times multiset\left(Asset\right) \times Rep \rightarrow
-    Utility$, where $Money \in \mathbb{N}, Utility \in \mathbb{R}$.
+  \begin{definition}[Utility Function] \ \\
+    $U_{Alice} : Time \rightarrow \left(Money \times multiset\left(Asset\right) \times Rep
+    \rightarrow Utility\right)$, where $Money, Time \in \mathbb{N}, Utility \in \mathbb{R}$.
   \end{definition}
-  \begin{gather*}
-    Rep_{Alice}\left(t\right) = \left\{\Pr\left[Alice \mbox{ receives message }
-    \left(\mathtt{canYouSatisfy}, d\right) \mbox{ from } \right.\right. \\
-    \left.\left. Bob \mbox{ at time } t\right] : Bob \in \mathcal{P}, d \in
-    2^{Asset}\right\}
-  \end{gather*}
   The utility function is strictly increasing with respect to the integer $Money$ and may
   do anything with respect to the quantity of any single $Asset$ or combination of
   $Asset$s. It is also (not necessarily strictly) increasing with respect to each
   probability $\in Rep$.
 
-  \begin{definition}[Reputation function]
-    $Reputation : \mathcal{P} \times Time \times 2^{Asset} \rightarrow Rep$, where $Time,
+  \begin{definition}[Complex reputation function]
+    $Rep_{Alice} : Time \times \mathcal{P} \times 2^{Asset} \rightarrow \left[0,
+    1\right]$, where $Time \in \mathbb{N}$
+    \begin{gather*}
+      Rep_{Alice}\left(t, Bob, d\right) = \\
+      \Pr\left[Alice \mbox{ receives message } \left(\mathtt{canYouSatisfy}, d\right)
+      \mbox{ from } Bob \mbox{ at time } t\right]
+    \end{gather*}
+  \end{definition}
+
+  \begin{definition}[Simple reputation function]
+    $Rep'_{Alice} : Time \times 2^{Asset} \rightarrow Rep$, where $Time,
     Rep \in \mathbb{N}$
   \end{definition}
   \begin{gather*}
