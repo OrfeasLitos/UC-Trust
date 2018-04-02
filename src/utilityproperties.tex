@@ -1,6 +1,6 @@
 \section{Utility Function Properties}
   Before $Alice$ (an ITM that executes $\Pi_{\mathrm{SAT}}$) can take any action, she must
-  be assigned a mapping from moments in time to score functions, $U_{Alice} : Time
+  be assigned a mapping from moments in time to score functions, $u_{Alice} : Time
   \rightarrow sc_{Alice}$, where $sc_{Alice} : Money \times multiset\left(Asset\right)
   \rightarrow \mathbb{R}, Money, Time = \mathbb{N}$, and a discount function,
   $\lambda_{Alice}$, by $\mathcal{E}$.
@@ -15,9 +15,10 @@
   Let $state_{Alice} : Time \rightarrow Money \times multiset\left(Asset\right)$.
   \end{definition}
   For any given moment $t \in Time$, $Alice$'s target is to maximise
-  \begin{equation*}
-    U_{Alice}\left(t\right) = \sum\limits_{t' = t}^{\infty}
+  \begin{gather*}
+    U_{Alice}\left(t, m, a\right) = u_{Alice}\left(t\right)\left(m, a\right) + \\
+    \sum\limits_{t' = t + 1}^{\infty}
     \lambda_{Alice}\left(t'\right)\left(\sum\limits_{\overset{\left(m, a\right) \in}{Money
-    \times mset\left(Asset\right)}} sc_{Alice}\left(m, a\right) \cdot
+    \times mset\left(Asset\right)}} u_{Alice}\left(t'\right)\left(m, a\right) \cdot
     \Pr\left[state_{Alice}\left(t'\right) = \left(m, a\right)\right]\right) \enspace.
-  \end{equation*}
+  \end{gather*}

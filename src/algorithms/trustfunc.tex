@@ -1,17 +1,15 @@
 \Suppressnumber
 \begin{lstlisting}[label=trustfunc, style=numbers]
 (*@$\mathcal{F}_{\mathrm{Trust}}$ \Reactivatenumber@*)
-Has oracle access to every player's (*@$Alice$@*) utility function util((*@$Alice$@*))
+Has oracle access to every player's (*@$Alice$@*) utility function (*@$U_{Alice}$@*)
 
 Upon receiving (chooseBestSeller, (*@$d$@*), (*@$L$@*)) from (*@$Alice$@*):
-  (*@$Bob$@*) =
-  (*@$\argmax\limits_{Bob \in L}\left\{\right.$@*) util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)) (*@$:$@*)
+  (*@$t$@*) = (*@$\mathcal{G}_{Clock}$@*)
+  (*@$Bob$@*) = (*@$\argmax\limits_{Bob \in L}\left\{\right.$@*) (*@$U_{Alice}\left(t, state_{Alice}\left[1\right] - x, state_{Alice}\left[2\right] \cup s\right) :$@*)
   (*@$s \in d \wedge s \in$@*) assets((*@$Bob$@*)) (*@$\wedge$@*) (*@$Alice$@*) has (*@$x$@*) coins (*@$\wedge$@*)
-  (util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x \: \mathrm{coins} + 1 \: \mathrm{point}$@*)) >
-  util((*@$Bob$@*))((*@$state_{Bob} + x \: \mathrm{coins} - 1 \: \mathrm{point}$@*))) (*@$\wedge$@*)
-  util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x \: \mathrm{coins} + 1 \: \mathrm{point}$@*)) > util((*@$Bob$@*))((*@$state_{Bob}$@*)) (*@$\left.\right\}$@*)
-  If util((*@$Alice$@*))((*@$state_{Alice}$@*)) (*@$\geq$@*) util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)):
-    (*@$Bob$@*) = (*@$\bot$@*)
+  (*@$U_{Alice}\left(t, state_{Alice}\left[1\right] - x, state_{Alice}\left[2\right] \cup s\right) > U_{Alice}\left(state_{Alice}\right) \wedge$@*)
+  (*@$U_{Bob}\left(t, state_{Bob}\left[1\right] + x, state_{Bob}\left[2\right] \setminus s\right) > U_{Bob}\left(t, state_{Bob}\right) \wedge$@*)
+  (*@$U_{Bob}\left(t, state_{Bob}\left[1\right] + x, state_{Bob}\left[2\right]\right) < U_{Bob}\left(t, state_{Bob}\right) \left.\right\}$@*)
   send message (bestSeller, (*@$d$@*), (*@$L$@*), (*@$Bob$@*)) to (*@$Alice$@*)
 \end{lstlisting}
 
