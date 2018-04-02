@@ -1,60 +1,23 @@
 \section{Utility Function Properties}
   Before $Alice$ (an ITM that executes $\Pi_{\mathrm{SAT}}$) can take any action, she must
-  be assigned a utility function, $U_{Alice}$, and a discount function, $\lambda_{Alice}$,
-  by $\mathcal{E}$.
-  \begin{definition}[Utility Function] \ \\
-    $U_{Alice} : Time \rightarrow \left(Money \times multiset\left(Asset\right) \times Rep
-    \rightarrow Utility\right)$, where $Money, Time \in \mathbb{N}, Utility \in \mathbb{R}$.
-  \end{definition}
-  The utility function is strictly increasing with respect to the integer $Money$ and may
-  do anything with respect to the quantity of any single $Asset$ or combination of
-  $Asset$s. It is also (not necessarily strictly) increasing with respect to each
-  probability $\in Rep$.
-
-  \begin{definition}[Complex reputation function]
-    $Rep_{Alice} : Time \times \mathcal{P} \times 2^{Asset} \rightarrow \left[0,
-    1\right]$, where $Time \in \mathbb{N}$
-    \begin{gather*}
-      Rep_{Alice}\left(t, Bob, d\right) = \\
-      \Pr\left[Alice \mbox{ receives message } \left(\mathtt{canYouSatisfy}, d\right)
-      \mbox{ from } Bob \mbox{ at time } t\right]
-    \end{gather*}
-  \end{definition}
-
-  \begin{definition}[Simple reputation function]
-    $Rep'_{Alice} : Time \times 2^{Asset} \rightarrow Rep$, where $Time,
-    Rep \in \mathbb{N}$
-  \end{definition}
-  \begin{gather*}
-    Rep\left(Alice, t, set\right) > Rep\left(Bob, t, set\right)
-    \overset{\mathrm{def}}{\iff} \\
-    \begin{aligned}
-      \Pr\left[Alice \mbox{ receives message } \left(\mbox{canYouSatisfy}, d\right) \mbox{
-      at time t}\right] &> \\
-      \Pr\left[Bob \mbox{ receives message } \left(\mbox{canYouSatisfy}, d\right) \mbox{ at
-      time t}\right] &
-    \end{aligned} \\
-    \mbox{where } d \in set
-  \end{gather*}
-  $Rep$ is an integer that corresponds to $Alice$'s perceived rank in a partial ordering
-  of all the players where $Alice$ assumes that she has a higher rank than $Bob$ if the
-  average probability of third players choosing her before $Bob$ when they want to buy
-  something amongst a list of $Asset$s that $Alice$ is interested in selling is higher
-  than $Bob$'s corresponding probability for the same $Asset$s, as perceived by $Alice$.
+  be assigned a mapping from moments in time to score functions, $U_{Alice} : Time
+  \rightarrow sc_{Alice}$, where $sc_{Alice} : Money \times multiset\left(Asset\right)
+  \rightarrow \mathbb{R}, Money, Time = \mathbb{N}$, and a discount function,
+  $\lambda_{Alice}$, by $\mathcal{E}$.
+  The utility function is strictly increasing with respect to the integer $Money$ and to
+  the quantity of any single $Asset$ or combination of $Asset$s.
 
   \begin{definition}[Discount function]
     $\lambda_{Alice} : Time \rightarrow \left[0, 1\right]$, where $Time \in \mathbb{N}$
     and $\lambda$ is strictly decreasing.
   \end{definition}
   \begin{definition}[State]
-  Let $state_{Alice} : Time \rightarrow Money \times multiset\left(Asset\right) \times
-  Rep$.
+  Let $state_{Alice} : Time \rightarrow Money \times multiset\left(Asset\right)$.
   \end{definition}
-  $Alice$'s target is to maximise
+  For any given moment $t \in Time$, $Alice$'s target is to maximise
   \begin{equation*}
-    \sum\limits_{t = 1}^{\infty}
-    \lambda_{Alice}\left(t\right)\left(\sum\limits_{\overset{\left(m, a, r\right)
-    \in}{Money \times mset\left(Asset\right) \times Rep}} U_{Alice}\left(m, a,
-    r\right) \cdot \Pr\left[state_{Alice}\left(t\right) = \left(m, a,
-    r\right)\right]\right) \enspace.
+    U_{Alice}\left(t\right) = \sum\limits_{t' = t}^{\infty}
+    \lambda_{Alice}\left(t'\right)\left(\sum\limits_{\overset{\left(m, a\right) \in}{Money
+    \times mset\left(Asset\right)}} sc_{Alice}\left(m, a\right) \cdot
+    \Pr\left[state_{Alice}\left(t'\right) = \left(m, a\right)\right]\right) \enspace.
   \end{equation*}
