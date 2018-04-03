@@ -1,11 +1,11 @@
 \section{Utility Function Properties}
   Before $Alice$ (an ITM that executes $\Pi_{\mathrm{SAT}}$) can take any action, she must
   be assigned a mapping from moments in time to score functions, $u_{Alice} : Time
-  \rightarrow sc_{Alice}$, where $sc_{Alice} : Money \times multiset\left(Asset\right)
-  \rightarrow \mathbb{R}, Money, Time = \mathbb{N}$, and a discount function,
-  $\lambda_{Alice}$, by $\mathcal{E}$.
-  The utility function is strictly increasing with respect to the integer $Money$ and to
-  the quantity of any single $Asset$ or combination of $Asset$s.
+  \rightarrow \left(Money \times multiset\left(Asset\right) \rightarrow
+  \mathbb{R}\right)$, where $Money, Time = \mathbb{N}$, and a discount function,
+  $\lambda_{Alice}$, by $\mathcal{E}$. The utility function is strictly increasing with
+  respect to the integer $Money$ and to the quantity of any single $Asset$ or combination
+  of $Asset$s.
 
   \begin{definition}[Discount function]
     $\lambda_{Alice} : Time \rightarrow \left[0, 1\right]$, where $Time \in \mathbb{N}$
