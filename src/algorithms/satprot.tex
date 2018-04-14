@@ -3,73 +3,75 @@
 (*@$\Pi_{\mathrm{SAT}}$ \Reactivatenumber@*)
 Initalization:
   util = (*@$\bot$@*)
-  score = 0
 
-Upon receiving (type, (*@$t$@*)) from (*@$\mathcal{E}$@*):
-  util = (*@$t$@*)
+Upon receiving (utility, (*@$U$@*)) from (*@$\mathcal{E}$@*):
+  util = (*@$U$@*)
 
-Upon receiving message (satisfy, (*@$d, L$@*)) from (*@$\mathcal{E}$@*):
+Upon receiving message (satisfy, d, L) from (*@$\mathcal{E}$@*) at time t:
   If util == (*@$\bot$@*):
     send message (utilityNotSet) to (*@$\mathcal{E}$@*)
     go to Idle state
   aux = (*@$L$@*)
+  m = (*@$\mathcal{G}_{\mathrm{Ledger}}$@*).money((*@$Alice$@*))
+  a = (*@$\mathcal{G}_{\mathrm{Assets}}$@*).assets((*@$Alice$@*))
   While (aux (*@$\neq \emptyset$@*)):
-    send message (chooseBestSeller, (*@$d$@*), aux) to (*@$\mathcal{F}_{\mathrm{Trust}}$@*)
+    send message (chooseBestSeller, d, aux) to (*@$\mathcal{F}_{\mathrm{Trust}}$@*)
     wait for response1 from (*@$\mathcal{F}_{\mathrm{Trust}}$@*)
-    If response1 == (bestSeller, (*@$d, L, Bob$@*)):
-      send message (canYouSatisfy, (*@$d$@*)) to (*@$Bob$@*)
+    If response1 == (bestSeller, d, L, (*@$Bob$@*)):
+      send message (canYouSatisfy, d) to (*@$Bob$@*)
       wait for response2 from (*@$Bob$@*)
-      If response2 == (IcanSatisfy, (*@$d, x, s$@*)):
-        If util((*@$state \cup s - x$@*)) > util((*@$state$@*)) and (*@$s \in d$@*)
-          send message (trade, (*@$x, s, Bob$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
+      If response2 == (IcanSatisfy, d, x, s):
+        If util(t+1, m - x, a (*@$\cup\left\{\mathtt{s}\right\}$@*)) > util(t, m, a) and s (*@$\in$@*) d
+          send message (trade, x, s, (*@$Bob$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
           wait for response3 from (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
-            If response3 == (traded, (*@$x, s, Bob$@*)):
-              send message (satisfied, (*@$d, x, s, Bob$@*)) to (*@$\mathcal{F}_{\mathrm{Trust}}$@*)
+            If response3 == (traded, x, s, (*@$Bob$@*)):
+              send message (satisfied, d, x, s, (*@$Bob$@*)) to (*@$\mathcal{F}_{\mathrm{Trust}}$@*)
               # maybe send only utility difference to (*@$\mathcal{F}_{\mathrm{Trust}}$@*)
-              send message (satisfied, (*@$d, L$@*)) to (*@$\mathcal{E}$@*)
+              send message (satisfied, d, L) to (*@$\mathcal{E}$@*)
               go to Idle state
-            Else If response3 == (cheated, (*@$x, s$@*), (*@$Bob$@*)):
-              send message (cheated, (*@$d, x, s, Bob$@*)) to (*@$\mathcal{F}_{\mathrm{Trust}}$@*)
-              send message (cheated, (*@$d, L$@*)) to (*@$\mathcal{E}$@*)
+            Else If response3 == (cheated, x, s, (*@$Bob$@*)):
+              send message (cheated, d, x, s, (*@$Bob$@*)) to (*@$\mathcal{F}_{\mathrm{Trust}}$@*)
+              send message (cheated, d, L) to (*@$\mathcal{E}$@*)
               go to Idle state
     Else: # if response1 == (*@$\bot$@*) (*@\label{satprot:badtrustresponse}@*)
-      send message (unsatisfied, (*@$d, L$@*)) to (*@$\mathcal{E}$@*) (*@\label{satprot:unsat}@*)
+      send message (unsatisfied, d, L) to (*@$\mathcal{E}$@*) (*@\label{satprot:unsat}@*)
       go to Idle state
     aux = aux (*@$\setminus \left\{Bob\right\}$@*) # only when response2 is not good
-  send message (unsatisfied, (*@$d, L$@*)) to (*@$\mathcal{E}$@*)
+  send message (unsatisfied, d, L) to (*@$\mathcal{E}$@*)
 
-Upon receiving message (obtain, (*@$s$@*)) from (*@$\mathcal{E}$@*):
-  send message (obtain, (*@$s$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
+Upon receiving message (obtain, s) from (*@$\mathcal{E}$@*):
+  send message (obtain, s) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
   wait for response from (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
-  If response == (obtained, (*@$s$@*)):
-    send message (obtained, (*@$s$@*)) to (*@$\mathcal{E}$@*)
+  If response == (obtained, s):
+    send message (obtained, s) to (*@$\mathcal{E}$@*)
   Else:
-    send message (notObtained, (*@$s$@*)) to (*@$\mathcal{E}$@*)
+    send message (notObtained, s) to (*@$\mathcal{E}$@*)
 
-Upon receiving message (lose, (*@$s$@*)) from (*@$\mathcal{E}$@*):
-  send message (lose, (*@$s$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
+Upon receiving message (lose, s) from (*@$\mathcal{E}$@*):
+  send message (lose, s) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
   wait for response from (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
-  If response == (lost, (*@$s$@*)):
-    send message (lost, (*@$s$@*)) to (*@$\mathcal{E}$@*)
+  If response == (lost, s):
+    send message (lost, s) to (*@$\mathcal{E}$@*)
   Else:
-    send message (notLost, (*@$s$@*)) to (*@$\mathcal{E}$@*)
+    send message (notLost, s) to (*@$\mathcal{E}$@*)
 
-Upon receiving message (canYouSatisfy, (*@$d$@*)) from (*@$Alice$@*):
+Upon receiving message (canYouSatisfy, d) from (*@$Alice$@*) at time t:
   If util == (*@$\bot$@*):
     ignore request, go to Idle state
-  If (util((*@$state + x \: \mathrm{coins} - 1 \: \mathrm{point}$@*)) > util((*@$state$@*)) or
-      util((*@$state \setminus s + x \: \mathrm{coins} + 1 \: \mathrm{point}$@*)) > util((*@$state$@*))) and (*@$s \in d$@*):
-    send message (IcanSatisfy, (*@$d, x, s$@*)) to (*@$Alice$@*) # (*@$x$@*) is the price
+  m = (*@$\mathcal{G}_{\mathrm{Ledger}}$@*).money((*@$Alice$@*))
+  a = (*@$\mathcal{G}_{\mathrm{Assets}}$@*).assets((*@$Alice$@*))
+  If (*@$\exists \mathtt{s} \in \mathtt{a} \cap \mathtt{d}, \mathtt{x} \in Money:$@*)
+    (util(t + 1, m + x, a (*@$\setminus \left\{\mathtt{s}\right\}$@*)) > util(t, m, a) or
+    (util(t + 1, m + x, a) > util(t, m, a) and I do not care for the bad rep))
+      send message (IcanSatisfy, d, x, s) to (*@$Alice$@*)
   Else:
-    send message (IcannotSatisfy, (*@$d$@*)) to (*@$Alice$@*)
+    send message (IcannotSatisfy, d) to (*@$Alice$@*)
 
-Upon receiving message (willWeCheat, (*@$x, s, Alice$@*)) from (*@$\mathcal{F}_{\mathrm{Trade}}$@*):
+Upon receiving message (willWeCheat, x, s, (*@$Alice$@*)) from (*@$\mathcal{F}_{\mathrm{Trade}}$@*):
   If util == (*@$\bot$@*): # (Unreachable since we've already engaged)
     ignore request, go to Idle state
-  If util((*@$state \setminus s + x \: \mathrm{coins} + 1 \: \mathrm{point}$@*)) (*@$\geq$@*) util((*@$state + x \: \mathrm{coins} - 1 \: \mathrm{point}$@*)):
-    send message (doNotCheat, (*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
-    score = score + 1
+  If cheating is a bad idea:
+    send message (doNotCheat, x, s, (*@$Alice$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
   Else:
-    send message (cheat, (*@$x, s, Alice$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
-    score = score - 1
+    send message (cheat, x, s, (*@$Alice$@*)) to (*@$\mathcal{F}_{\mathrm{Trade}}$@*)
 \end{lstlisting}
