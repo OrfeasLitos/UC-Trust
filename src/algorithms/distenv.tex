@@ -3,19 +3,18 @@
 (*@$\mathcal{E}$@*) distinguisher(*@\Reactivatenumber@*)
 (*@$Alice \overset{R}{\leftarrow} \mathcal{P}$@*) (*@\label{distenv:Alice}@*)
 (*@$Bob \overset{R}{\leftarrow} \mathcal{P} \setminus \left\{Alice\right\}$@*) (*@\label{distenv:Bob}@*)
-(*@$U_{Alice}\left(assets, x\right) = 2\left|assets\right| + x$@*) (*@\label{distenv:setutil:Alice}@*)
-(*@$U_{Bob}\left(assets, x\right) = \left|assets\right| + 2x$@*) (*@\label{distenv:setutil:Bob}@*)
-(*@$\lambda_{Alice}\left(t\right) = \lambda_{Bob}\left(t\right) = \frac{1}{t^2}$@*)
+(*@$U_{Alice}$@*)(t, x, a) = x + 2|a| (*@\label{distenv:setutil:Alice}@*)
+(*@$U_{Bob}$@*)(t, x, a) = 2x + |a| (*@\label{distenv:setutil:Bob}@*)
 (*@$\forall p \in \left\{Alice, Bob\right\}$@*):
-  send message (type, (*@$U_p$@*), (*@$\lambda_p$@*)) to (*@$p$@*) (*@\label{distenv:sendutil}@*)
-(*@$s \overset{R}{\leftarrow} Asset$@*)
-send message (obtain, 1 coin) to (*@$Alice$@*) (*@\label{distenv:obtain:Alice}@*)
-send message (obtain, (*@$s$@*)) to (*@$Bob$@*) (*@\label{distenv:obtain:Bob}@*)
-send message (satisfy, (*@$\left\{s\right\}$@*), (*@$\left\{Bob\right\}$@*)) to (*@$Alice$@*) (*@\label{distenv:satisfy}@*)
+  send message (type, (*@$U_p$@*)) to (*@$p$@*) (*@\label{distenv:sendutil}@*)
+s (*@$\overset{R}{\leftarrow} Asset$@*)
+send message (obtain, 1, (*@$Alice$@*)) to (*@$G_{\mathrm{Ledger}}$@*) (*@\label{distenv:obtain:Alice}@*)
+send message (obtain, s, (*@$Bob$@*)) to (*@$G_{\mathrm{Assets}}$@*) (*@\label{distenv:obtain:Bob}@*)
+send message (satisfy, (*@$\left\{\mathtt{s}\right\}$@*), (*@$\left\{Bob\right\}$@*)) to (*@$Alice$@*) (*@\label{distenv:satisfy}@*)
 
-Upon receiving message (x, (*@$\left\{s\right\}$@*), (*@$\left\{Bob\right\}$@*)) from (*@$Alice$@*):
+Upon receiving message (x, (*@$\left\{\mathtt{s}\right\}$@*), (*@$\left\{Bob\right\}$@*)) from (*@$Alice$@*):
   If x == satisfied:
     return 1 # functionality (*@\label{distenv:func}@*)
-  Else: # if x (*@$\in \left\{\right.$@*)cheated, unsatisfied(*@$\left.\right\}$@*)
+  Else: # if x (*@$\in \left\{\mathtt{cheated, unsatisfied}\right\}$@*)
     return 0 # protocol (*@\label{distenv:prot}@*)
 \end{lstlisting}

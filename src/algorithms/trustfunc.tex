@@ -3,14 +3,17 @@
 (*@$\mathcal{F}_{\mathrm{Trust}}$ \Reactivatenumber@*)
 Has oracle access to every player's (*@$Alice$@*) utility function (*@$U_{Alice}$@*)
 
-Upon receiving (chooseBestSeller, (*@$d$@*), (*@$L$@*)) from (*@$Alice$@*):
-  (*@$t$@*) = (*@$\mathcal{G}_{Clock}$@*)
-  (*@$Bob$@*) = (*@$\argmax\limits_{Bob \in L}\left\{\right.$@*) (*@$U_{Alice}\left(t, state_{Alice}\left[1\right] - x, state_{Alice}\left[2\right] \cup s\right) :$@*)
-  (*@$s \in d \wedge s \in$@*) assets((*@$Bob$@*)) (*@$\wedge$@*) (*@$Alice$@*) has (*@$x$@*) coins (*@$\wedge$@*)
-  (*@$U_{Alice}\left(t, state_{Alice}\left[1\right] - x, state_{Alice}\left[2\right] \cup s\right) > U_{Alice}\left(state_{Alice}\right) \wedge$@*)
-  (*@$U_{Bob}\left(t, state_{Bob}\left[1\right] + x, state_{Bob}\left[2\right] \setminus s\right) > U_{Bob}\left(t, state_{Bob}\right) \wedge$@*)
-  (*@$U_{Bob}\left(t, state_{Bob}\left[1\right] + x, state_{Bob}\left[2\right]\right) < U_{Bob}\left(t, state_{Bob}\right) \left.\right\}$@*)
-  send message (bestSeller, (*@$d$@*), (*@$L$@*), (*@$Bob$@*)) to (*@$Alice$@*)
+Upon receiving (chooseBestSeller, (*@$d$@*), (*@$L$@*)) from (*@$Alice$@*) at time t:
+  (*@$\mathtt{m}_{\mathrm{Alice}}$@*) = (*@$\mathcal{G}_{\mathrm{Ledger}}$@*).money((*@$Alice$@*))
+  (*@$\mathtt{a}_{\mathrm{Alice}}$@*) = (*@$\mathcal{G}_{\mathrm{Assets}}$@*).assets((*@$Alice$@*))
+  (*@$\mathtt{m}_{\mathrm{Bob}}$@*) = (*@$\mathcal{G}_{\mathrm{Ledger}}$@*).money((*@$Bob$@*))
+  (*@$\mathtt{a}_{\mathrm{Bob}}$@*) = (*@$\mathcal{G}_{\mathrm{Assets}}$@*).assets((*@$Bob$@*))
+  (*@$Bob$@*) = (*@$\argmax\limits_{Bob \in L}\left\{\right. U_{Alice}\left(\mathtt{t}, \mathtt{m}_{\mathrm{Alice}} - x, \mathtt{a}_{\mathrm{Alice}} \cup \left\{\mathtt{s}\right\}\right):$@*)
+  (*@$\mathtt{s} \in \mathtt{d} \cap \mathtt{a}_{\mathrm{Bob}} \wedge \mathtt{m}_{\mathrm{Alice}} \geq \mathtt{x} \wedge$@*)
+  (*@$U_{Alice}\left(\mathtt{t}, \mathtt{m}_{\mathrm{Alice}} - \mathtt{x}, \mathtt{a}_{\mathrm{Alice}} \cup \left\{\mathtt{s}\right\}\right) > U_{Alice}\left(\mathtt{t}, \mathtt{m}_{\mathrm{Alice}}, \mathtt{a}_{\mathrm{Alice}}\right) \wedge$@*)
+  (*@$U_{Bob}\left(\mathtt{t}, \mathtt{m}_{\mathrm{Bob}} + x, \mathtt{a}_{\mathrm{Bob}} \setminus \left\{\mathtt{s}\right\}\right) > U_{Bob}\left(\mathtt{t}, \mathtt{m}_{\mathrm{Bob}}, \mathtt{a}_{\mathrm{Bob}}\right) \wedge$@*)
+  (*@$U_{Bob}\left(\mathtt{t}, \mathtt{m}_{\mathrm{Bob}} + x, \mathtt{a}_{\mathrm{Bob}}\right) < U_{Bob}\left(\mathtt{t}, \mathtt{m}_{\mathrm{Bob}}, \mathtt{a}_{\mathrm{Bob}}\right) \left.\right\}$@*) # impossible
+  send message (bestSeller, d, L, (*@$Bob$@*)) to (*@$Alice$@*)
 \end{lstlisting}
 
 Assumptions:
