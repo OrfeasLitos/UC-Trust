@@ -1,24 +1,13 @@
 \section{Utility Function Properties}
   Before $Alice$ (an ITM that executes $\Pi_{\mathrm{SAT}}$) can take any action, she must
-  be assigned a mapping from moments in time to score functions, $u_{Alice} : Time
-  \rightarrow \left(Money \times multiset\left(Asset\right) \rightarrow
-  \mathbb{R}\right)$, where $Money, Time = \mathbb{N}$, and a discount function,
-  $\lambda_{Alice}$, by $\mathcal{E}$. The utility function is strictly increasing with
-  respect to the integer $Money$ and to the quantity of any single $Asset$ or combination
-  of $Asset$s.
+  be assigned a utility function $U_{Alice} : Time \times Money \times
+  multiset\left(Asset\right) \rightarrow \mathbb{R}$, where $Money = Time = \mathbb{N}$.
+  The utility function is strictly increasing with respect to $Money$ and to the quantity
+  of any single $Asset$ or combination of $Asset$s.
 
-  \begin{definition}[Discount function]
-    $\lambda_{Alice} : Time \rightarrow \left[0, 1\right]$, where $Time \in \mathbb{N}$
-    and $\lambda$ is strictly decreasing.
-  \end{definition}
-  \begin{definition}[State]
-  Let $state_{Alice} : Time \rightarrow Money \times multiset\left(Asset\right)$.
-  \end{definition}
-  For any given moment $t \in Time$, $Alice$'s target is to maximise
-  \begin{gather*}
-    U_{Alice}\left(t, m, a\right) = u_{Alice}\left(t\right)\left(m, a\right) + \\
-    \sum\limits_{t' = t + 1}^{\infty}
-    \lambda_{Alice}\left(t'\right)\left(\sum\limits_{\overset{\left(m, a\right) \in}{Money
-    \times mset\left(Asset\right)}} u_{Alice}\left(t'\right)\left(m, a\right) \cdot
-    \Pr\left[state_{Alice}\left(t'\right) = \left(m, a\right)\right]\right) \enspace.
-  \end{gather*}
+  $\mathcal{E}$ can decide to conclude the game at any time $t \in Time$; $Alice$'s
+  utility will be then determined by
+  \begin{equation*}
+    U_{Alice}\left(t, \mathcal{G}_{\mathrm{Ledger}}.\mathtt{money(}Alice\mathtt{)},
+    \mathcal{G}_{\mathrm{Assets}}.\mathtt{assets(}Alice\mathtt{)}\right) \enspace.
+  \end{equation*}
