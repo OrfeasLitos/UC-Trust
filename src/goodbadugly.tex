@@ -1,0 +1,18 @@
+\section{A case against honest and malicious parties}
+  Satisfying Definition~\ref{def:cheatsec} in case there exist honest parties and an
+  Adversary seems impossible. When an honest buyer pays a malicious seller, then the
+  malicious seller can always cheat and the honest buyer will report it to $\mathcal{E}$.
+  It seems improbable that we can create an $\mathcal{F}_{\mathrm{Trust}}$ that returns a
+  malicious party with negligible probability, especially since
+  $\mathcal{F}_{\mathrm{Trust}}$ cannot know from the outset which parties are corrupted
+  and which are not.
+
+  Similarly, if a malicious buyer trades with an honest seller, then the seller will go
+  through with the trade but the buyer will be able to falsely report a cheat to
+  $\mathcal{E}$. This as well cannot be avoided, since $\mathcal{E}$ does not know whether
+  the player to which it sends a $\left(\mathtt{satisfy, d, L}\right)$ message is
+  corrupted.
+
+  Nevertheless, if we completely change perspective and have all players be rational, then
+  it is possible that for certain utility functions no player will cheat or report false
+  cheating for fear of future punishment.
