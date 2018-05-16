@@ -1,0 +1,33 @@
+\section{Interaction with $F_{\mathrm{Trust}}$}
+$Alice$ receives an offer from $Bob$ for price $p$. If $Trust_{Alice \rightarrow Bob} \geq
+p$, then she pays Bob by telling $F_{\mathrm{Trust}}$ to redistribute the $p$ of her
+direct trust to him so that we end up with $Trust_{Alice \rightarrow Bob} =
+DirectTrust_{Alice \rightarrow Bob}$.
+
+If the trade completes correctly, $Alice$ undoes the initial redistribution and on top of
+this she adds another $p$ as direct trust to $Bob$. If she has spare exclusive coins, she
+uses them, otherwise she decreases her direct trust to the least recently used direct
+trust. LRU direct trust is the oldest direct trust that helped her make a decision --- for
+that she has to locally timestamp the direct trusts that are leveraged whenever she
+decides to trust someone.
+
+If the trade fails to complete, she takes her money back if she can and also reduces her
+trust to the players towards whom she had direct trusts that pointed her to $Bob$ by
+another total $p$, keeping this money for exclusive use.
+
+How can $Bob$ exploit this strategy? He would need the collaboration of the players
+$Alice$ trusts directly. They have to steal from her at the same time as he does. If we
+assume adaptive corruptions, then this is rather easy.
+
+$Bob$ seems to be able to cheat on half of the trades and still he will have some incoming
+direct trust. If he has say $100p$ incoming direct trust, then he can maintain the same
+balance by selling honestly one item of value $p$ and then cheating on the next trade of
+the same item alternatively. It is not directly obvious that this strategy will eventually
+leave $Bob$ alone --- indeed, he may build a lucrative mafia-like scheme this way; he just
+has to find constantly new first-line cheaters.
+
+In order to mitigate this attack, a "know your customer" scheme may be necessary.  Indeed,
+if honest sellers only sell to $Bob$ only if they trust him enough, this scheme does not
+work because nobody will accept his money. Exclusive coins will only be useful as reserve
+to be directly trusted to others. This however completely overhauls the way money works
+today...
