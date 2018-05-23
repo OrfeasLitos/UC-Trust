@@ -1,0 +1,24 @@
+\begin{algorithm}
+  \caption{$\mathrm{singleCorruptionGame}_{\mathcal{A}}\left(G = \left(V, E, W\right), CP,
+  D, w, end\right)$}
+  \label{alg:singlecorruptiongame}
+  \begin{algorithmic}[1]
+    \ForAll{$v \in V$}
+      \If{$v \neq w$}
+        \State start $\Pi_{\mathrm{SAT}}$ on behalf of $v$
+      \Else
+        \State start $\mathcal{A}\left(v\right)$
+      \EndIf
+      \State $U\left(v\right) \leftarrow CP$
+      \State send \texttt{(utility,}$U\left(v\right)$\texttt{)} to $v$
+    \EndFor
+    \For{t $\leftarrow$ 1 to $end$}
+      \State $v \overset{r}{\leftarrow} V$; $d \overset{r}{\leftarrow} D$; $L
+      \overset{r}{\subseteq} V$
+      \State send $\mathtt{(satisfy,} d \mathtt{,} L \mathtt{)}$ to $v$
+      \State wait for $\mathtt{(satisfied,} d \mathtt{,} L \mathtt{)}$ or
+      $\mathtt{(cheated,} d \mathtt{,} L \mathtt{)}$ from $v$
+    \EndFor
+    \State output $U\left(w\right)$
+  \end{algorithmic}
+\end{algorithm}
