@@ -4,16 +4,18 @@ p$, then she pays Bob by telling $F_{\mathrm{Trust}}$ to redistribute the $p$ of
 direct trust to him so that we end up with $Trust_{Alice \rightarrow Bob} =
 DirectTrust_{Alice \rightarrow Bob}$.
 
-If the trade completes correctly, $Alice$ undoes the initial redistribution and on top of
-this she adds another $p$ as direct trust to $Bob$. If she has spare exclusive coins, she
-uses them, otherwise she decreases her direct trust to the least recently used direct
-trust. LRU direct trust is the oldest direct trust that helped her make a decision --- for
-that she has to locally timestamp the direct trusts that are leveraged whenever she
-decides to trust someone.
+If the trade completes correctly and $Bob$ takes $p'$ coins from $Alice$'s direct trust,
+where $0 \leq p' \leq p$, $Alice$ undoes the initial redistribution and on top of this she
+adds another $p - p'$ as direct trust to $Bob$. If she has spare exclusive coins, she uses
+them, otherwise she decreases her direct trust to the least recently used direct trust.
+LRU direct trust is the oldest direct trust that helped her make a decision --- for that
+she has to locally timestamp the direct trusts that are leveraged whenever she decides to
+trust someone.
 
-If the trade fails to complete, she takes her money back if she can and also reduces her
-trust to the players towards whom she had direct trusts that pointed her to $Bob$ by
-another total $p$, keeping this money for exclusive use.
+If the trade fails to complete and $Bob$ takes $p'$ coins from $Alice$'s direct trust,
+where $0 \leq p' \leq p$, she takes her $p - p'$ coins back and also reduces her trust to
+the players towards whom she had direct trusts that pointed her to $Bob$ by another total
+$p$, keeping this money for exclusive use.
 
 How can $Bob$ exploit this strategy? He would need the collaboration of the players
 $Alice$ trusts directly. They have to steal from her at the same time as he does. If we
