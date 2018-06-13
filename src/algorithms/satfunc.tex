@@ -4,7 +4,6 @@
 Initialisation:
   (*@$\forall Alice \in \mathcal{P},$@*)
     util((*@$Alice$@*)) = (*@$\bot$@*)
-    assets((*@$Alice$@*)) = (*@$\bot$@*)
 
 Upon receiving (type, (*@$t$@*)) from (*@$Alice$@*):
   util((*@$Alice$@*)) = (*@$t$@*)
@@ -15,20 +14,26 @@ Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
     go to Idle state
   find list = (*@$\left\{\left(Bob, x, s\right) \in L \times \mathbb{R} \times Assets :\right.$@*)
     (*@$s \in$@*) assets((*@$Bob$@*)) and (*@$s \in d$@*) and (*@$x \geq 0$@*) and
-    (*@$Alice$@*) has at least (*@$x$@*) coins available and (*@\label{satfunc:hascoins}@*)
-    util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*)) > util((*@$Alice$@*))((*@$state_{Alice}$@*)) (*@\label{satfunc:gains:Alice}@*)
+    (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Alice\right) \geq x$@*) and (*@\label{satfunc:hascoins}@*)
+    util((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right) \cup \left\{s\right\},$@*) (*@\label{satfunc:gains:Alice:start}@*)
+        (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Alice\right) - x$@*)) >
+    util((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right),
+    \mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Alice\right)$@*)) (*@\label{satfunc:gains:Alice:end}@*)
     and
-    util((*@$Bob$@*))((*@$state_{Bob} \setminus s + x$@*)) (*@$\geq$@*) util((*@$Bob$@*))((*@$state_{Bob}$@*))(*@$\left.\right\}$@*) (*@\label{satfunc:gains:Bob}@*)
   send (chooseBestSeller, (*@$d$@*), list, (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
   wait for response from (*@$\mathcal{A}$@*)
   If response (*@$\neq$@*) (bestSeller, list, (*@$Bob, x, s$@*)), (*@$Bob \in \mathcal{P}, x \in Money, s \in Asset$@*): (*@\label{satfunc:badresponse}@*)
+    util((*@$Bob$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Bob\right) \setminus \left\{s\right\},$@*) (*@\label{satfunc:gains:Bob:start}@*)
+        (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Bob\right) + x$@*)) >
+    util((*@$Bob$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Bob\right),
+    \mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Bob\right)$@*)) (*@\label{satfunc:gains:Bob:end}@*)
     # e.g. (*@$Bob = \bot$@*)
-    ((*@$Bob, x, s$@*)) = (*@$\argmax\limits_{\left(Bob, x, s\right) \in \texttt{list}}\left\{\right.$@*)util((*@$Alice$@*))((*@$state_{Alice} \cup s - x$@*))(*@$\left.\right\}$@*)
   Else:
     parse response as (bestSeller, list, (*@$Bob, x, s$@*))
-  pay (*@$x$@*) from (*@$Alice$@*) to (*@$Bob$@*)
-  assets((*@$Bob$@*)) = assets((*@$Bob$@*))(*@$\setminus \left\{s\right\}$@*)
-  assets((*@$Alice$@*)) = assets((*@$Alice$@*))(*@$\cup \left\{s\right\}$@*)
+  ((*@$Bob, x, s$@*)) = (*@$\argmax\limits_{\left(Bob, x, s\right) \in \texttt{list}}\left\{\right.$@*)util((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right) \cup \left\{s\right\},$@*)
+        (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Alice\right) - x$@*))(*@$\left.\right\}$@*)
+  send (pay, (*@$Alice$@*), (*@$Bob$@*), x) to (*@$\mathcal{G}_{\mathrm{Ledger}}$@*) as (*@$Alice$@*)
+  send (give, (*@$Bob$@*), (*@$Alice$@*), s) to (*@$\mathcal{G}_{\mathrm{Assets}}$@*) as (*@$Bob$@*)
   send message (satisfied, (*@$d, L$@*)) to (*@$Alice$@*) (*@\label{satfunc:send:satisfied}@*)
 
 Upon receiving (obtain, (*@$s$@*)) from (*@$Alice$@*):
