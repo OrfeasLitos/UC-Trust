@@ -20,18 +20,18 @@ Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
     util((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right),
     \mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Alice\right)$@*)) (*@\label{satfunc:gains:Alice:end}@*)
     and
-  send (chooseBestSeller, (*@$d$@*), list, (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
-  wait for response from (*@$\mathcal{A}$@*)
-  If response (*@$\neq$@*) (bestSeller, list, (*@$Bob, x, s$@*)), (*@$Bob \in \mathcal{P}, x \in Money, s \in Asset$@*): (*@\label{satfunc:badresponse}@*)
     util((*@$Bob$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Bob\right) \setminus \left\{s\right\},$@*) (*@\label{satfunc:gains:Bob:start}@*)
         (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Bob\right) + x$@*)) >
     util((*@$Bob$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Bob\right),
     \mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Bob\right)$@*)) (*@\label{satfunc:gains:Bob:end}@*)
+  # send (chooseBestSeller, (*@$d$@*), list, (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
+  # wait for response from (*@$\mathcal{A}$@*)
+  # If response (*@$\neq$@*) (bestSeller, list, (*@$Bob, x, s$@*)), (*@$Bob \in \mathcal{P}, x \in Money, s \in Asset$@*): (*@\label{satfunc:badresponse}@*)
     # e.g. (*@$Bob = \bot$@*)
-  Else:
-    parse response as (bestSeller, list, (*@$Bob, x, s$@*))
   ((*@$Bob, x, s$@*)) = (*@$\argmax\limits_{\left(Bob, x, s\right) \in \texttt{list}}\left\{\right.$@*)util((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right) \cup \left\{s\right\},$@*)
         (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Alice\right) - x$@*))(*@$\left.\right\}$@*)
+  # Else:
+  #   parse response as (bestSeller, list, (*@$Bob, x, s$@*))
   send (pay, (*@$Alice$@*), (*@$Bob$@*), x) to (*@$\mathcal{G}_{\mathrm{Ledger}}$@*) as (*@$Alice$@*)
   send (give, (*@$Bob$@*), (*@$Alice$@*), s) to (*@$\mathcal{G}_{\mathrm{Assets}}$@*) as (*@$Bob$@*)
   send message (satisfied, (*@$d, L$@*)) to (*@$Alice$@*) (*@\label{satfunc:send:satisfied}@*)
