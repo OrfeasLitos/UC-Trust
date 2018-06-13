@@ -1,0 +1,25 @@
+\Suppressnumber
+\begin{lstlisting}[label=satfunc, style=numbers]
+(*@$\langle\mathcal{F}_{\mathrm{SAT}}\rangle$ \Reactivatenumber@*)
+Same as (*@$\mathcal{F}_{\mathrm{SAT}}$@*) with the following additions:
+
+Upon receiving (cheat, (*@$Alice$@*)) from (*@$Eve$@*):
+  cheat (*@$Alice$@*) the next time she transacts with (*@$Eve$@*) (obvious way)
+
+Upon receiving (cheatNext) from (*@$Eve$@*):
+  cheat the next player who transacts with (*@$Eve$@*) (obvious way)
+
+Upon receiving (chooseMe, (*@$Alice$@*), (*@$x$@*)) from (*@$Eve$@*):
+  the next time (*@$Alice$@*) buys, choose (*@$Eve$@*) with cost (*@$x$@*)
+  # fails if (*@$Eve$@*) is not simultaneously cheating and cannot satisfy desire
+
+Upon receiving (chooseMeNext, (*@$x$@*)) from (*@$Eve$@*):
+  the next time anyone buys, choose (*@$Eve$@*) with cost (*@$x$@*)
+  # fails if (*@$Eve$@*) is not simultaneously cheating and cannot satisfy desire
+
+Upon receiving (blockOthers, (*@$Alice$@*)) from (*@$Eve$@*):
+  the next time (*@$Alice$@*) buys, populate list only with (*@$Eve$@*) (or no one)
+
+Upon receiving (blockOthersNext) from (*@$Eve$@*):
+  the next time anyone buys, populate list only with (*@$Eve$@*) (or no one)
+\end{lstlisting}
