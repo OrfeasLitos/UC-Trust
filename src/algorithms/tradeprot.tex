@@ -15,7 +15,7 @@ Upon receiving (letsTrade, theirs, ours) from (*@$Bob$@*):
   Send (willWeCheat, theirs, ours, (*@$Bob$@*)) to (*@$\mathcal{E}$@*)
   Wait for response from (*@$\mathcal{E}$@*)
   If response is (doNotCheat, theirs, ours, (*@$Bob$@*)):
-    If (transfer, ours, (*@$Bob$@*)) == True:
+    If transfer(ours, (*@$Bob$@*)) == True:
       Send (transferred, ours, (*@$Bob$@*)) to (*@$Bob$@*) and (*@$\mathcal{E}$@*)
 
 transfer(object, receiver):
