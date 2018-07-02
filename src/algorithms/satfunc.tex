@@ -40,7 +40,7 @@ Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
   #   parse response as (bestSeller, list, (*@$Bob, x, s$@*))
   #   ((*@$Bob', x', s'$@*)) = (*@$\argmax\limits_{\left(Bob, x, s\right) \in \texttt{list}}\left\{\right.$@*)util((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right) \cup \left\{s\right\},$@*)
   #      (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Alice\right) - x$@*))(*@$\left.\right\}$@*)
-  #   punish (*@$\mathcal{A}$@*) dist((*@$Bob, x, s$@*), (*@$Bob', x', s'$@*)) payoff reduction
+  #   punish (*@$\mathcal{A}$@*) dist((*@$Bob, x, s$@*), (*@$Bob', x', s'$@*)) payoff reduction (*@\label{satfunc:punish}@*)
   send (pay, (*@$Alice$@*), (*@$Bob$@*), x) to (*@$\mathcal{G}_{\mathrm{Ledger}}$@*) as (*@$Alice$@*)
   # If (*@$Bob == \mathcal{A}$@*):
   #   send (cheat, list, response, (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
