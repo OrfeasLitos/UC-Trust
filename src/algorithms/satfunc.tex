@@ -10,8 +10,8 @@ Initialisation:
 Upon receiving (type, (*@$t$@*)) from (*@$Alice$@*):
   util((*@$Alice$@*)) = (*@$t$@*)
 
-# TODO: have adversary influence list only on weak F_SAT
 # TODO: define dist(normalresponse, adversarialresponse)
+# TODO: be more flexible than grim trigger (gossip cheats, regain trust)
 Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
   If util((*@$Alice$@*)) == (*@$\bot$@*):
     send message (utilityNotSet) to (*@$Alice$@*)
@@ -28,24 +28,29 @@ Upon receiving (satisfy, (*@$d, L$@*)) from (*@$Alice$@*):
         (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Bob\right) + x$@*)) >
     util((*@$Bob$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Bob\right),
     \mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Bob\right)$@*)) (*@\label{satfunc:gains:Bob:end}@*)
+  # send (createList, (*@$d$@*), (*@$L$@*), (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
+  # wait for response from (*@$\mathcal{A}$@*)
+  # If response is a valid list of sellers, prices, and assets:
+  #   punish (*@$\mathcal{A}$@*) distList(list, response)
+  #   list = response
   # If (*@$Alice \in$@*) advBlacklistedBy:
   #   remove from list all entries with (*@$\mathcal{A}$@*) as seller
   # send (chooseBestSeller, (*@$d$@*), list, (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
   # wait for response from (*@$\mathcal{A}$@*)
   # If response (*@$\neq$@*) (bestSeller, list, (*@$Bob, x, s$@*)), (*@$Bob \in \mathcal{P}, x \in Money, s \in Asset$@*): (*@\label{satfunc:badresponse}@*)
-    # e.g. (*@$Bob = \bot$@*)
+    # e.g. (*@$Bob == \bot$@*)
   ((*@$Bob, x, s$@*)) = (*@$\argmax\limits_{\left(Bob, x, s\right) \in \texttt{list}}\left\{\right.$@*)util((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right) \cup \left\{s\right\},$@*)
         (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Alice\right) - x$@*))(*@$\left.\right\}$@*)
   # Else:
   #   parse response as (bestSeller, list, (*@$Bob, x, s$@*))
   #   ((*@$Bob', x', s'$@*)) = (*@$\argmax\limits_{\left(Bob, x, s\right) \in \texttt{list}}\left\{\right.$@*)util((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right) \cup \left\{s\right\},$@*)
   #      (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Alice\right) - x$@*))(*@$\left.\right\}$@*)
-  #   punish (*@$\mathcal{A}$@*) dist((*@$Bob, x, s$@*), (*@$Bob', x', s'$@*)) payoff reduction (*@\label{satfunc:punish}@*)
+  #   punish (*@$\mathcal{A}$@*) distSeller((*@$Bob, x, s$@*), (*@$Bob', x', s'$@*)) payoff reduction (*@\label{satfunc:punish}@*)
   send (pay, (*@$Alice$@*), (*@$Bob$@*), x) to (*@$\mathcal{G}_{\mathrm{Ledger}}$@*) as (*@$Alice$@*)
   # If (*@$Bob == \mathcal{A}$@*):
   #   send (cheat, list, response, (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
-  #   wait for response1 from (*@$\mathcal{A}$@*)
-  #   If response1 == yes:
+  #   wait for response from (*@$\mathcal{A}$@*)
+  #   If response == yes:
   #     advBlacklistedBy = advBlacklistedBy (*@$\cup \: Alice$@*) (grim trigger)
   #     send message (cheated, (*@$d, L$@*)) to (*@$Alice$@*) (*@\label{satfunc:send:cheated}@*)
   #     go to idle state
