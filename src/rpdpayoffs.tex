@@ -1,32 +1,34 @@
 \noindent \textbf{Designer's (RPD~\cite{rationalprotocol}) utility:}
 \begin{gather*}
-  \forall p \in \mathcal{P} \: \mathrm{let \: event} \: E_p: \mathcal{Z} \: \mathrm{sends
-  \: message} \: \mathtt{(payoffs,} \: u_p:2^{\mathcal{A}} \times \mathbb{N} \rightarrow
-  \mathbb{R} \mathtt{)} \: \mathrm{at} \\
-  \mathrm{time} \: t \: \mathrm{such \: that} \: \forall t \in \mathbb{N}, b, b' \in
-  2^{\mathcal{A}}, b' \subseteq b, \: \mathrm{it \: is} \: u_p\left(b', t\right) \leq
-  u_p\left(b, t\right) \: \mathrm{and} \\
+  \forall p \in \mathcal{P} \: \mathrm{let \: event} \: E_{u, p}: \mathcal{Z} \:
+  \mathrm{sends \: message} \: \mathtt{(payoffs,} \: u_p:2^A \times \mathbb{N}^*
+  \rightarrow \mathbb{R} \mathtt{)} \: \mathrm{at} \\
+  \mathrm{time} \: 0 \: \mathrm{such \: that} \: \forall t \in \mathbb{N}^*, b, b' \in
+  2^A, b' \subseteq b, \: \mathrm{it \: is} \: u_p\left(b', t\right) \leq u_p\left(b,
+  t\right) \: \mathrm{and} \\
   \forall \: \mathrm{sequences \: of \: bundles} \: B, \sum\limits_{t \in
-  \mathbb{N}}u\left(B_t, t\right) \in \mathbb{R}\enspace.
+  \mathbb{N}^*}u\left(B_t, t\right) \in \mathbb{R}\enspace.
 \end{gather*}
 
 \begin{equation*}
-  \forall p \in \mathcal{P}, b \in 2^{\mathcal{A}} \: \mathrm{let \: event} \: E_{p, b,
-  t}: \mathcal{F}_{\mathrm{Assets}}.\mathtt{assets(}Alice\mathtt{)} = b \: \mathrm{at \:
-  time} \: t
+  \forall p \in \mathcal{P}, b \in 2^A \: \mathrm{let \: event} \: E_{p, b, t}:
+  \mathcal{F}_{\mathrm{Assets}}.\mathtt{assets(}Alice\mathtt{)} = b \: \mathrm{at \: time}
+  \: t
 \end{equation*}
 
 \begin{equation*}
   v^{\mathtt{D}}_{\langle \mathcal{F} \rangle, \mathcal{S}, \mathcal{Z}} = \sum\limits_{p
-  \in \mathcal{P}} \Pr\left[E_p\right] \sum\limits_{t \in \mathbb{N}} \sum\limits_{b \in
-  2^{\mathrm{Assets}}} \Pr\left[E_{p, b, t}\right] u_p\left(b, t\right)
+  \in \mathcal{P}} \Pr\limits_{\mathrm{messages}}\left[E_{u, p}\right] \sum\limits_{t \in
+  \mathbb{N}^*} \sum\limits_{b \in 2^A} \Pr\limits_{\mathrm{messages}}\left[E_{p, b,
+  t}\right] u_p\left(b, t\right)
 \end{equation*}
 
 \noindent \textbf{Attacker's (RPD~\cite{rationalprotocol}) utility:}
 
 \begin{equation*}
   v^{\mathtt{A}}_{\langle \mathcal{F} \rangle, \mathcal{S}, \mathcal{Z}} =
-  \Pr\left[E_\mathcal{A}\right] \sum\limits_{t \in \mathbb{N}} \sum\limits_{b \in
-  2^{\mathrm{Assets}}} \Pr\left[E_{\mathcal{A}, b, t}\right] u_{\mathcal{A}}\left(b,
+  \Pr\limits_{\mathrm{messages}}\left[E_\mathcal{A}\right] \sum\limits_{t \in
+  \mathbb{N}^*} \sum\limits_{b \in 2^{\mathrm{Assets}}}
+  \Pr\limits_{\mathrm{messages}}\left[E_{\mathcal{A}, b, t}\right] u_{\mathcal{A}}\left(b,
   t\right) - \langle F_{SAT} \rangle \: \mathrm{~punishment \: (l.~\ref{satfunc:punish})}
 \end{equation*}
