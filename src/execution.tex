@@ -1,0 +1,34 @@
+\section{Formal description of execution}
+  The control function $C$ has the following information hardcoded:
+  \begin{itemize}
+    \item Duration of the game, $r_{\mathrm{end}}$ (not disclosed to anyone else)
+    \item Number of parties, $n$ (not known by honest parties)
+    \item Set of (distinct) assets $A$
+  \end{itemize}
+  $C$ imposes the following rules on the execution:
+  \begin{itemize}
+    \item Up to one party is allowed to be corrupted at $r = 0$.
+    \item $\mathcal{Z}$ is obliged to send one \texttt{(payoff,} $u : 2^A \times
+    \mathbb{N}^* \rightarrow \mathbb{R}$\texttt{)} input and one \texttt{(endowment,}
+    $b_P$\texttt{)} ($b_P \subseteq A$) to each player $P$ at $r = 0$. $C$ ensures that
+    the bundles $b_{P_1}, \dots, b_{P_n}$ are a partition of $A$. (TODO: We will later
+    specify whether the utility functions and endowments are defined by $\mathcal{Z}$ or
+    are given as input to $\mathcal{Z}$ at the beginning of the execution. We also have to
+    specify whether the utility functions are oracles or PPT.)
+    \item Each player is allowed to satisfy up to one desire on each $r > 0$. $C$ demands
+    that $\mathcal{Z}$ provide exactly one \texttt{(satisfy,} $d$\texttt{)} ($d \subseteq
+    A$) input to each player on each $r > 0$. The players must be activated in a
+    round-robin fashion, with $\mathcal{A}$ being last. (Rushing) (TODO: how to hide which
+    player is corrupted?)
+  \end{itemize}
+
+  \begin{gather*}
+    P\text{'s messages for round } i: ms^P_i = \left(m_1, \dots, m_{|ms^P_i|}\right) \\
+    \mathrm{VIEW}^{P, t_{\mathrm{end}}, n}_{\Pi, \mathcal{A}, \mathcal{Z}}\left(z\right) =
+    \left(\underbrace{x^P_1, \dots, x^P_{r_{\mathrm{end}}}}_{\text{inputs by }
+    \mathcal{Z}}, \underbrace{r^P}_{P\text{'s random tape}}, \underbrace{ms^P_1, \dots,
+    m^P_{r_{\mathrm{end}}}}_{\text{messages received by } P}\right) \\
+    \mathrm{VIEW}^{t_{\mathrm{end}}, n}_{\Pi, \mathcal{A}, \mathcal{Z}}\left(z\right) =
+    \langle\mathrm{VIEW}^{P, t_{\mathrm{end}}, n}_{\Pi, \mathcal{A},
+    \mathcal{Z}}\left(z\right)\rangle_{P \in \mathcal{P}}
+  \end{gather*}
