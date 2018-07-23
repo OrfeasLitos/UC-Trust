@@ -4,29 +4,29 @@
 # Commented lines are the weak version, (*@$\langle \mathcal{F}_{\mathrm{SAT}} \rangle$@*).
 Initialisation:
   (*@$\forall Alice \in \mathcal{P},$@*)
-    util((*@$Alice$@*)) = (*@$\bot$@*)
+    payoff((*@$Alice$@*)) = (*@$\bot$@*)
   # advBlacklistedBy = (*@$\emptyset$@*)
 
 Upon receiving (type, (*@$t$@*)) from (*@$Alice$@*):
-  util((*@$Alice$@*)) = (*@$t$@*)
+  payoff((*@$Alice$@*)) = (*@$t$@*)
 
 # TODO: define dist(normalresponse, adversarialresponse)
 # TODO: be more flexible than grim trigger (gossip cheats, regain trust)
 Upon receiving (satisfy, (*@$d$@*), vendorList) from (*@$Alice$@*):
-  If util((*@$Alice$@*)) == (*@$\bot$@*):
+  If payoff((*@$Alice$@*)) == (*@$\bot$@*):
     send message (utilityNotSet) to (*@$Alice$@*)
     go to Idle state
   find offerList = (*@$\left\{\left(Bob, x, s\right) \in \mathrm{vendorList} \times \mathbb{R} \times Assets :\right.$@*)
     (*@$s \in$@*) assets((*@$Bob$@*)) and (*@$s \in d$@*) and (*@$x \geq 0$@*) and
     (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Alice\right) \geq x$@*) and (*@\label{satfunc:hascoins}@*)
-    util((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right) \cup \left\{s\right\},$@*) (*@\label{satfunc:gains:Alice:start}@*)
+    payoff((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right) \cup \left\{s\right\},$@*) (*@\label{satfunc:gains:Alice:start}@*)
         (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Alice\right) - x$@*)) >
-    util((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right),
+    payoff((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right),
     \mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Alice\right)$@*)) (*@\label{satfunc:gains:Alice:end}@*)
     and
-    util((*@$Bob$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Bob\right) \setminus \left\{s\right\},$@*) (*@\label{satfunc:gains:Bob:start}@*)
+    payoff((*@$Bob$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Bob\right) \setminus \left\{s\right\},$@*) (*@\label{satfunc:gains:Bob:start}@*)
         (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Bob\right) + x$@*)) >
-    util((*@$Bob$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Bob\right),
+    payoff((*@$Bob$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Bob\right),
     \mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Bob\right)$@*)) (*@\label{satfunc:gains:Bob:end}@*)
   # send (createOfferList, (*@$d$@*), vendorList, (*@$Alice$@*)) to (*@$\mathcal{A}$@*)
   # wait for response from (*@$\mathcal{A}$@*)
@@ -39,11 +39,11 @@ Upon receiving (satisfy, (*@$d$@*), vendorList) from (*@$Alice$@*):
   # wait for response from (*@$\mathcal{A}$@*)
   # If response (*@$\neq$@*) (bestSeller, offerList, (*@$Bob, x, s$@*)), (*@$Bob \in \mathcal{P}, x \in Money, s \in Asset$@*): (*@\label{satfunc:badresponse}@*)
     # e.g. (*@$Bob == \bot$@*)
-  ((*@$Bob, x, s$@*)) = (*@$\argmax\limits_{\left(Bob, x, s\right) \in \texttt{list}}\left\{\right.$@*)util((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right) \cup \left\{s\right\},$@*)
+  ((*@$Bob, x, s$@*)) = (*@$\argmax\limits_{\left(Bob, x, s\right) \in \texttt{list}}\left\{\right.$@*)payoff((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right) \cup \left\{s\right\},$@*)
         (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Alice\right) - x$@*))(*@$\left.\right\}$@*)
   # Else:
   #   parse response as (bestSeller, offerList, (*@$Bob, x, s$@*))
-  #   ((*@$Bob', x', s'$@*)) = (*@$\argmax\limits_{\left(Bob, x, s\right) \in \texttt{list}}\left\{\right.$@*)util((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right) \cup \left\{s\right\},$@*)
+  #   ((*@$Bob', x', s'$@*)) = (*@$\argmax\limits_{\left(Bob, x, s\right) \in \texttt{list}}\left\{\right.$@*)payoff((*@$Alice$@*))((*@$\mathcal{G}_{\mathrm{Assets}}.\mathrm{possessions}\left(Alice\right) \cup \left\{s\right\},$@*)
   #      (*@$\mathcal{G}_{\mathrm{Ledger}}.\mathrm{balance}\left(Alice\right) - x$@*))(*@$\left.\right\}$@*)
   #   punish (*@$\mathcal{A}$@*) distSeller(((*@$Bob, x, s$@*)), ((*@$Bob', x', s'$@*))) payoff reduction (*@\label{satfunc:punish}@*)
   send (pay, (*@$Alice$@*), (*@$Bob$@*), x) to (*@$\mathcal{G}_{\mathrm{Ledger}}$@*) as (*@$Alice$@*)
